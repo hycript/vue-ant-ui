@@ -1,0 +1,1 @@
+yarn add --dev eslint babel-eslint eslint-config-standard eslint-config-vue eslint-friendly-formatter eslint-loader eslint-plugin-babel eslint-plugin-html eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-react eslint-plugin-standard eslint-plugin-vue
