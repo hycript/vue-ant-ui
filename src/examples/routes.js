@@ -66,7 +66,7 @@ export default [
             tooltip: 'Tooltip 文字提示 √',
             table: 'Table 表格',
             tabs: 'Tabs 标签页',
-            tag: 'Tag 标签',
+            tag: 'Tag 标签 √',
             timeline: 'Timeline 时间轴',
             tree: 'Tree 树形控件',
         }

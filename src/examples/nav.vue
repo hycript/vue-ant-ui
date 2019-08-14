@@ -28,8 +28,9 @@
         a {
             color: @fontColor;
             font-size: 14px;
-            text-overflow: ellipsis;
-            overflow: hidden;
+            // text-overflow: ellipsis;
+            // overflow: hidden;
+            white-space: nowrap;
             display: block;
             padding: 12px 30px 12px 48px;
 
