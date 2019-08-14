@@ -39,6 +39,7 @@ import PropTypes from '~utils/vue-types';
 import Tooltip from '../tooltip/tooltip';
 
 export default {
+    name: 'Popover',
     extends: Tooltip,
     props: {
         prefixCls: PropTypes.string.def('ant-popover'),

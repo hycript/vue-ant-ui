@@ -56,6 +56,7 @@ const generateId = (() => {
 })();
 
 export default {
+    name: 'Sider',
     components: {
         Icon,
     },

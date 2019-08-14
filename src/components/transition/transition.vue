@@ -9,7 +9,7 @@
     @after-leave="afterLeave"
     :enter-active-class="enterActiveCls"
     :leave-active-class="leaveActiveCls"
-    appear
+    :appear="appear"
 >
     <slot></slot>
 </transition>
@@ -23,6 +23,7 @@ export default {
     name: 'vTransition',
     props: {
         transitionName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).def(defaultTransitionName),
+        appear: PropTypes.bool.def(true),
     },
     computed: {
         enterActiveCls(){

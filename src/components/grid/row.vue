@@ -46,6 +46,7 @@ const BreakpointMap = PropTypes.shape({
 }).loose;
 
 export default {
+    name: 'Row',
     data(){
         return {
             screens: {}

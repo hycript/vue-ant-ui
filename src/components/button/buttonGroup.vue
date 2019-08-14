@@ -11,6 +11,7 @@ import ButtonSize from './buttonSize.js';
 import ButtonSizeMapper from './buttonSizeMapper.js';
 
 export default {
+    name: 'ButtonGroup',
     props: {
         prefixCls: PropTypes.string.def('ant-btn-group'),
         size: ButtonSize,

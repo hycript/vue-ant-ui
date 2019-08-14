@@ -22,7 +22,7 @@ const EVENTS = [
 ];
 
 export default {
-    name: 'affix',
+    name: 'Affix',
     data(){
         return {
             affixStyle: undefined,

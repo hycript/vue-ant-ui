@@ -10,7 +10,7 @@ import PropTypes from '~utils/vue-types';
 export default {
     props: {
         prefixCls: PropTypes.string,
-        hasSider: PropTypes.boolean,
+        hasSider: PropTypes.bool,
     },
     computed: {
         classes(){

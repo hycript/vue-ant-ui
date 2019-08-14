@@ -3,6 +3,7 @@ import PropTypes from '~utils/vue-types';
 import Basic from './basic';
 
 export default {
+    name: 'Layout',
     extends: Basic,
     data(){
         return {

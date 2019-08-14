@@ -49,6 +49,7 @@ import { buttonType } from '../button';
 import Button from '../button/button';
 
 export default {
+    name: 'Popconfirm',
     extends: Tooltip,
     components: {
         Icon,

@@ -6,6 +6,7 @@ import listener from './listener';
 function noop () {}
 
 export default {
+    name: 'Align',
     mixins: [listener],
     // functional: true,
     data(){

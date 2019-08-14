@@ -21,6 +21,7 @@ const objectOrNumber = PropTypes.oneOfType([PropTypes.number, colSize]);
 
 
 export default {
+    name: 'Col',
     data(){
         return {
             gutter: 0,

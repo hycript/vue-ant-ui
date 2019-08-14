@@ -36,6 +36,7 @@ import listener from '../common/listener';
 const isTouch = 'ontouchstart' in window ? true : false;
 
 export default {
+    name: 'Tooltip',
     mixins: [listener],
     components: {
         Align,

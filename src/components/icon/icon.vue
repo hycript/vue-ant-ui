@@ -8,6 +8,7 @@
 import PropTypes from '~utils/vue-types';
 
 export default {
+    name: 'Icon',
     props: {
         type: PropTypes.string.isRequired,
         spin: PropTypes.bool.def(false),
