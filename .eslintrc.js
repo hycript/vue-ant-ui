@@ -1,38 +1,11 @@
 module.exports = {
-    "root": true,
-    "parser": "babel-eslint",
-    "parserOptions": {
-        "ecmaVersion": 7,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "globalReturn": true,// 允许在全局作用域下使用 return 语句
-            "jsx": true,// 启用 JSX
-            // "impliedStrict": true,// impliedStric
-        }
-    },
-    "extends": [
-        "standard",
-        "vue"
+    root: true,
+    'extends': [
+        'plugin:vue/essential',
+        '@vue/standard'
     ],
-    "plugins": [
-        "babel",
-        "html",
-        "react",
-        "vue"
-    ],
-    "env": {
-        "browser": true,
-        "es6": true,
-        "node": true
-    },
     "globals": {
-        "$": false,
-        "location": false,
         "__DEV__": false,
-        "__PROD__": false,
-        "__TEST__": false,
-        "SERVICE_URL": false,
-        "weex": false
     },
     "rules": {
         "no-extra-semi": 2,//多余的分号

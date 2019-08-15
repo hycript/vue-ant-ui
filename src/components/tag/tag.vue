@@ -1,7 +1,7 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
 <vTransition @after-leave="animationEnd">
-    <div v-if="visble" :class="classes" :style="tagStyle" >
+    <div v-if="!closed" :class="classes" :style="tagStyle" >
         <slot></slot>
         <Icon v-if="closable" type='cross' @click="close"></Icon>
     </div>
@@ -27,11 +27,11 @@ export default {
         vTransition,
         Icon,
     },
-    /* data(){
+    data(){
         return {
-            closed: false,
+            closed: !this.visble,
         }
-    }, */
+    },
     props: {
         prefixCls: PropTypes.string.def('ant-tag'),
         color: PropTypes.string,
@@ -56,6 +56,11 @@ export default {
                 backgroundColor: (color && !isPresetColor) ? color : null,
             }
         },
+    },
+    watch: {
+        visble(val){
+            this.closed = !val;
+        }
     },
     methods: {
         animationEnd(){
