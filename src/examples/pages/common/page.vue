@@ -3,10 +3,17 @@
     padding: 0 30px;
     &-title {
         display: block;
-        font-size: 20px;
+        font-size: 1.5em;
         line-height: 1;
         padding: 30px 20px;
         border-bottom: 1px solid #eee;
+    }
+    &-body > .title{
+        display: block;
+        font-size: 1.35em;
+        line-height: 1;
+        padding: 20px 20px 0px;
+        font-weight: bold;
     }
 }
 </style>

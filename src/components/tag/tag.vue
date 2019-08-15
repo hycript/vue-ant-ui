@@ -1,7 +1,7 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
 <vTransition @after-leave="animationEnd">
-    <div v-if="!closed" :class="classes" :style="tagStyle" >
+    <div v-if="visble" :class="classes" :style="tagStyle" >
         <slot></slot>
         <Icon v-if="closable" type='cross' @click="close"></Icon>
     </div>
@@ -20,19 +20,23 @@ function _isPresetColor(color){
 
 export default {
     name: 'Tag',
+    model: {
+        prop: 'visble',
+    },
     components: {
         vTransition,
         Icon,
     },
-    data(){
+    /* data(){
         return {
             closed: false,
         }
-    },
+    }, */
     props: {
         prefixCls: PropTypes.string.def('ant-tag'),
         color: PropTypes.string,
         closable: PropTypes.bool,
+        visble: PropTypes.bool.def(true),
     },
     computed: {
         isPresetColor(){
@@ -58,8 +62,9 @@ export default {
             this.$emit('afterClose');
         },
         close (e) {
-            this.$emit('close', e)
+            this.$emit('close', e);
             if (e.defaultPrevented) return;
+            this.$emit('input', false)
             this.closed = true
         },
     }
