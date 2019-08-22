@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:pack": "cross-env VUE_CLI_SERVICE_CONFIG_PATH=vue.config.lib.js node ./config/vue-cli-service/vue-cli-service build",
     "lint": "vue-cli-service lint",
     "pack": "rollup -c"
   },
@@ -25,6 +26,7 @@
     "babel-eslint": "^10.0.1",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
+    "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-vue": "^5.0.0",
