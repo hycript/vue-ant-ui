@@ -29,7 +29,7 @@ const components = {
     ...Transition,
     //layout
     ...Grid,
-    ...Layout,
+    // ...Layout,
     //navigation
     ...Affix,
     //Data Display
