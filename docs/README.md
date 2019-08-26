@@ -2,7 +2,12 @@
 
 <basic />
 
-<<< @/pages/tag/basic.vue
+- 1 
+- 2 
+- 3 
+- 4 
+
+<<< @/.vuepress/pages/tag/basic.vue
 
 <template>
 <Button @click="click">{{ text }}</Button>
@@ -12,7 +17,7 @@
 </template>
 
 <script>
-import basic from './pages/tag/basic.vue'
+import basic from '@/pages/tag/basic.vue'
 export default {
     components: {
         basic,
@@ -28,6 +33,9 @@ export default {
 
             }
         }
+    },
+    created(){
+        console.log(this.$options.components);
     },
     methods: {
         click(){

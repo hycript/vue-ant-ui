@@ -1,5 +1,6 @@
 const path = require('path');
 const DIRNAME = process.cwd();
+const sidebar = require('./sidebar');
 const _src = '../src'
 console.log('DIRNAME', DIRNAME);
 module.exports = {
@@ -8,7 +9,7 @@ module.exports = {
     configureWebpack: {
         resolve: {
             alias: {
-                '@': path.resolve(DIRNAME, './.vuepress'),
+                '@': path.resolve(DIRNAME, '.vuepress'),
                 '~': path.resolve(DIRNAME, _src, './'),
                 '~comps': path.resolve(DIRNAME, _src, 'components'),
                 '~utils': path.resolve(DIRNAME, _src, 'components/_util'),
@@ -16,4 +17,17 @@ module.exports = {
             }
         }
     },
+    /* configureWebpack: {
+        resolve: {
+            alias: {
+                '@': path.resolve(DIRNAME, 'docs', '.vuepress'),
+                '@assets': path.resolve(DIRNAME, 'docs', 'assets'),
+            }
+        }
+    }, */
+    themeConfig: {
+        // sidebar: 'auto',
+        sidebar,
+        sidebarDepth : 3,
+    }
 }

@@ -29,7 +29,7 @@ const components = {
     ...Transition,
     //layout
     ...Grid,
-    // ...Layout,
+    ...Layout,
     //navigation
     ...Affix,
     //Data Display
@@ -50,4 +50,8 @@ function install(Vue){
 
 export default {
     install,
+}
+
+export {
+    components as Components,
 }
