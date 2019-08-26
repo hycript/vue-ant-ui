@@ -17,14 +17,6 @@ module.exports = {
             }
         }
     },
-    /* configureWebpack: {
-        resolve: {
-            alias: {
-                '@': path.resolve(DIRNAME, 'docs', '.vuepress'),
-                '@assets': path.resolve(DIRNAME, 'docs', 'assets'),
-            }
-        }
-    }, */
     themeConfig: {
         // sidebar: 'auto',
         sidebar,
