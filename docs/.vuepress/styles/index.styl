@@ -20,6 +20,11 @@ table
     border: 1px solid #ebedf0
     line-height: 1.5
     border-width: 0px
+    thead
+        border-style: solid
+        border-color: #f6f6f6
+        border-width: 1px 1px 2px 1px
+        border-bottom-color: #e8e8e8
 
     tr
         border-width: 0
@@ -31,12 +36,10 @@ table
         white-space: nowrap
         color: #5c6b77
         padding: 0.8rem 0 0.8rem 0.9rem
-        border-style: solid
-        border-color: #e8e8e8
-        // border-width: 0 0 2px 0
         border-width: 0
-        font-weight: 500
-        // background-color: rgba(0, 0, 0, 0.02)
+        font-weight: normal
+        font-size: 95%;
+        background-color: rgba(0, 0, 0, 0.02)
 
     td
         padding: 0.8rem 0 0.8rem 0.9rem
@@ -56,4 +59,12 @@ table
             width: 22%;
             color: #c41d7f
             word-break: break-all
+
+
+.theme-default-content
+    &:not(.custom)
+        max-width: 820px
+
+.page-edit, .page-nav
+    max-width: 820px !important
 
