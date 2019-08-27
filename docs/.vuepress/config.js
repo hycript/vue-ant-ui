@@ -6,6 +6,9 @@ console.log('DIRNAME', DIRNAME);
 module.exports = {
     title: 'Vue-Ant-UI',
     description: '',
+    head: [
+        ['link', { rel: 'icon', href: `/favicon.png` }],
+    ],
     configureWebpack: {
         resolve: {
             alias: {

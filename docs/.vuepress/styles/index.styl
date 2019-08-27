@@ -1,11 +1,59 @@
 p
-    margin: 1em 0
-ul
-ol
-    margin: 1em 0
+    margin: 1rem 0
+
+ul, ol
+    margin: 1rem 0
+
 h2
     font-size: 1.5rem
     border: none
+
 h1, h2, h3, h4, h5, h6{
-    margin: 1em 0;
+    margin: 1rem 0
 }
+
+table
+    display: table
+    width: 100%
+    border-spacing: 0
+    empty-cells: show
+    border: 1px solid #ebedf0
+    line-height: 1.5
+    border-width: 0px
+
+    tr
+        border-width: 0
+
+        &:nth-child(2n)
+            background-color: rgba(0, 0, 0, 0)
+
+    th
+        white-space: nowrap
+        color: #5c6b77
+        padding: 0.8rem 0 0.8rem 0.9rem
+        border-style: solid
+        border-color: #e8e8e8
+        // border-width: 0 0 2px 0
+        border-width: 0
+        font-weight: 500
+        // background-color: rgba(0, 0, 0, 0.02)
+
+    td
+        padding: 0.8rem 0 0.8rem 0.9rem
+        border: 1px solid #e8e8e8
+        border-width: 1px 0
+        font-size: 90%;
+
+        &:first-child
+            font-weight: 500
+            width: 25%
+            color: #003a8c
+
+        &:last-child
+            width: 13%
+
+        &:nth-child(3)
+            width: 22%;
+            color: #c41d7f
+            word-break: break-all
+
