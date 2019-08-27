@@ -34,18 +34,71 @@
 </Wrapper>
 </Code>
 
+### 多彩标签
+我们添加了多种预设色彩的标签样式，用作不同场景使用。如果预设值不能满足你的需求，可以设置为具体的色值。
+
+<Code>
+<Colorful></Colorful>
+<Wrapper slot="code">
+<<< @/../src/components/tag/demo/colorful.vue
+</Wrapper>
+</Code>
+
+### 动态添加和删除 
+用数组生成一组标签，可以动态添加和删除，通过监听删除动画结束的事件 `afterClose` 实现。
+
+
+<Code>
+<Control></Control>
+<Wrapper slot="code">
+<<< @/../src/components/tag/demo/control.vue
+</Wrapper>
+</Code>
+
+### 热门标签
+选择你感兴趣的话题。
+
+<Code>
+<HotTags></HotTags>
+<Wrapper slot="code">
+<<< @/../src/components/tag/demo/hot-tags.vue
+</Wrapper>
+</Code>
+
+### 控制关闭状态
+通过 `visible` 属性控制关闭状态。
+
+<Code>
+<Visible></Visible>
+<Wrapper slot="code">
+<<< @/../src/components/tag/demo/visible.vue
+</Wrapper>
+</Code>
+
+## API
+
+### Tag
+
+参数|说明|类型|默认值
+--|--|--|--
+afterClose|关闭动画完成后的回调|() => void|-
+
 <script>
-import Basic from '~comps/tag/demo/basic'
-import Checkable from '~comps/tag/demo/checkable'
+import Basic from '~comps/tag/demo/basic';
+import Checkable from '~comps/tag/demo/checkable';
+import Colorful from '~comps/tag/demo/colorful';
+import Control from '~comps/tag/demo/control';
+import HotTags from '~comps/tag/demo/hot-tags';
+import Visible from '~comps/tag/demo/visible';
 // import Test from '../.vuepress/test.md'
-// console.log('test', Test);
 export default {
     components: {
         Basic,
         Checkable,
+        Colorful,
+        Control,
+        HotTags,
+        Visible,
     },
-    created(){
-        console.log(this);
-    }
 }
 </script>

@@ -3,8 +3,12 @@
         <CheckableTag v-model="checked1" @change="handleChange">
             Tag1
         </CheckableTag>
-        <CheckableTag v-model="checked2" @change="handleChange">Tag2</CheckableTag>
-        <CheckableTag v-model="checked3" @change="handleChange">Tag3</CheckableTag>
+        <CheckableTag v-model="checked2" @change="handleChange">
+            Tag2
+        </CheckableTag>
+        <CheckableTag v-model="checked3" @change="handleChange">
+            Tag3
+        </CheckableTag>
     </div>
 </template>
 <script>

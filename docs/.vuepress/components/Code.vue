@@ -2,6 +2,7 @@
 .code-container{
     border: 1px solid #eee;
     border-radius: 6px;
+    margin: 1em 0;
     .code-body{
         position: relative;
         margin: 1em;
@@ -36,7 +37,7 @@
 <div class="code-container">
     <div class="code-body">
         <slot></slot>
-        <div class="ico-wrapper">
+        <div v-if="$slots && $slots.code" class="ico-wrapper">
             <Tooltip title="code" :visible="false">
                 <div class="ico" @click="visible = !visible">
                     <img v-if="!visible" src="@/assets/code1.svg" alt="">

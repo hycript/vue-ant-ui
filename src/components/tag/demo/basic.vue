@@ -16,7 +16,7 @@ export default {
         },
         preventDefault(e) {
             e.preventDefault();
-            console.log("Clicked! But prevent default.");
+            console.log('Clicked! But prevent default.');
         }
     }
 };
