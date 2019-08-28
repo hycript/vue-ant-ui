@@ -5,11 +5,11 @@
     margin: 1em 0;
     .code-body{
         position: relative;
-        margin: 1em;
+        padding: 1em;
         .ico-wrapper{
             position: absolute;
-            right: 0em;
-            bottom: -0.5em;
+            right: 1em;
+            bottom: 0.5em;
             line-height: 0;
             // display: flex;
             // justify-content: flex-end;
@@ -24,6 +24,7 @@
     }
     .code-area{
         margin-bottom: -0.85rem;
+        margin-top: -0.85rem;
     }
     &:hover {
         .ico{

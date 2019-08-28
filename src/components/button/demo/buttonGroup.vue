@@ -11,9 +11,7 @@
         <Button disabled>R</Button>
     </ButtonGroup>
     <ButtonGroup>
-        <Button>L</Button>
-        <Button>M</Button>
-        <Button>R</Button>
+        <Button>L</Button><Button>M</Button><Button>R</Button>
     </ButtonGroup>
 
     <h4>With Icon</h4>
@@ -32,3 +30,8 @@
     </ButtonGroup>
 </div>
 </template>
+<style lang="less" scoped>
+.ant-btn-group{
+    margin-right: 0.8rem;
+}
+</style>

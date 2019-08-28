@@ -1,6 +1,6 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
-    <component :is="$attrs.href ? 'a' : 'button'" :class="classes" @click="click" :disabled="disabled">
+    <component :is="$attrs.href ? 'a' : 'button'" :class="classes" v-on="$$listeners" @click="click" :disabled="disabled">
         <Icon v-if="iconType" :type="iconType"></Icon><template v-if="$slots.default && $slots.default.length > 0">
             <span v-if="$slots.default.length === 1 && $slots.default[0].tag === undefined"><slot></slot></span><template v-else><slot></slot></template>
         </template>
@@ -11,6 +11,7 @@ import isString from 'lodash/isString';
 import PropTypes from '~utils/vue-types';
 
 import click from '../common/click';
+import events from '../common/events';
 import buttonType from './buttonType.js';
 import buttonSize from './buttonSize.js';
 import buttonSizeMapper from './buttonSizeMapper.js';
@@ -20,7 +21,8 @@ const isTwoCNChar = rxTwoCNChar.test.bind(rxTwoCNChar);
 
 export default {
     name: 'Button',
-    mixins: [click],
+    mixins: [click, events],
+    exceptListeners: ['click'],
     data(){
         return {
             hasTwoCNChar: false,

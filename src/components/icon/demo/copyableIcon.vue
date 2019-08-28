@@ -31,8 +31,8 @@
 }
 </style>
 <template>
-<div class="icon-wrapper">
-    <Icon class="icon" @click="click" :type="type" />
+<div class="icon-wrapper" @click="click">
+    <Icon class="icon" :type="type" />
     <div class="name">{{ type }}</div>
 </div>
 </template>

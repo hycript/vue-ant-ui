@@ -1,4 +1,11 @@
 <style lang="less" src="./style/index.less"></style>
+<style lang="less">
+@import "../style/themes/default.less";
+
+.@{ant-prefix}-btn-group{
+    font-size: 0;
+}
+</style>
 <template>
     <div :class="classes">
         <slot></slot>

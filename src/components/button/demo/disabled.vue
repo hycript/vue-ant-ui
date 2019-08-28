@@ -12,7 +12,7 @@
     <Button type="link">Link</Button>
     <Button type="link" disabled>Link(disabled)</Button>
     <br><br>
-    <div :style="{ padding: '12px', background: 'rgb(190, 200, 200)' }">
+    <div :style="{ padding: '1em', background: 'rgb(190, 200, 200)', margin: '0 -1em -1em', borderRadius: '6px' }">
         <Button ghost>Ghost</Button>
         <Button ghost disabled>Ghost(disabled)</Button>
     </div>
