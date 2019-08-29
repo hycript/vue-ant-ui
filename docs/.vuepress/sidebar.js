@@ -25,6 +25,7 @@ module.exports = [
         sidebarDepth: 2,
         children: [
             '/components/tag',
+            '/components/tooltip',
         ]
     },
 ]
