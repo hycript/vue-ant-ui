@@ -12,14 +12,18 @@
     <slot :show="show" :hide="hide" :visible="selfVisible"></slot>
     <vTransition>
         <Align v-if="selfVisible" :target="getTarget" :align="selfPlacement" :monitorWindowResize="true" :style="originStyle">
-            <div ref="contents" :class="classes">
-                <div :class="[`${prefixCls}-content`]">
-                    <slot name="contents">
-                        <div :class="[`${prefixCls}-arrow`]"></div>
-                        <div :class="[`${prefixCls}-inner`, overlayClassName || '']" :style="overlayStyle">{{ title }}</div>
-                    </slot>
+            <Popup v-if="selfVisible">
+                <div ref="contents" :class="classes">
+                    <div :class="[`${prefixCls}-content`]">
+                        <slot name="contents">
+                            <div :class="[`${prefixCls}-arrow`]"></div>
+                            <div :class="[`${prefixCls}-inner`, overlayClassName || '']" :style="overlayStyle">
+                                <slot name="title">{{ title }}</slot>
+                            </div>
+                        </slot>
+                    </div>
                 </div>
-            </div>
+            </Popup>
         </Align>
     </vTransition>
 </div>
@@ -30,6 +34,7 @@ import { contains } from '~utils/dom';
 import abstractTooltipProps from './abstractTooltipProps.js';
 import getPlacement from './getPlacement';
 import Align from '../common/align.js';
+import Popup from '../common/popup.js';
 import vTransition from '../transition/transition';
 import listener from '../common/listener';
 
@@ -40,7 +45,11 @@ export default {
     mixins: [listener],
     components: {
         Align,
+        Popup,
         vTransition,
+    },
+    model: {
+        prop: 'visible',
     },
     data(){
         return {
@@ -175,9 +184,11 @@ export default {
 
             if(!delay){
                 this.selfVisible = true;
+                this.$emit('input', true);
             }else{
                 this.delayTimer = setTimeout(_ => {
                     this.selfVisible = true;
+                    this.$emit('input', true);
                 }, delay * 1000);
             }
         },
@@ -187,9 +198,11 @@ export default {
 
             if(!delay){
                 this.selfVisible = false;
+                this.$emit('input', false);
             }else{
                 this.delayTimer = setTimeout(_ => {
                     this.selfVisible = false;
+                    this.$emit('input', false);
                 }, delay * 1000);
             }
         },

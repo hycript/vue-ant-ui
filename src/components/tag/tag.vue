@@ -21,7 +21,7 @@ function _isPresetColor(color){
 export default {
     name: 'Tag',
     model: {
-        prop: 'visble',
+        prop: 'visible',
     },
     components: {
         vTransition,
@@ -29,14 +29,14 @@ export default {
     },
     data(){
         return {
-            closed: !this.visble,
+            closed: !this.visible,
         }
     },
     props: {
         prefixCls: PropTypes.string.def('ant-tag'),
         color: PropTypes.string,
         closable: PropTypes.bool,
-        visble: PropTypes.bool.def(true),
+        visible: PropTypes.bool.def(true),
     },
     computed: {
         isPresetColor(){
@@ -58,7 +58,7 @@ export default {
         },
     },
     watch: {
-        visble(val){
+        visible(val){
             this.closed = !val;
         }
     },

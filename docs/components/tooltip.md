@@ -10,11 +10,34 @@
 ### 基本
 最简单的用法。
 
+<Code>
+<Basic></Basic>
+<Wrapper slot="code">
+<<< @/../src/components/tooltip/demo/basic.vue
+</Wrapper>
+</Code>
+
+
 ### 位置
 位置有 12 个方向。
 
+<Code>
+<Placement></Placement>
+<Wrapper slot="code">
+<<< @/../src/components/tooltip/demo/placenment.vue
+</Wrapper>
+</Code>
+
 ### 箭头指向
 设置了 `arrowPointAtCenter` 后，箭头将指向目标元素的中心。
+
+<Code>
+<ArrowCenter></ArrowCenter>
+<Wrapper slot="code">
+<<< @/../src/components/tooltip/demo/arrow-point-at-center.vue
+</Wrapper>
+</Code>
+
 
 ### 自动调整位置 
 气泡框不可见时自动调整位置
@@ -40,7 +63,7 @@
 | overlayStyle | 卡片样式 | object | 无 |
 | placement | 气泡框位置，可选 `top` `left` `right` `bottom` `topLeft` `topRight` `bottomLeft` `bottomRight` `leftTop` `leftBottom` `rightTop` `rightBottom` | string | top |
 | trigger | 触发行为，可选 `hover/focus/click/contextmenu` | string | hover |
-| visible | 用于手动控制浮层显隐 | boolean | false |
+| visible(v-model) | 用于手动控制浮层显隐 | boolean | false |
 
 ### 事件
 | 事件名称 | 说明 | 回调参数 |
@@ -51,8 +74,15 @@
 请确保 `Tooltip` 的子元素能接受 `mouseenter`、`mouseleave`、`focus`、`click` 事件。
 
 <script>
+import Basic from '~comps/tooltip/demo/basic';
+import Placement from '~comps/tooltip/demo/placement';
+import ArrowCenter from '~comps/tooltip/demo/arrow-point-at-center';
 
 export default {
-    
+    components: {
+        Basic,
+        Placement,
+        ArrowCenter,
+    }
 }
 </script>
