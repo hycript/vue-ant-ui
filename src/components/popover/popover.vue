@@ -7,45 +7,46 @@
 }
 </style>
 <template>
-<div :class="`${prefixCls}-wrapper`" @mouseenter="onMouseenter" @mouseleave="onMouseleave" @click="onClick" @contextmenu="onContextmenu">
-    <!-- @focus="onFocus" @blur="onBlur" -->
-    <slot :show="show" :hide="hide" :visible="selfVisible"></slot>
-    <vTransition>
-        <Align v-if="selfVisible" :target="getTarget" :align="selfPlacement" :monitorWindowResize="true" :style="originStyle">
-            <div ref="contents" :class="classes">
-                <div :class="[`${prefixCls}-content`]">
-                    <slot name="contents" :hide="hide" :show="show" :visible="selfVisible">
-                        <div :class="[`${prefixCls}-arrow`]"></div>
-                        <div :class="[`${prefixCls}-inner`, overlayClassName || '']" :style="overlayStyle">
-                            <div>
-                                <div :class="`${prefixCls}-title`">
-                                    <slot name="title" :hide="hide" :show="show" :visible="selfVisible">{{ title }}</slot>
-                                </div>
-                                <div :class="`${prefixCls}-inner-content`">
-                                    <slot name="content" :hide="hide" :show="show" :visible="selfVisible">{{ content }}</slot>
-                                </div>
-                            </div>
-                        </div>
-                    </slot>
+<Tooltip v-bind="$props">
+    <template slot-scope="{ show, hide, visible }">
+        <slot :show="show" :hide="hide" :visible="visible"></slot>
+    </template>
+    <template slot="contents" slot-scope="{ show, hide, visible }">
+        <slot name="contents">
+            <div :class="[`${prefixCls}-arrow`]"></div>
+            <div :class="[`${prefixCls}-inner`, overlayClassName || '']" :style="overlayStyle">
+                <div>
+                    <div :class="`${prefixCls}-title`">
+                        <slot name="title" :hide="hide" :show="show" :visible="visible">{{ title }}</slot>
+                    </div>
+                    <div :class="`${prefixCls}-inner-content`">
+                        <slot name="content" :hide="hide" :show="show" :visible="visible">{{ content }}</slot>
+                    </div>
                 </div>
             </div>
-        </Align>
-    </vTransition>
-</div>
-
+        </slot>
+    </template>
+</Tooltip>
 </template>
 <script>
 import PropTypes from '~utils/vue-types';
 import Tooltip from '../tooltip/tooltip';
+import abstractTooltipProps from '../tooltip/abstractTooltipProps.js';
 
 export default {
     name: 'Popover',
-    extends: Tooltip,
+    components: {
+        Tooltip,
+    },
     props: {
+        ...abstractTooltipProps,
         prefixCls: PropTypes.string.def('ant-popover'),
         transitionName: PropTypes.string.def('zoom-big'),
         title: PropTypes.any,
         content: PropTypes.any,
     },
+    created(){
+        console.error('popover', this);
+    }
 }
 </script>

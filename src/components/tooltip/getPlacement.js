@@ -110,7 +110,7 @@ function getOverflowOptions(autoAdjustOverflow) {
     }
 }
 
-export default function(config = {}) {
+const getPlacenment = function(config = {}) {
     const { placement = 'top', arrowPointAtCenter = false, arrowWidth = 5, horizontalArrowShift = 16, verticalArrowShift = 12, autoAdjustOverflow = true } = config;
     const xAxisOffset = arrowPointAtCenter ? horizontalArrowShift + arrowWidth : 0;
     const yAxisOffset = arrowPointAtCenter ? verticalArrowShift + arrowWidth : 0;
@@ -129,4 +129,19 @@ export default function(config = {}) {
         overflow: getOverflowOptions(autoAdjustOverflow),
         offset: [Math.abs(offset[0]) === 1 ? offset[0] * xAxisOffset : offset[0], Math.abs(offset[1]) === 1 ? offset[1] * yAxisOffset : offset[1]],
     }
+}
+
+export default getPlacenment;
+
+getPlacenment.check = function(points){
+    points = points.join(',');
+    let placement = '';
+    Object.keys(placements).forEach(_placement => {
+        let _points = placements[_placement].points.join(',');
+        if(_points === points){
+            placement = _placement;
+            return false;
+        }
+    })
+    return placement;
 }

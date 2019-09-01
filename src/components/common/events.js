@@ -2,7 +2,7 @@ export default {
     exceptListeners: [],
     computed: {
         $$listeners(){
-            let { $options, $listeners = [] } = this;
+            let { $options, $listeners = {} } = this;
             let { exceptListeners } = $options;
             if(!Array.isArray(exceptListeners)) exceptListeners = [];
             let keys = Object.keys($listeners).filter(key => {

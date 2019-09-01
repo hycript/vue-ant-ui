@@ -24,7 +24,7 @@
 <Code>
 <Placement></Placement>
 <Wrapper slot="code">
-<<< @/../src/components/tooltip/demo/placenment.vue
+<<< @/../src/components/tooltip/demo/placement.vue
 </Wrapper>
 </Code>
 
@@ -42,6 +42,26 @@
 ### 自动调整位置 
 气泡框不可见时自动调整位置
 
+<Code>
+<AutoAdjust></AutoAdjust>
+<Wrapper slot="code">
+<<< @/../src/components/tooltip/demo/auto-adjust-overflow.vue
+</Wrapper>
+</Code>
+
+### 触发条件
+trigger: `string` | `array` 
+
+可选: `click`, `focus`, `hover`, `contextmenu`
+
+<Code>
+<Trigger></Trigger>
+<Wrapper slot="code">
+<<< @/../src/components/tooltip/demo/trigger.vue
+</Wrapper>
+</Code>
+
+
 ## API
 
 | 参数 | 说明 | 类型 | 默认值 |
@@ -55,15 +75,14 @@
 | --- | --- | --- | --- |
 | arrowPointAtCenter | 箭头是否指向目标元素中心 | boolean | `false` |
 | autoAdjustOverflow | 气泡被遮挡时自动调整位置 | boolean | `true` |
-| defaultVisible | 默认是否显隐 | boolean | false |
-| getPopupContainer | 浮层渲染父节点，默认渲染到 body 上 | Function(triggerNode) | () => document.body |
+| getPopupContainer | 浮层渲染父节点，默认渲染到 body 上, 当返回false时则渲染在当前节点下. | Function(triggerNode) \| boolean(false) \| Dom | () => document.body |
 | mouseEnterDelay | 鼠标移入后延时多少才显示 Tooltip，单位：秒 | number | 0 |
 | mouseLeaveDelay | 鼠标移出后延时多少才隐藏 Tooltip，单位：秒 | number | 0.1 |
 | overlayClassName | 卡片类名 | string | 无 |
 | overlayStyle | 卡片样式 | object | 无 |
 | placement | 气泡框位置，可选 `top` `left` `right` `bottom` `topLeft` `topRight` `bottomLeft` `bottomRight` `leftTop` `leftBottom` `rightTop` `rightBottom` | string | top |
-| trigger | 触发行为，可选 `hover/focus/click/contextmenu` | string | hover |
-| visible(v-model) | 用于手动控制浮层显隐 | boolean | false |
+| trigger | 触发行为，可选 `hover/focus/click/contextmenu` | string \| array | hover |
+| visible(v-model) | 用于控制浮层显隐 | boolean | false |
 
 ### 事件
 | 事件名称 | 说明 | 回调参数 |
@@ -77,12 +96,16 @@
 import Basic from '~comps/tooltip/demo/basic';
 import Placement from '~comps/tooltip/demo/placement';
 import ArrowCenter from '~comps/tooltip/demo/arrow-point-at-center';
+import AutoAdjust from '~comps/tooltip/demo/auto-adjust-overflow';
+import Trigger from '~comps/tooltip/demo/trigger';
 
 export default {
     components: {
         Basic,
         Placement,
         ArrowCenter,
+        AutoAdjust,
+        Trigger,
     }
 }
 </script>

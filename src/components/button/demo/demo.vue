@@ -1,7 +1,7 @@
 <template>
 <div>
     <br>
-    <Button type="primary" @mouseenter="log($event, 'mouseenter')" @click="log($event, 'click')">Primary</Button>
+    <Button type="primary" @mouseenter.stop="log($event, 'mouseenter')" @click="log($event, 'click')">Primary</Button>
     <br><br>
     <Icon type="home" @mouseenter="log($event, 'Icon mouseenter')" />
     <br><br>

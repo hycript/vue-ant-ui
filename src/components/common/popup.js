@@ -2,23 +2,29 @@ import PropTypes from '~utils/vue-types';
 
 export default {
     props: {
-        target: {
-            type: [HTMLElement, Function, Boolean],
+        getPopupContainer: {
+            // type: [Function, Boolean],
+            default: null,
         }
     },
     mounted(){
-        console.log('popup mounted');
-        let { target } = this;
-        if(typeof target === 'function'){
-            target = target();
-        }
+        let { getPopupContainer } = this;
+        let target = typeof getPopupContainer === 'function' ? getPopupContainer(this.$el) : getPopupContainer;
+        console.log('popup mounted', target);
         if(target === false) return;
-        this._target = target || document.body;
-        this._target.appendChild(this.$el);
+        if(target === this.$el.parentElement) return;
+        this._$target = (target !== true && target) || document.body;
+        let _$el = this._$el = document.createElement('div');
+        // _$el.style.cssText = 'position: absolute; top: 0px; left: 0px; width: 100%;'
+        _$el.appendChild(this.$el);
+        this._$target.appendChild(this._$el);
     },
     beforeDestroy(){
-        this._target && this._target.removeChild(this.$el);
-        this._target = undefined;
+        try{
+            this._$target && this._$el && this._$target.removeChild(this._$el);
+            this._$target = undefined;
+            this._$el = undefined;
+        }catch(ee){}
     },
     render(h, context) {
         const child = this.$slots.default && this.$slots.default[0];

@@ -16,6 +16,7 @@ export default {
     mouseLeaveDelay: PropTypes.number.def(0.1),
     // getTooltipContainer: PropTypes.func,
     // getPopupContainer: PropTypes.func,
+    getPopupContainer: PropTypes.any,
     arrowPointAtCenter: PropTypes.bool.def(false),
     autoAdjustOverflow: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).def(true),
 }

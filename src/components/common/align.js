@@ -46,7 +46,7 @@ export default {
                 const source = this.$el;
                 if(!source) return;
                 const target = getTarget();
-                console.error('target', target, 'source', source);
+                // console.error('target', target, 'source', source);
                 !!target && this.$emit('align', source, domAlign(source, target, align));
             });
             _nextTick = null;

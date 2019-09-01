@@ -24,8 +24,9 @@ module.exports = [
         collapsable: false,
         sidebarDepth: 2,
         children: [
-            '/components/tag',
-            '/components/tooltip',
+            '/components/data-display/popover',
+            '/components/data-display/tag',
+            '/components/data-display/tooltip',
         ]
     },
 ]

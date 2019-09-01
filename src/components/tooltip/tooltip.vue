@@ -11,9 +11,9 @@
     <!-- @focus="onFocus" @blur="onBlur" -->
     <slot :show="show" :hide="hide" :visible="selfVisible"></slot>
     <vTransition>
-        <Align v-if="selfVisible" :target="getTarget" :align="selfPlacement" :monitorWindowResize="true" :style="originStyle">
-            <Popup v-if="selfVisible">
-                <div ref="contents" :class="classes">
+        <Align v-if="selfVisible" :target="getTarget" :align="selfPlacement" :monitorWindowResize="true" :style="originStyle" @align="onAlign">
+            <Popup :getPopupContainer="getPopupContainer">
+                <div v-on="$contentsListener" ref="contents" :class="classes">
                     <div :class="[`${prefixCls}-content`]">
                         <slot name="contents">
                             <div :class="[`${prefixCls}-arrow`]"></div>
@@ -54,6 +54,7 @@ export default {
     data(){
         return {
             selfVisible: this.visible,
+            realPlacement: '',
         }
     },
     props: {
@@ -74,11 +75,11 @@ export default {
             return [].concat(trigger);
         },
         classes(){
-            const { prefixCls, placement } = this;
+            const { prefixCls, placement, realPlacement } = this;
 
             return {
                 [`${prefixCls}`]: true,
-                [`${prefixCls}-placement-${placement}`]: true,
+                [`${prefixCls}-placement-${realPlacement || placement}`]: true,
             }
         },
         isNoTitle(){
@@ -86,7 +87,7 @@ export default {
             return !$slots.title && !title;
         },
         originStyle(){
-            const { selfPlacement, placement } = this;
+            const { selfPlacement, realPlacement: placement } = this;
             let originTop = '50%';
             let originLeft = '50%';
 
@@ -105,6 +106,22 @@ export default {
                 transformOrigin: `${originLeft} ${originTop}`
             };
         },
+        $contentsListener(){
+            const downEvent = isTouch ? 'touchstart' : 'mousedown';
+            return {
+                mouseenter: (e) => {
+                    e.stopPropagation();
+                    this.onMouseenter(e)
+                },
+                mouseleave: (e) => {
+                    e.stopPropagation();
+                    this.onMouseleave(e)
+                },
+                [downEvent]: (e) => {
+                    e.stopPropagation();
+                },
+            }
+        }
     },
     watch: {
         visible(val){
@@ -175,6 +192,10 @@ export default {
             e.preventDefault();
             this.show(e);
         },
+        onAlign(source, domAlign){
+            this.realPlacement = getPlacement.check(domAlign.points);
+            // console.log('onAlign', arguments, this.realPlacement);
+        },
         toggle(){
             this.selfVisible ? this.hide() : this.show();
         },
@@ -183,26 +204,26 @@ export default {
             if(this.selfVisible === true) return;
 
             if(!delay){
-                this.selfVisible = true;
-                this.$emit('input', true);
+                this.setVisible(true);
             }else{
                 this.delayTimer = setTimeout(_ => {
-                    this.selfVisible = true;
-                    this.$emit('input', true);
+                    this.setVisible(true);
                 }, delay * 1000);
             }
+        },
+        setVisible(value){
+            this.selfVisible = value;
+            this.$emit('input', value);
         },
         hide(event, delay){
             this.clearTimer();
             if(this.selfVisible === false) return;
 
             if(!delay){
-                this.selfVisible = false;
-                this.$emit('input', false);
+                this.setVisible(false);
             }else{
                 this.delayTimer = setTimeout(_ => {
-                    this.selfVisible = false;
-                    this.$emit('input', false);
+                    this.setVisible(false);
                 }, delay * 1000);
             }
         },
