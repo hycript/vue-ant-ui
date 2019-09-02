@@ -10,7 +10,7 @@ export default {
     mounted(){
         let { getPopupContainer } = this;
         let target = typeof getPopupContainer === 'function' ? getPopupContainer(this.$el) : getPopupContainer;
-        console.log('popup mounted', target);
+        // console.log('popup mounted', target);
         if(target === false) return;
         if(target === this.$el.parentElement) return;
         this._$target = (target !== true && target) || document.body;

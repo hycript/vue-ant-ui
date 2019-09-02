@@ -1,6 +1,6 @@
 <template>
 <div>
-    <Tooltip v-model="visible" placement="left">
+    <Tooltip v-model="visible" placement="topLeft" arrowPointAtCenter>
         <template slot='title'>
         prompt text
         </template>

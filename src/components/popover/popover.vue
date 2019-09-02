@@ -7,12 +7,12 @@
 }
 </style>
 <template>
-<Tooltip v-bind="$props">
+<Tooltip v-bind="$props" v-model="selfVisible">
     <template slot-scope="{ show, hide, visible }">
         <slot :show="show" :hide="hide" :visible="visible"></slot>
     </template>
     <template slot="contents" slot-scope="{ show, hide, visible }">
-        <slot name="contents">
+        <slot :show="show" :hide="hide" :visible="visible" name="contents">
             <div :class="[`${prefixCls}-arrow`]"></div>
             <div :class="[`${prefixCls}-inner`, overlayClassName || '']" :style="overlayStyle">
                 <div>
@@ -38,6 +38,14 @@ export default {
     components: {
         Tooltip,
     },
+    model: {
+        prop: 'visible',
+    },
+    data(){
+        return {
+            selfVisible: this.visible,
+        }
+    },
     props: {
         ...abstractTooltipProps,
         prefixCls: PropTypes.string.def('ant-popover'),
@@ -45,8 +53,16 @@ export default {
         title: PropTypes.any,
         content: PropTypes.any,
     },
-    created(){
-        console.error('popover', this);
-    }
+    watch: {
+        visible(val){
+            this.selfVisible = val;
+        },
+        selfVisible(val){
+            this.$emit('visibleChange', val);
+            if(val !== this.visible){
+                this.$emit('input', val);
+            }
+        },
+    },
 }
 </script>

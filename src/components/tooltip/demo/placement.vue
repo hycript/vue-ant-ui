@@ -91,14 +91,16 @@ export default {
     },
 }
 </script>
-<style scoped>
-#components-Tooltip-demo-placement .ant-tooltip-wrapper {
-    text-align: center;
-    padding: 0;
-    margin-right: 8px;
-    margin-bottom: 8px;
-}
-#components-Tooltip-demo-placement .ant-btn{
-    width: 70px;
+<style lang="less" scoped>
+#components-Tooltip-demo-placement{
+    .ant-tooltip-wrapper {
+        text-align: center;
+        padding: 0;
+        margin-right: 8px;
+        margin-bottom: 8px;
+    }
+    .ant-btn{
+        width: 70px;
+    }
 }
 </style>

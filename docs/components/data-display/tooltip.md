@@ -66,7 +66,7 @@ trigger: `string` | `array`
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| title | 提示文字 | string\|slot | 无 |
+| title | 提示文字 | string \| slot | 无 |
 
 ### 共同的 API
 以下 API 为 `Tooltip` 、`Popconfirm` 、`Popover` 共享的 API。

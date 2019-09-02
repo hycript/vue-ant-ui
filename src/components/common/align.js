@@ -20,13 +20,11 @@ export default {
         disabled: PropTypes.bool,
         monitorWindowResize: PropTypes.bool,
     },
-    created(){
+    mounted(){
         const { monitorWindowResize } = this;
         if(monitorWindowResize){
             this.startMonitorWindowResize();
         }
-    },
-    mounted(){
         this.forceAlign();
     },
     updated(){
@@ -39,14 +37,14 @@ export default {
         forceAlign(){
             const { disabled, align, target: getTarget } = this;
             if(disabled || !align) return;
-            let _nextTick = !this.aligned ? window.setTimeout : this.$nextTick;
-            // let _nextTick = window.setTimeout;
+            // let _nextTick = !this.aligned ? window.setTimeout : this.$nextTick;
+            let _nextTick = this.$nextTick;
             this.aligned = true;
             _nextTick(_ => {
                 const source = this.$el;
                 if(!source) return;
                 const target = getTarget();
-                // console.error('target', target, 'source', source);
+                console.error('target', target, 'source', source, align);
                 !!target && this.$emit('align', source, domAlign(source, target, align));
             });
             _nextTick = null;

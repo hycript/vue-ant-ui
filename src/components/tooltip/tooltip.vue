@@ -15,7 +15,7 @@
             <Popup :getPopupContainer="getPopupContainer">
                 <div v-on="$contentsListener" ref="contents" :class="classes">
                     <div :class="[`${prefixCls}-content`]">
-                        <slot name="contents">
+                        <slot name="contents" :show="show" :hide="hide" :visible="selfVisible">
                             <div :class="[`${prefixCls}-arrow`]"></div>
                             <div :class="[`${prefixCls}-inner`, overlayClassName || '']" :style="overlayStyle">
                                 <slot name="title">{{ title }}</slot>
@@ -37,8 +37,6 @@ import Align from '../common/align.js';
 import Popup from '../common/popup.js';
 import vTransition from '../transition/transition';
 import listener from '../common/listener';
-
-const isTouch = 'ontouchstart' in window ? true : false;
 
 export default {
     name: 'Tooltip',
@@ -87,9 +85,10 @@ export default {
             return !$slots.title && !title;
         },
         originStyle(){
-            const { selfPlacement, realPlacement: placement } = this;
+            let { selfPlacement, realPlacement: placement } = this;
             let originTop = '50%';
             let originLeft = '50%';
+            placement = placement || this.placement;
 
             if (placement.indexOf('top') >= 0 || placement.indexOf('Bottom') >= 0) {
                 originTop = '100%';
@@ -107,6 +106,10 @@ export default {
             };
         },
         $contentsListener(){
+            const { $isServer } = this;
+            if($isServer) return {};
+
+            const isTouch = 'ontouchstart' in window ? true : false;
             const downEvent = isTouch ? 'touchstart' : 'mousedown';
             return {
                 mouseenter: (e) => {
@@ -194,7 +197,7 @@ export default {
         },
         onAlign(source, domAlign){
             this.realPlacement = getPlacement.check(domAlign.points);
-            // console.log('onAlign', arguments, this.realPlacement);
+            // console.log('onAlign', this.realPlacement);
         },
         toggle(){
             this.selfVisible ? this.hide() : this.show();
@@ -229,6 +232,7 @@ export default {
         },
         registOutsideHandler(){
             if(this._listeners.length > 0) return;
+            const isTouch = 'ontouchstart' in window ? true : false;
             const downEvent = isTouch ? 'touchstart' : 'mousedown';
             this.registListener(window.document, downEvent, this.outsideHandler);
             if(this.selfTrigger.indexOf('contextmenu') > -1){
