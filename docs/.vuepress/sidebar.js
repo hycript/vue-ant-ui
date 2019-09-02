@@ -29,4 +29,13 @@ module.exports = [
             '/components/data-display/tooltip',
         ]
     },
+    {
+        title: 'Feedback',
+        // path: '/components',
+        collapsable: false,
+        sidebarDepth: 2,
+        children: [
+            '/components/feedback/popconfirm',
+        ]
+    }
 ]

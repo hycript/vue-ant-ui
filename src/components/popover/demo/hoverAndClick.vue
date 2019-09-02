@@ -6,7 +6,7 @@
                 <div>This is click content.</div>
                 <a @click="hide">Close</a>
             </div>
-            <Button style="width: 500px;">Hover and click / 悬停并单击</Button>
+            <Button>Hover and click / 悬停并单击</Button>
         </Popover>
     </Popover>
 </template>
