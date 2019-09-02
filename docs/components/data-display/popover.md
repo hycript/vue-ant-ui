@@ -80,7 +80,7 @@ trigger: `string` | `array`
 | content | 卡片内容 | string \| slot | 无 |
 | title | 卡片标题 | string \| slot | 无 |
 
-更多属性请参考 [Tooltip](./tooltip.html#API)。
+更多属性请参考 [Tooltip](./tooltip.html#api)。
 
 ## 注意
 
