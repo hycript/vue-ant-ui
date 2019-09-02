@@ -6,7 +6,7 @@ console.log('DIRNAME', DIRNAME);
 module.exports = {
     title: 'Vue-Ant-UI',
     description: '',
-    base: '/2018/vue-ant-ui/docs/.vuepress/dist/',
+    base: '/vue-ant-ui/',
     head: [
         ['link', { rel: 'icon', href: `/favicon.png` }],
     ],
