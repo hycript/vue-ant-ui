@@ -45,8 +45,8 @@
     <div class="code-body">
         <slot></slot>
         <div v-if="$slots && $slots.code" class="ico-wrapper">
-            <Tooltip title="code" :visible="false">
-                <span class="tooltip-title" slot="title">show code</span>
+            <Tooltip :visible="false">
+                <span class="tooltip-title" slot="title">{{ !visible ? 'show' : 'hide' }} code</span>
                 <div class="ico" :class="{ visible: visible}" @click="visible = !visible">
                     <img v-if="!visible" src="@/assets/code1.svg" alt="">
                     <img v-else class="visible" src="@/assets/code2.svg" alt="">
