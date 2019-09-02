@@ -14,8 +14,17 @@ module.exports = [
         collapsable: false,
         sidebarDepth: 2,
         children: [
-            '/components/icon',
-            '/components/button',
+            '/components/general/icon',
+            '/components/general/button',
+        ]
+    },
+    {
+        title: 'Navigation',
+        // path: '/components',
+        collapsable: false,
+        sidebarDepth: 2,
+        children: [
+            '/components/navigation/affix',
         ]
     },
     {

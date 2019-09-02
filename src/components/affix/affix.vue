@@ -13,10 +13,7 @@ import PropTypes from '~utils/vue-types';
 
 const EVENTS = [
     'resize',
-    'scroll',
-    // 'touchstart',
-    // 'touchmove',
-    // 'touchend',
+    // 'scroll',
     'pageshow',
     'load',
 ];
@@ -67,6 +64,12 @@ export default {
                 // Mock Event object.
                 this.updatePosition()
             })
+        },
+        offsetTop() {
+            this.updatePosition({});
+        },
+        offsetBottom() {
+            this.updatePosition({});
         },
     },
     beforeDestroy () {
@@ -139,6 +142,7 @@ export default {
             });
         },
         updatePosition(e = {}) {
+            console.log('updatePosition', e.type);
             let { offsetTop, offsetBottom, offset, target = this.getDefaultTarget } = this;
             const targetNode = target();
 
@@ -181,7 +185,7 @@ export default {
                     position: 'fixed',
                     top,
                     left,
-                    width,
+                    maxWidth: width,
                 };
                 this.setAffixStyle(e, affixStyle);
                 this.setPlaceholderStyle({
@@ -199,7 +203,7 @@ export default {
                     position: 'fixed',
                     bottom,
                     left,
-                    width,
+                    maxWidth: width,
                 };
                 this.setAffixStyle(e, affixStyle);
                 this.setPlaceholderStyle({
@@ -209,7 +213,7 @@ export default {
             } else {
                 const { affixStyle } = this;
                 if (e.type === 'resize' && affixStyle && affixStyle.position === 'fixed' && affixNode.offsetWidth) {
-                    this.setAffixStyle(e, { ...affixStyle, width: affixNode.offsetWidth });
+                    this.setAffixStyle(e, { ...affixStyle, maxWidth: affixNode.offsetWidth });
                 } else {
                     this.setAffixStyle(e, null);
                 }
@@ -229,23 +233,31 @@ export default {
             }
             return top;
         },
-        handleTagetNotWindow() {
+        handleTagetNotWindow(e) {
+            console.log('handleTagetNotWindow', e.type, this.affixStyle);
             const temp = this.affixStyle;
             let { offsetTop, offsetBottom, offset, target = this.getDefaultTarget } = this;
             if(temp) {
                 const targetNode = target();
-                temp['position'] = 'absolute';
+                // temp['position'] = 'absolute';
                 const targetOffsetTop = this.targetOffsetTop;
-                if(!temp['bottom']) {
+                const scrollTop = getScroll(targetNode, true);
+                const _scrollTop = getScroll(window, true);
+                const rect = targetNode.getBoundingClientRect();
+                // console.log('handleTagetNotWindow style top', this.affixStyle.top, 'scrollTop', scrollTop, 'targetOffsetTop', targetOffsetTop, '_scrollTop', _scrollTop);
+                // if(temp['bottom'] === undefined) {
+                if(offsetBottom === undefined){
                     offsetTop = typeof offsetTop === 'undefined' ? (offset ? offset : 0) : offsetTop;
-                    temp['top'] = `${offsetTop + targetOffsetTop}px`;
+                    // temp['top'] = `${offsetTop + targetOffsetTop}px`;
+                    temp['top'] = `${rect.top + offsetTop}px`;
                 } else {
                     offsetBottom = typeof offsetBottom === 'undefined' ? (offset ? offset : 0) : offsetBottom;
-                    const rect = targetNode.getBoundingClientRect();
-                    const { height } = this.placeholderStyle;
-                    const h = height.replace('px', '');
-                    temp['top'] = `${targetOffsetTop + rect.height - offsetBottom - h}px`;
-                    temp['bottom'] = undefined;
+                    const CH = document.body.clientHeight;
+                    // const { height } = this.placeholderStyle;
+                    // const h = height.replace('px', '');
+                    // temp['top'] = `${targetOffsetTop + rect.height - offsetBottom - h}px`;
+                    // temp['bottom'] = undefined;
+                    temp['bottom'] = `${CH - rect.bottom + offsetBottom}px`
                 }
             }
             this.affixStyle = temp;
@@ -258,11 +270,22 @@ export default {
             this.clearEventListeners(getTarget)
 
             EVENTS.forEach(eventName => {
-                target.addEventListener(eventName, this.updatePosition)
+                window.addEventListener(eventName, this.updatePosition);
+                if(!this.isWindow) {
+                    window.addEventListener(eventName, this.handleTagetNotWindow);
+                }
             });
+            target.addEventListener('scroll', this.updatePosition);
             if(!this.isWindow) {
                 window.addEventListener('scroll', this.handleTagetNotWindow);
+                // window.addEventListener('scroll', this.handleTagetNotWindow);
             }
+            /* if(!this.isWindow) {
+                EVENTS.forEach(eventName => {
+                    window.addEventListener(eventName, this.handleTagetNotWindow)
+                });
+                // window.addEventListener('scroll', this.handleTagetNotWindow);
+            } */
         },
         clearEventListeners (getTarget) {
             const target = getTarget();
@@ -270,8 +293,12 @@ export default {
                 return;
             }
             EVENTS.forEach(eventName => {
-                target.removeEventListener(eventName, this.updatePosition);
+                window.removeEventListener(eventName, this.updatePosition);
+                if(!this.isWindow){
+                    window.removeEventListener(eventName, this.handleTagetNotWindow);
+                }
             });
+            target.removeEventListener('scroll', this.updatePosition);
             if(!this.isWindow) {
                 window.removeEventListener('scroll', this.handleTagetNotWindow);
             }
