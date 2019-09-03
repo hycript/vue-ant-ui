@@ -3,6 +3,10 @@
 
 ## 设计理念
 
+<Code>
+<Demo></Demo>
+</Code>
+
 在多数业务情况下，Ant Design需要在设计区域内解决大量信息收纳的问题，因此在 12 栅格系统的基础上，我们将整个设计建议区域按照 24 等分的原则进行划分。
 
 划分之后的信息区块我们称之为『盒子』。建议横向排列的盒子数量最多四个，最少一个。『盒子』在整个屏幕上占比见上图。设计部分基于盒子的单位定制盒子内部的排版规则，以保证视觉层面的舒适感。
@@ -26,23 +30,58 @@ Flex 布局是基于 24 栅格来定义每一个『盒子』的宽度，但不�
 
 使用单一的一组 `Row` 和 `Col` 栅格组件，就可以创建一个基本的栅格系统，所有列（Col）必须放在 `Row` 内。
 
+<Code>
+<Basic></Basic>
+<Wrapper slot="code">
+<<< @/../src/components/grid/demo/basic.vue
+</Wrapper>
+</Code>
+
 ### Flex 对齐
 Flex 子元素垂直对齐。
+
+<Code>
+<FlexAlign></FlexAlign>
+<Wrapper slot="code">
+<<< @/../src/components/grid/demo/flex-align.vue
+</Wrapper>
+</Code>
 
 ### Flex 排序
 从堆叠到水平排列。
 
 通过 `Flex` 布局的 `Order` 来改变元素的排序。
 
+<Code>
+<FlexOrder></FlexOrder>
+<Wrapper slot="code">
+<<< @/../src/components/grid/demo/flex-order.vue
+</Wrapper>
+</Code>
+
 ### Flex 布局
 Flex 布局基础。
 
 使用 `row-flex` 定义 `flex` 布局，其子元素根据不同的值 `start` , `center` , `end` , `space-between` , `space-around` ,分别定义其在父节点里面的排版方式。
 
+<Code>
+<Flex></Flex>
+<Wrapper slot="code">
+<<< @/../src/components/grid/demo/flex.vue
+</Wrapper>
+</Code>
+
 ### 区块间隔
 栅格常常需要和间隔进行配合，你可以使用 `Row` 的 `gutter` 属性，我们推荐使用 `(16+8n)px` 作为栅格间隔。(n 是自然数)
 
 如果要支持响应式，可以写成 `{ xs: 8, sm: 16, md: 24, lg: 32 }` 。
+
+<Code>
+<Gutter></Gutter>
+<Wrapper slot="code">
+<<< @/../src/components/grid/demo/gutter.vue
+</Wrapper>
+</Code>
 
 
 ### 左右偏移
@@ -50,18 +89,46 @@ Flex 布局基础。
 
 使用 `offset` 可以将列向右侧偏。例如，`:offset="4"` 将元素向右侧偏移了 4 个列（column）的宽度。
 
+<Code>
+<Offset></Offset>
+<Wrapper slot="code">
+<<< @/../src/components/grid/demo/offset.vue
+</Wrapper>
+</Code>
+
 ### 其他属性的响应式
 `span` `pull` `push` `offset` `order` 属性可以通过内嵌到 `xs` `sm` `md` `lg` `xl` `xxl` 属性中来使用。
 
 其中 `:xs="6"` 相当于 `:xs="{ span: 6 }"`。
 
+<Code>
+<ResponsiveMore></ResponsiveMore>
+<Wrapper slot="code">
+<<< @/../src/components/grid/demo/responsive-more.vue
+</Wrapper>
+</Code>
+
 ### 响应式布局
 参照 Bootstrap 的 [响应式设计](http://getbootstrap.com/css/#grid-media-queries)，预设六个响应尺寸：`xs` `sm` `md` `lg` `xl` `xxl`。
+
+<Code>
+<Responsive></Responsive>
+<Wrapper slot="code">
+<<< @/../src/components/grid/demo/responsive.vue
+</Wrapper>
+</Code>
 
 ### 栅格排序
 列排序。
 
 通过使用 `push` 和 `pull` 类就可以很容易的改变列（column）的顺序。
+
+<Code>
+<Sort></Sort>
+<Wrapper slot="code">
+<<< @/../src/components/grid/demo/sort.vue
+</Wrapper>
+</Code>
 
 ### 栅格配置器
 可以简单配置几种等分栅格和间距。
@@ -94,3 +161,30 @@ Flex 布局基础。
 | xxl | `≥1600px` 响应式栅格，可为栅格数或一个包含其他属性的对象 | number\|object | - |
 
 响应式栅格的断点扩展自 [BootStrap 4 的规则](https://getbootstrap.com/docs/4.0/layout/overview/#responsive-breakpoints)（不包含链接里 `occasionally` 的部分)。
+
+<script>
+import Demo from '~comps/grid/demo/demo';
+import Basic from '~comps/grid/demo/basic';
+import FlexAlign from '~comps/grid/demo/flex-align';
+import FlexOrder from '~comps/grid/demo/flex-order';
+import Flex from '~comps/grid/demo/flex';
+import Gutter from '~comps/grid/demo/gutter';
+import Offset from '~comps/grid/demo/offset';
+import ResponsiveMore from '~comps/grid/demo/responsive-more';
+import Responsive from '~comps/grid/demo/responsive';
+import Sort from '~comps/grid/demo/sort';
+export default {
+    components: {
+        Demo,
+        Basic,
+        FlexAlign,
+        FlexOrder,
+        Flex,
+        Gutter,
+        Offset,
+        ResponsiveMore,
+        Responsive,
+        Sort,
+    }
+}
+</script>

@@ -66,6 +66,7 @@ export default {
             });
 
             return {
+                [`${prefixCls}`]: true,
                 [`${prefixCls}-${span}`]: span !== undefined,
                 [`${prefixCls}-order-${order}`]: order,
                 [`${prefixCls}-offset-${offset}`]: offset,

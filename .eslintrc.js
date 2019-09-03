@@ -60,5 +60,7 @@ module.exports = {
 
         "no-await-in-loop": 2,
         "import/no-webpack-loader-syntax": 0,
+
+        'vue/no-parsing-error': [2, { "x-invalid-end-tag": false }]
     }
 }
