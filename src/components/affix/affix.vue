@@ -10,7 +10,7 @@
 import { isEqual, isFunction } from '~utils/lodash';
 import getScroll from '~utils/getScroll';
 import PropTypes from '~utils/vue-types';
-import { setTimeout } from 'timers';
+import listener from '../common/listener';
 
 const EVENTS = [
     'resize',
@@ -21,6 +21,7 @@ const EVENTS = [
 
 export default {
     name: 'Affix',
+    mixins: [listener],
     data(){
         return {
             affixStyle: undefined,
@@ -69,9 +70,6 @@ export default {
         offsetBottom() {
             this.update();
         },
-    },
-    beforeDestroy () {
-        this.removeListeners();
     },
     activated(){
         this.initListeners();
@@ -289,30 +287,18 @@ export default {
             this.clearEventListeners(getTarget)
 
             EVENTS.forEach(eventName => {
-                window.addEventListener(eventName, this.updatePosition);
+                this.registListener(window, eventName, this.updatePosition);
                 if(!this.isWindow) {
-                    window.addEventListener(eventName, this.handleTagetNotWindow);
+                    this.registListener(window, eventName, this.handleTagetNotWindow);
                 }
             });
-            target.addEventListener('scroll', this.updatePosition);
+            this.registListener(target, 'scroll', this.updatePosition);
             if(!this.isWindow) {
-                window.addEventListener('scroll', this.handleTagetNotWindow);
+                this.registListener(window, 'scroll', this.handleTagetNotWindow);
             }
         },
         clearEventListeners (getTarget) {
-            EVENTS.forEach(eventName => {
-                window.removeEventListener(eventName, this.updatePosition);
-                if(!this.isWindow){
-                    window.removeEventListener(eventName, this.handleTagetNotWindow);
-                }
-            });
-            const target = getTarget();
-            if (target) {
-                target.removeEventListener('scroll', this.updatePosition);
-            }
-            if(!this.isWindow) {
-                window.removeEventListener('scroll', this.handleTagetNotWindow);
-            }
+            this.clearListener();
         },
     }
 }

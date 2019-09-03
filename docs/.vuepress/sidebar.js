@@ -19,6 +19,16 @@ module.exports = [
         ]
     },
     {
+        title: 'Layout',
+        // path: '/components',
+        collapsable: false,
+        sidebarDepth: 2,
+        children: [
+            '/components/layout/grid',
+            '/components/layout/layout',
+        ]
+    },
+    {
         title: 'Navigation',
         // path: '/components',
         collapsable: false,

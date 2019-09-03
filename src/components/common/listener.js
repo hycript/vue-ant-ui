@@ -15,10 +15,12 @@ export default {
             )
         },
         clearListener(){
-            this._listeners.forEach(listener => {
-                eventListner.off(listener);
-            });
-            this._listeners = [];
+            if(Array.isArray(this._listeners)){
+                this._listeners.forEach(listener => {
+                    eventListner.off(listener);
+                });
+                this._listeners = [];
+            }
         }
     },
 }
