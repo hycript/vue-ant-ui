@@ -142,7 +142,6 @@ export default {
             });
         },
         updatePosition(e = {}) {
-            console.log('updatePosition', e.type);
             let { offsetTop, offsetBottom, offset, target = this.getDefaultTarget } = this;
             const targetNode = target();
 
@@ -173,11 +172,11 @@ export default {
             }
 
             const targetRect = this.getTargetRect(targetNode);
-            const targetInnerHeight =
-            targetNode.innerHeight || targetNode.clientHeight;
+            const targetInnerHeight = targetNode.innerHeight || targetNode.clientHeight;
+
             if (scrollTop > elemOffset.top - offsetTop && offsetMode.top) {
                 // Fixed Top
-                const width = `${elemOffset.width}px`;
+                const width = `${elemSize.width}px`;
                 const height = `${elemSize.height}px`;
                 const top = `${targetRect.top + offsetTop}px`;
                 const left = `${targetRect.left + elemOffset.left}px`;
@@ -189,14 +188,14 @@ export default {
                 };
                 this.setAffixStyle(e, affixStyle);
                 this.setPlaceholderStyle({
-                    width,
+                    minWidth: width,
                     height,
                 });
             } else if (scrollTop < elemOffset.top + elemSize.height + offsetBottom - targetInnerHeight && offsetMode.bottom) {
                 // Fixed Bottom
                 const targetBottomOffet = targetNode === window ? 0 : (window.innerHeight - targetRect.bottom);
-                const width = elemOffset.width;
-                const height = `${elemOffset.height}px`;
+                const width = `${elemSize.width}px`;
+                const height = `${elemSize.height}px`;
                 const bottom = `${targetBottomOffet + offsetBottom}px`;
                 const left = `${targetRect.left + elemOffset.left}px`;
                 const affixStyle = {
@@ -207,22 +206,23 @@ export default {
                 };
                 this.setAffixStyle(e, affixStyle);
                 this.setPlaceholderStyle({
-                    width,
+                    minWidth: width,
                     height,
                 });
             } else {
-                const { affixStyle } = this;
+                /* const { affixStyle } = this;
                 if (e.type === 'resize' && affixStyle && affixStyle.position === 'fixed' && affixNode.offsetWidth) {
                     this.setAffixStyle(e, { ...affixStyle, maxWidth: affixNode.offsetWidth });
                 } else {
                     this.setAffixStyle(e, null);
-                }
+                } */
+                this.setAffixStyle(e, null);
                 this.setPlaceholderStyle(null);
             }
 
-            if (e.type === 'resize') {
+            /* if (e.type === 'resize') {
                 this.syncPlaceholderStyle(e);
-            }
+            } */
         },
         getTop(el) {
             let top = el.offsetTop;
@@ -234,7 +234,7 @@ export default {
             return top;
         },
         handleTagetNotWindow(e) {
-            console.log('handleTagetNotWindow', e.type, this.affixStyle);
+            console.log('handleTagetNotWindow');
             const temp = this.affixStyle;
             let { offsetTop, offsetBottom, offset, target = this.getDefaultTarget } = this;
             if(temp) {
@@ -244,7 +244,6 @@ export default {
                 const scrollTop = getScroll(targetNode, true);
                 const _scrollTop = getScroll(window, true);
                 const rect = targetNode.getBoundingClientRect();
-                // console.log('handleTagetNotWindow style top', this.affixStyle.top, 'scrollTop', scrollTop, 'targetOffsetTop', targetOffsetTop, '_scrollTop', _scrollTop);
                 // if(temp['bottom'] === undefined) {
                 if(offsetBottom === undefined){
                     offsetTop = typeof offsetTop === 'undefined' ? (offset ? offset : 0) : offsetTop;
@@ -278,14 +277,7 @@ export default {
             target.addEventListener('scroll', this.updatePosition);
             if(!this.isWindow) {
                 window.addEventListener('scroll', this.handleTagetNotWindow);
-                // window.addEventListener('scroll', this.handleTagetNotWindow);
             }
-            /* if(!this.isWindow) {
-                EVENTS.forEach(eventName => {
-                    window.addEventListener(eventName, this.handleTagetNotWindow)
-                });
-                // window.addEventListener('scroll', this.handleTagetNotWindow);
-            } */
         },
         clearEventListeners (getTarget) {
             const target = getTarget();

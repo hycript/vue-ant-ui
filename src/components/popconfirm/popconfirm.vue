@@ -47,7 +47,7 @@
 <script>
 import PropTypes from '~utils/vue-types';
 import Tooltip from '../tooltip/tooltip';
-import abstractTooltipProps from '../tooltip/abstractTooltipProps.js';
+import { abstractTooltipProps, triggerType } from '../tooltip/abstractTooltipProps.js';
 import Icon from '../icon/icon';
 import { buttonType } from '../button';
 import Button from '../button/button';
@@ -67,7 +67,7 @@ export default {
         prefixCls: PropTypes.string.def('ant-popover'),
         transitionName: PropTypes.string.def('zoom-big'),
         title: PropTypes.any,
-        trigger: abstractTooltipProps.trigger.def('click'),
+        trigger: PropTypes.oneOfType([triggerType, PropTypes.arrayOf(triggerType)]).def('click'),
         okText: PropTypes.string.def('确定'),
         okType: PropTypes.oneOf(buttonType).def('primary'),
         cancelText: PropTypes.string.def('取消'),

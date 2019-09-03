@@ -67,7 +67,6 @@ export default {
             this.$emit('afterClose');
         },
         close (e) {
-            console.log('tag close')
             this.$emit('close', e);
             if (e.defaultPrevented) return;
             this.$emit('input', false)

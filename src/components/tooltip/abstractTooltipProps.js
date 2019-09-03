@@ -4,7 +4,7 @@ const triggerType = PropTypes.oneOf(['hover', 'focus', 'click', 'contextmenu'])
 
 const placement = ['top', 'left', 'right', 'bottom', 'topLeft', 'topRight', 'bottomLeft', 'bottomRight', 'leftTop', 'leftBottom', 'rightTop', 'rightBottom'];
 
-export default {
+const abstractTooltipProps = {
     prefixCls: PropTypes.string.def('ant-tooltip'),
     trigger: PropTypes.oneOfType([triggerType, PropTypes.arrayOf(triggerType)]).def('hover'),
     visible: PropTypes.bool,
@@ -19,4 +19,12 @@ export default {
     getPopupContainer: PropTypes.any,
     arrowPointAtCenter: PropTypes.bool.def(false),
     autoAdjustOverflow: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).def(true),
+}
+
+export default abstractTooltipProps;
+
+export {
+    abstractTooltipProps,
+    triggerType,
+    placement,
 }
