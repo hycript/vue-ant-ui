@@ -10,6 +10,7 @@
 import { isEqual, isFunction } from '~utils/lodash';
 import getScroll from '~utils/getScroll';
 import PropTypes from '~utils/vue-types';
+import { setTimeout } from 'timers';
 
 const EVENTS = [
     'resize',
@@ -50,11 +51,8 @@ export default {
         },
     },
     mounted () {
-        const target = this.target || this.getDefaultTarget;
-        // Wait for parent component ref has its value
-        this.timeout = setTimeout(() => {
-            this.setTargetEventListeners(target)
-        })
+        this.initListeners();
+        setTimeout(this.update, 0);
     },
     watch: {
         target (val) {
@@ -62,23 +60,33 @@ export default {
                 this.clearEventListeners()
                 this.setTargetEventListeners(val)
                 // Mock Event object.
-                this.updatePosition()
+                this.update();
             })
         },
         offsetTop() {
-            this.updatePosition({});
+            this.update();
         },
         offsetBottom() {
-            this.updatePosition({});
+            this.update();
         },
     },
     beforeDestroy () {
-        const target = this.target || this.getDefaultTarget;
-        this.clearEventListeners(target)
-        clearTimeout(this.timeout)
-        // this.updatePosition.cancel()
+        this.removeListeners();
+    },
+    activated(){
+        this.initListeners();
+        setTimeout(this.update, 0);
+    },
+    deactivated(){
+        this.removeListeners();
     },
     methods: {
+        update(){
+            this.updatePosition({});
+            if(!this.isWindow){
+                this.handleTagetNotWindow({});
+            }
+        },
         getDefaultTarget() {
             return typeof window !== 'undefined' ? window : null;
         },
@@ -234,7 +242,6 @@ export default {
             return top;
         },
         handleTagetNotWindow(e) {
-            console.log('handleTagetNotWindow');
             const temp = this.affixStyle;
             let { offsetTop, offsetBottom, offset, target = this.getDefaultTarget } = this;
             if(temp) {
@@ -261,6 +268,19 @@ export default {
             }
             this.affixStyle = temp;
         },
+        initListeners(){
+            const target = this.target || this.getDefaultTarget;
+            // Wait for parent component ref has its value
+            this.timeout = setTimeout(() => {
+                this.setTargetEventListeners(target);
+            });
+        },
+        removeListeners(){
+            const target = this.target || this.getDefaultTarget;
+            this.clearEventListeners(target);
+            clearTimeout(this.timeout);
+            this.timeout = undefined;
+        },
         setTargetEventListeners (getTarget) {
             const target = getTarget();
             if (!target) {
@@ -280,17 +300,16 @@ export default {
             }
         },
         clearEventListeners (getTarget) {
-            const target = getTarget();
-            if (!target) {
-                return;
-            }
             EVENTS.forEach(eventName => {
                 window.removeEventListener(eventName, this.updatePosition);
                 if(!this.isWindow){
                     window.removeEventListener(eventName, this.handleTagetNotWindow);
                 }
             });
-            target.removeEventListener('scroll', this.updatePosition);
+            const target = getTarget();
+            if (target) {
+                target.removeEventListener('scroll', this.updatePosition);
+            }
             if(!this.isWindow) {
                 window.removeEventListener('scroll', this.handleTagetNotWindow);
             }
