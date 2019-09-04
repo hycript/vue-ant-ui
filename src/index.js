@@ -18,6 +18,7 @@ import Affix from './components/affix';
 import Popover from './components/popover';
 import Tooltip from './components/tooltip';
 import Tag from './components/tag';
+import Badge from './components/badge';
 
 //Feedback
 import Popconfirm from './components/popconfirm';
@@ -36,6 +37,7 @@ const components = {
     ...Popover,
     ...Tooltip,
     ...Tag,
+    ...Badge,
     //Feedback
     ...Popconfirm,
 }

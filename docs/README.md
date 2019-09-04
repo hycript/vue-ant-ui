@@ -10,6 +10,10 @@
 <Temp></Temp>
 </Code>
 
+<vBadge :count="100">
+    <Button>Badge</Button>
+</vBadge>
+
 <script>
 import Demo from '~comps/button/demo/demo';
 import Test from './.vuepress/test.md';
