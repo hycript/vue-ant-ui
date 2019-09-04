@@ -13,6 +13,10 @@
 <vBadge :count="100">
     <Button>Badge</Button>
 </vBadge>
+<vBadge>
+    <Icon slot="count" type="clock-circle" style="color: #f5222d" />
+    <Button>Badge</Button>
+</vBadge>
 
 <script>
 import Demo from '~comps/button/demo/demo';

@@ -4,14 +4,15 @@
     <template v-if="hasChildren">
         <slot></slot>
         <span v-if="!isHidden" :class="countClasses" :title="countTitle" :style="styleWithOffset">
-            <slot name="count">
-                {{ displayCount }}
-            </slot>
+            {{ displayCount }}
         </span>
     </template>
     <template v-else>
         <span :class="statusClasses" />
     </template>
+    <childComponent :class="[`${scrollNumberPrefixCls}-custom-component`]" :style="styleWithOffset">
+        <slot name="count"></slot>
+    </childComponent>
     <span :class="[`${prefixCls}-status-text`]">{{ text }}</span>
 </span>
 </template>
@@ -19,10 +20,14 @@
 import PropTypes from '~utils/vue-types';
 import { filterEmpty, isNumeric } from '~utils/props-util';
 import events from '../common/events';
+import childComponent from '../common/childComponent';
 
 export default {
     name: 'Badge',
     mixins: [events],
+    components: {
+        childComponent,
+    },
     props: {
         prefixCls: PropTypes.string.def('ant-badge'),
         /** Number to show in badge */
@@ -32,7 +37,7 @@ export default {
         overflowCount: PropTypes.number.def(99),
         /** whether to show red dot without number */
         dot: PropTypes.bool.def(false),
-        // scrollNumberPrefixCls: PropTypes.string.def('ant-scroll-number'),
+        scrollNumberPrefixCls: PropTypes.string.def('ant-scroll-number'),
         status: PropTypes.oneOf(['success', 'processing', 'default', 'error', 'warning']),
         text: PropTypes.string,
         offset: PropTypes.array,
@@ -99,8 +104,12 @@ export default {
         }
     },
     methods: {
+        log(e){
+            console.log('mouseenter', e)
+        },
         getNumberedDispayCount() {
             const { overflowCount, count } = this;
+            console.log('count', isNumeric(count), count, count > overflowCount, overflowCount);
             return isNumeric(count) && count > overflowCount ? `${overflowCount}+` : count;
         },
     }

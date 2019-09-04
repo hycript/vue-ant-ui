@@ -7,5 +7,5 @@ export function filterEmpty(children = []){
 }
 
 export function isNumeric(value){
-    return /^[-+]?\d(\.\d*)?$/.test(value);
+    return /^[-+]?\d*(\.\d*)?$/.test(value);
 }
