@@ -1,14 +1,26 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
-<div></div>
+<span :class="classes" :style="sizeStyle" v-on="$$listeners">
+    <img v-if="src && isImgExist" :src="src" :srcSet="srcSet" @error="handleImgLoadError" :alt="alt" />
+    <Icon v-else-if="icon" :type="icon"></Icon>
+    <span v-else :class="`${prefixCls}-string`" :style="stringStyle" ref="avatarChildren">
+        <slot></slot>
+    </span>
+</span>
 </template>
 <script>
 import PropTypes from '~utils/vue-types';
 import events from '../common/events';
+// import childComponent from '../common/childComponent';
 import Icon from '../icon/icon';
 
 export default {
     name: 'Avatar',
+    mixins: [events],
+    components: {
+        // childComponent,
+        Icon,
+    },
     data(){
         return {
             isImgExist: true,
@@ -38,14 +50,61 @@ export default {
             }
         },
         sizeStyle(){
-            const { size } = this;
-            return typeof size
+            let { size, icon } = this;
+            size = size >> 0;
+            return size ? {
+                width: `${size}px`,
+                height: `${size}px`,
+                lineHeight: `${size}px`,
+                fontSize: icon ? `${size / 2}px` : '18px',
+            } : '';
+        },
+        stringStyle(){
+            let { scale, size } = this;
+            size = size >> 0;
+            return {
+                transform: `scale(${scale}) translateX(-50%)`,
+                lineHeight: !!size ? `${size}px` : '',
+            }
         }
     },
     watch: {
         src() {
             this.isImgExist = true;
-            this.scale = 1;
+        },
+    },
+    mounted(){
+        console.log('this.$refs', this.$refs);
+        this.$nextTick(this.setScale);
+    },
+    updated(){
+        this.$nextTick(this.setScale);
+    },
+    methods: {
+        handleImgLoadError(e){
+            const { loadError } = this;
+            const errorFlag = typeof loadError === 'function' ? loadError() : undefined;
+            if (errorFlag !== false) {
+                this.isImgExist = false;
+            }
+            this.$emit('loadError');
+        },
+        setScale(){
+            const { avatarChildren: childrenNode } = this.$refs || {};
+            console.log('scale', childrenNode, this.$el);
+            if(!childrenNode || !this.$el) {
+                this.scale = 1;
+                return;
+            }
+            let scale;
+            const { offsetWidth } = childrenNode;
+            const avatarWidth = this.$el.getBoundingClientRect().width;
+            if (avatarWidth - 8 < offsetWidth) {
+                scale = (avatarWidth - 8) / offsetWidth;
+            } else {
+                scale = 1;
+            }
+            this.scale = scale;
         },
     }
 }

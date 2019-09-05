@@ -15,6 +15,7 @@ import Layout from './components/layout';
 import Affix from './components/affix';
 
 //Data Display
+import Avatar from './components/avatar';
 import Popover from './components/popover';
 import Tooltip from './components/tooltip';
 import Tag from './components/tag';
@@ -34,6 +35,7 @@ const components = {
     //navigation
     ...Affix,
     //Data Display
+    ...Avatar,
     ...Popover,
     ...Tooltip,
     ...Tag,
