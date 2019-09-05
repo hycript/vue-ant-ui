@@ -43,6 +43,7 @@ module.exports = [
         collapsable: false,
         sidebarDepth: 2,
         children: [
+            '/components/data-display/badge',
             '/components/data-display/popover',
             '/components/data-display/tag',
             '/components/data-display/tooltip',

@@ -1,19 +1,21 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
 <span v-on="$$listeners" :class="classes" :style="hasChildren && styleWithOffset">
-    <template v-if="hasChildren">
-        <slot></slot>
-        <span v-if="!isHidden" :class="countClasses" :title="countTitle" :style="styleWithOffset">
-            {{ displayCount }}
-        </span>
-    </template>
-    <template v-else>
+    <template  v-if="!hasChildren && status">
         <span :class="statusClasses" />
     </template>
-    <childComponent :class="[`${scrollNumberPrefixCls}-custom-component`]" :style="styleWithOffset">
-        <slot name="count"></slot>
-    </childComponent>
-    <span :class="[`${prefixCls}-status-text`]">{{ text }}</span>
+    <template v-else>
+        <slot></slot>
+        <vTransition :transitionName="`${prefixCls}-zoom`">
+            <childComponent v-if="$slots.count" :class="[`${scrollNumberPrefixCls}-custom-component`]" style="top: 0;" :style="styleWithOffset" :title="countTitle">
+                <slot name="count"></slot>
+            </childComponent>
+            <span v-else-if="!isHidden" :class="countClasses" :title="countTitle" :style="styleWithOffset">
+                {{ displayCount }}
+            </span>
+        </vTransition>
+    </template>
+    <span v-if="(!isHidden || status) && text" :class="[`${prefixCls}-status-text`]">{{ text }}</span>
 </span>
 </template>
 <script>
@@ -21,6 +23,7 @@ import PropTypes from '~utils/vue-types';
 import { filterEmpty, isNumeric } from '~utils/props-util';
 import events from '../common/events';
 import childComponent from '../common/childComponent';
+import vTransition from '../transition/transition';
 
 export default {
     name: 'Badge',
@@ -83,8 +86,9 @@ export default {
             } : {}, numberStyle);
         },
         countClasses(){
-            const { prefixCls, isDot, count, status } = this;
+            const { prefixCls, isDot, count, status, scrollNumberPrefixCls } = this;
             return {
+                [scrollNumberPrefixCls]: true,
                 [`${prefixCls}-dot`]: isDot,
                 [`${prefixCls}-count`]: !isDot,
                 [`${prefixCls}-multiple-words`]: !isDot && count && count.toString && count.toString().length > 1,
@@ -104,12 +108,8 @@ export default {
         }
     },
     methods: {
-        log(e){
-            console.log('mouseenter', e)
-        },
         getNumberedDispayCount() {
             const { overflowCount, count } = this;
-            console.log('count', isNumeric(count), count, count > overflowCount, overflowCount);
             return isNumeric(count) && count > overflowCount ? `${overflowCount}+` : count;
         },
     }
