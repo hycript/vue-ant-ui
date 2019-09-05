@@ -38,13 +38,25 @@ module.exports = [
         ]
     },
     {
+        title: 'Data Entry',
+        // path: '/components',
+        collapsable: false,
+        sidebarDepth: 2,
+        children: [
+            '/components/data-entry/switch',
+        ]
+    },
+    {
         title: 'Data Display',
         // path: '/components',
         collapsable: false,
         sidebarDepth: 2,
         children: [
+            '/components/data-display/avatar',
             '/components/data-display/badge',
+            '/components/data-display/card',
             '/components/data-display/popover',
+            '/components/data-display/tabs',
             '/components/data-display/tag',
             '/components/data-display/tooltip',
         ]

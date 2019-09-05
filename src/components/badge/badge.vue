@@ -6,7 +6,7 @@
     </template>
     <template v-else>
         <slot></slot>
-        <vTransition :transitionName="`${prefixCls}-zoom`">
+        <vTransition :appear="false" :transitionName="`${prefixCls}-zoom`">
             <childComponent v-if="$slots.count" :class="[`${scrollNumberPrefixCls}-custom-component`]" style="top: 0;" :style="styleWithOffset" :title="countTitle">
                 <slot name="count"></slot>
             </childComponent>
