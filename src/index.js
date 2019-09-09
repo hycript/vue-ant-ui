@@ -14,6 +14,9 @@ import Layout from './components/layout';
 //navigation
 import Affix from './components/affix';
 
+//Data Entry
+import Switch from './components/switch';
+
 //Data Display
 import Avatar from './components/avatar';
 import Popover from './components/popover';
@@ -34,6 +37,8 @@ const components = {
     ...Layout,
     //navigation
     ...Affix,
+    //Data Entry
+    ...Switch,
     //Data Display
     ...Avatar,
     ...Popover,
@@ -46,8 +51,8 @@ const components = {
 
 function install(Vue){
     Vue.use(directive);
-
     Object.keys(components).forEach(key => {
+        key = components[key].name || key;
         Vue.component(key, components[key]);
     })
 }

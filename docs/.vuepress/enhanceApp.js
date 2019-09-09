@@ -22,6 +22,8 @@ export default ({
     let components = { vLayout, vHeader, vFooter, vContent, vBadge, ...others, ContentSlotsDistributor };
     Object.keys(components).forEach(key => {
         if(!components[key]) return;
-        Vue.component(key, components[key]);
+        let component = components[key];
+        key = key.indexOf('v') === 0 ? key : component.name || key;
+        Vue.component(key, component);
     })
 }
