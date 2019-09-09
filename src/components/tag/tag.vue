@@ -22,6 +22,7 @@ export default {
     name: 'Tag',
     model: {
         prop: 'visible',
+        event: 'change',
     },
     components: {
         vTransition,
@@ -69,7 +70,7 @@ export default {
         close (e) {
             this.$emit('close', e);
             if (e.defaultPrevented) return;
-            this.$emit('input', false)
+            this.$emit('change', false)
             this.closed = true
         },
     }
