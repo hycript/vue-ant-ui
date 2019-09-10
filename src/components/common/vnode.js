@@ -36,22 +36,43 @@ const stringifyClassData = (classData) => {
     return classData;
 }
 
+const mergeListeners = (cdata = {}, odata = {}) => {
+    Object.keys(odata).forEach(key => {
+        let clistener = cdata[key];
+        let olistener = odata[key];
+        if(!clistener){
+            cdata[key] = olistener
+        }else{
+            cdata[key] = function(...params){
+                olistener(...params);
+                clistener(...params);
+            }
+        }
+    })
+    return cdata;
+}
+
 export default {
     functional: true,
     render(h, ctx) {
-        let { attrs, ...otherData } = ctx.data;
+        let { attrs = {}, ...otherData } = ctx.data;
         let { vnodes: _vnodes, ...otherAttrs } = attrs;
 
         let data = {
             ...otherData,
         };
         Object.keys(otherAttrs) > 0 && (data[attrs] = otherAttrs);
-
         let keys = Object.keys(data);
 
-        keys.length > 0 && ctx.props.vnodes.forEach(vnode => {
-            // Object.assign(vnode.data, data);
-            if (!vnode.data) return;
+        let vnodes = ctx.props.vnodes && ctx.props.vnodes.length > 0 ? ctx.props.vnodes : ctx.children;
+
+        console.log(ctx, vnodes);
+
+        keys.length > 0 && vnodes.forEach(vnode => {
+            if(!vnode || !vnode.tag || (vnode.text && vnode.text.trim() !== '')) return;
+
+            vnode.data = vnode.data || {};
+
             let _tempKey = {};
             let _keys = Object.keys(vnode.data).concat(keys).filter(key => {
                 if(!_tempKey[key]){
@@ -60,40 +81,40 @@ export default {
                 }
             });
             _keys.forEach(key => {
-                let _odata = vnode.data[key];
-                let _adata = data[key];
-                if (!_adata) return;
+                let cdata = vnode.data[key];
+                let odata = data[key];
+                if (!odata) return;
 
-                if(key === 'style'){
-                    _odata = parseStyleText(_odata);
-                    _adata = parseStyleText(_adata);
-                }else if(key === 'class'){
-                    console.log('_class', _odata, _adata);
-                    _odata = stringifyClassData(_odata);
-                    _adata = stringifyClassData(_adata);
-                }
-
-                let _type = is(_odata || _adata);
-                if(_type !== is(_adata)){
-                    vnode.data[key] = _adata;
+                switch(key){
+                case 'style':
+                    cdata = parseStyleText(cdata);
+                    odata = parseStyleText(odata);
+                    break;
+                case 'class':
+                    cdata = stringifyClassData(cdata);
+                    odata = stringifyClassData(odata);
+                    break;
+                case 'on':
+                    vnode.data[key] = mergeListeners(cdata, odata);
                     return;
                 }
 
+                let _type = is(cdata || odata);
+                if(_type !== is(odata)) return;
+
                 switch (_type) {
                 case 'string':
-                    vnode.data[key] = (_odata || '') + ' ' + _adata;
+                    vnode.data[key] =  `${odata} ${cdata || ''}`;
                     break;
                 case 'array':
-                    vnode.data[key] = (_odata || []).concat(_adata);
+                    vnode.data[key] = odata.concat(cdata || []);
                     break;
                 case 'object':
-                    vnode.data[key] = Object.assign(_odata || {}, _adata);
+                    vnode.data[key] = Object.assign(cdata || {}, odata);
                     break;
-                default:
-                    vnode.data[key] = _adata;
                 }
             })
         })
-        return ctx.props.vnodes;
+        return vnodes;
     }
 }
