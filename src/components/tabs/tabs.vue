@@ -1,7 +1,7 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
 <div :class="classes" v-on="$$listeners">
-    <TabBar>
+    <!-- <TabBar>
         <span slot="extraContent" v-if="!hideAdd">
             <Icon type="plus" :class="`${prefixCls}-new-tab`" @click="createNewTab" />
             <slot name="tabBarExtraContent"></slot>
@@ -9,21 +9,29 @@
         <div slot="extraContent" v-else-if="$slots.tabBarExtraContent" :class="`${prefixCls}-extra-content`">
             <slot name="tabBarExtraContent"></slot>
         </div>
-    </TabBar>
+    </TabBar> -->
+    <TabContent :class="contentClasses" :animated="tabPaneAnimated" animatedWithMargin>
+        <slot></slot>
+    </TabContent>
 </div>
 </template>
 <script>
 import PropTypes from '~utils/vue-types';
 import events from '../common/events';
-import TabBar from './tabBar';
+import TabBar from './lib/TabBar';
+import TabContent from './lib/TabContent';
 
 export default {
     name: 'Tabs',
     mixins: [events],
     components: {
-        TabBar,
+        // TabBar,
+        TabContent,
     },
     exceptListeners: ['change', 'scroll'],
+    inject: [
+        'activeKey'
+    ],
     model: {
         prop: 'activeKey',
         event: 'change',
@@ -39,13 +47,13 @@ export default {
         type: PropTypes.oneOf(['line', 'card', 'editable-card']),
         tabPosition: PropTypes.oneOf(['top', 'right', 'bottom', 'left']).def('top'),
         size: PropTypes.oneOf(['default', 'small', 'large']),
-        animated: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+        animated: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).def(true),
         tabBarGutter: PropTypes.number,
         renderTabBar: PropTypes.func,
     },
     computed: {
         classes(){
-            const { prefixCls, tabPosition, size, type, animated } = this;
+            const { prefixCls, tabPosition, size, type = 'line', animated } = this;
 
             let tabPaneAnimated = typeof animated === 'object' ? animated.tabPane : animated;
             // card tabs should not have animation
@@ -62,6 +70,22 @@ export default {
                 [`${prefixCls}-${type}`]: true,
                 [`${prefixCls}-no-animation`]: !tabPaneAnimated,
             }
+        },
+        contentClasses(){
+            const { prefixCls, tabPosition, type = 'line' } = this;
+            return {
+                [`${prefixCls}-${tabPosition}-content`]: true,
+                [`${prefixCls}-card-content`]: type.indexOf('card') >= 0,
+            };
+        },
+        tabPaneAnimated(){
+            const { animated, type = 'line', $options } = this;
+            const { propsData } = $options;
+            let tabPaneAnimated = typeof animated === 'object' ? animated.tabPane : animated;
+            if (type !== 'line') {
+                tabPaneAnimated = 'animated' in propsData ? tabPaneAnimated : false;
+            }
+            return tabPaneAnimated;
         }
     },
     mounted(){

@@ -1,21 +1,21 @@
 <style></style>
 <template>
 <div role="tablist" :class="classes" tabIndex="0" @keydown="onKeyDown">
-    <childComponent key="extra" :style="tabBarExtraContentStyle">
+    <vnode key="extra" :style="tabBarExtraContentStyle">
         <slot name="extraContent"></slot>
-    </childComponent>
-    <childComponent key="content">
+    </vnode>
+    <vnode key="content">
         <slot></slot>
-    </childComponent>
+    </vnode>
 </div>
 </template>
 <script>
 import PropTypes from '~utils/vue-types';
-import childComponent from '../common/childComponent';
+import vnode from '../../common/vnode';
 
 export default {
     components: {
-        childComponent,
+        vnode,
     },
     props: {
         prefixCls: PropTypes.string.def('ant-tabs'),
