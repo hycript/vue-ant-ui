@@ -11,7 +11,6 @@
 <script>
 import PropTypes from '~utils/vue-types';
 import events from '../common/events';
-// import childComponent from '../common/childComponent';
 import Icon from '../icon/icon';
 
 export default {
@@ -74,7 +73,6 @@ export default {
         },
     },
     mounted(){
-        console.log('this.$refs', this.$refs);
         this.$nextTick(this.setScale);
     },
     updated(){
@@ -91,7 +89,6 @@ export default {
         },
         setScale(){
             const { avatarChildren: childrenNode } = this.$refs || {};
-            console.log('scale', childrenNode, this.$el);
             if(!childrenNode || !this.$el) {
                 this.scale = 1;
                 return;
