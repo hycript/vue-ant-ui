@@ -17,7 +17,6 @@ export default {
     name: 'Avatar',
     mixins: [events],
     components: {
-        // childComponent,
         Icon,
     },
     data(){

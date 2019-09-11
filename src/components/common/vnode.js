@@ -66,12 +66,15 @@ export default {
 
         let vnodes = ctx.props.vnodes && ctx.props.vnodes.length > 0 ? ctx.props.vnodes : ctx.children;
 
-        console.log(ctx, vnodes);
+        // console.error('.vuepress vnode', ctx, vnodes, vnodes[0] && Object.keys(vnodes[0].data));
 
-        keys.length > 0 && vnodes.forEach(vnode => {
+        //keys.length > 0 &&
+        vnodes.forEach(vnode => {
             if(!vnode || !vnode.tag || (vnode.text && vnode.text.trim() !== '')) return;
 
-            vnode.data = vnode.data || {};
+            vnode.data = Object.assign({}, vnode.data, { slot: data.slot });
+
+            if(keys.length === 0) return;
 
             let _tempKey = {};
             let _keys = Object.keys(vnode.data).concat(keys).filter(key => {
@@ -83,7 +86,8 @@ export default {
             _keys.forEach(key => {
                 let cdata = vnode.data[key];
                 let odata = data[key];
-                if (!odata) return;
+
+                if (!odata || key === 'slot') return;
 
                 switch(key){
                 case 'style':
@@ -104,7 +108,7 @@ export default {
 
                 switch (_type) {
                 case 'string':
-                    vnode.data[key] =  `${odata} ${cdata || ''}`;
+                    vnode.data[key] = `${odata} ${cdata || ''}`.trim();
                     break;
                 case 'array':
                     vnode.data[key] = odata.concat(cdata || []);

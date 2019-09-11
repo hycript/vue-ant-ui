@@ -7,9 +7,9 @@
     <template v-else>
         <slot></slot>
         <vTransition :appear="false" :transitionName="`${prefixCls}-zoom`">
-            <childComponent v-if="$slots.count" :class="[`${scrollNumberPrefixCls}-custom-component`]" style="top: 0;" :style="styleWithOffset" :title="countTitle">
+            <vnode v-if="$slots.count" :class="[`${scrollNumberPrefixCls}-custom-component`]" style="top: 0;" :style="styleWithOffset" :title="countTitle">
                 <slot name="count"></slot>
-            </childComponent>
+            </vnode>
             <span v-else-if="!isHidden" :class="countClasses" :title="countTitle" :style="styleWithOffset">
                 {{ displayCount }}
             </span>
@@ -22,14 +22,14 @@
 import PropTypes from '~utils/vue-types';
 import { filterEmpty, isNumeric } from '~utils/props-util';
 import events from '../common/events';
-import childComponent from '../common/childComponent';
+import vnode from '../common/vnode';
 import vTransition from '../transition/transition';
 
 export default {
     name: 'Badge',
     mixins: [events],
     components: {
-        childComponent,
+        vnode,
     },
     props: {
         prefixCls: PropTypes.string.def('ant-badge'),
