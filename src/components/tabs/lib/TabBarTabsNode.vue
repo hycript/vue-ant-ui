@@ -1,37 +1,48 @@
 <style lang="less"></style>
 <template>
 <div>
-    <div v-for="panel in panels" :key="panel.key"
-        :class="[activeKey === panel.key ? `${prefixCls}-tab-active` : '', `${prefixCls}-tab`, panel.disabled || panel.disabled === '' ?  `${prefixCls}-tab-disabled` : '']"
+    <div v-for="(panel, index) in panels" :key="panel.key"
+        :class="getClasses(panel)"
         role="tab" :aria-disabled="panel.disabled || panel.disabled === '' ? 'true' : 'false'"
         :aria-selected="activeKey === panel.key ? 'true' : 'false'"
-        :style="getTabStyles(index)"
+        :style="getTabStyles(panel, index)"
         @click="click(panel)"
     >
-        {{ panel.tab }}
+        <div :class="panel.closable ? undefined : `${prefixCls}-tab-unclosable`">
+            <vnode v-if="panel.getTabNode" :vnodes="panel.getTabNode()"></vnode>
+            <template v-else><Icon v-if="panel.icon" :type="panel.icon"/>{{ panel.tab }}</template>
+            <Icon v-if="panel.closable" type="close" :class="`${prefixCls}-close-x`" @click="void 0"/>
+        </div>
     </div>
 </div>
 </template>
 <script>
 import PropTypes from '~utils/vue-types';
+import vnode from '../../common/vnode';
 
 export default {
     name: 'TabBarTabsNode',
+    components: {
+        vnode,
+    },
+    inject: ['isVertical', 'panels'],
     props: {
+        prefixCls: PropTypes.string.def('ant-tabs'),
         activeKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         panels: PropTypes.any.def([]), //props of pane; { key, tab }
-        prefixCls: PropTypes.string.def(''),
         tabBarGutter: PropTypes.any.def(null),
         tabPosition: PropTypes.string,
     },
-    computed: {
-        isVertical(){
-            const { tabPosition } = this;
-            return tabPosition === 'left' || tabPosition === 'right';
-        },
-    },
     methods: {
-        getTabStyles(index){
+        getClasses(panel){
+            const { prefixCls, activeKey } = this;
+            return {
+                [`${prefixCls}-tab`]: true,
+                [`${prefixCls}-tab-active`]: activeKey === panel.key,
+                [`${prefixCls}-tab-disabled`]: panel.disabled || panel.disabled === '',
+            }
+        },
+        getTabStyles(panel, index){
             const { isVertical, panels, tabBarGutter } = this;
             let gutter = tabBarGutter && index === panels.length - 1 ? 0 : tabBarGutter;
             gutter = typeof gutter === 'number' ? `${gutter}px` : gutter;

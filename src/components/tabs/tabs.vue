@@ -1,15 +1,16 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
 <div :class="classes" v-on="$$listeners">
-    <!-- <TabBar>
-        <span slot="extraContent" v-if="!hideAdd">
-            <Icon type="plus" :class="`${prefixCls}-new-tab`" @click="createNewTab" />
-            <slot name="tabBarExtraContent"></slot>
-        </span>
-        <div slot="extraContent" v-else-if="$slots.tabBarExtraContent" :class="`${prefixCls}-extra-content`">
-            <slot name="tabBarExtraContent"></slot>
-        </div>
-    </TabBar> -->
+    <TabBar>
+        <slot slot="tabBarExtraContent" name="tabBarExtraContent"></slot>
+    </TabBar>
+    <!-- <span slot="extraContent" v-if="!hideAdd">
+        <Icon type="plus" :class="`${prefixCls}-new-tab`" @click="createNewTab" />
+        <slot name="tabBarExtraContent"></slot>
+    </span>
+    <div slot="extraContent" v-else-if="$slots.tabBarExtraContent" :class="`${prefixCls}-extra-content`">
+        <slot name="tabBarExtraContent"></slot>
+    </div> -->
     <TabContent :class="contentClasses" :animated="tabPaneAnimated" animatedWithMargin>
         <slot></slot>
     </TabContent>
@@ -20,21 +21,34 @@ import PropTypes from '~utils/vue-types';
 import events from '../common/events';
 import TabBar from './lib/TabBar';
 import TabContent from './lib/TabContent';
+import CONST from './const';
+import isFlexSupported from '../_util/isFlexSupported';
 
 export default {
     name: 'Tabs',
     mixins: [events],
     components: {
-        // TabBar,
+        TabBar,
         TabContent,
     },
     exceptListeners: ['change', 'scroll'],
-    inject: [
-        'activeKey'
-    ],
+    provide: function(){
+        return {
+            activeKey: this.selfActiveKey,
+            activeIndex: this.activeIndex,
+            isVertical: this.isVertical,
+            panels: this.panels,
+        }
+    },
     model: {
         prop: 'activeKey',
         event: 'change',
+    },
+    data(){
+        return {
+            selfActiveKey: this.activeKey || this.defaultActiveKey,
+            panels: [],
+        }
     },
     props: {
         prefixCls: PropTypes.string.def('ant-tabs'),
@@ -53,11 +67,11 @@ export default {
     },
     computed: {
         classes(){
-            const { prefixCls, tabPosition, size, type = 'line', animated } = this;
+            const { prefixCls, tabPosition, size, type = CONST.LINE, animated } = this;
 
             let tabPaneAnimated = typeof animated === 'object' ? animated.tabPane : animated;
             // card tabs should not have animation
-            if (type !== 'line') {
+            if (type !== CONST.LINE) {
                 tabPaneAnimated = !!animated ? tabPaneAnimated : false;
             }
 
@@ -69,61 +83,103 @@ export default {
                 [`${prefixCls}-card`]: type.indexOf('card') >= 0,
                 [`${prefixCls}-${type}`]: true,
                 [`${prefixCls}-no-animation`]: !tabPaneAnimated,
+                'no-flex': !isFlexSupported(),
             }
         },
+        isVertical(){
+            const { tabPosition } = this;
+            return tabPosition === 'left' || tabPosition === 'right';
+        },
         contentClasses(){
-            const { prefixCls, tabPosition, type = 'line' } = this;
+            const { prefixCls, tabPosition, type = CONST.LINE } = this;
             return {
                 [`${prefixCls}-${tabPosition}-content`]: true,
                 [`${prefixCls}-card-content`]: type.indexOf('card') >= 0,
             };
         },
         tabPaneAnimated(){
-            const { animated, type = 'line', $options } = this;
+            const { animated, type = CONST.LINE, $options } = this;
             const { propsData } = $options;
             let tabPaneAnimated = typeof animated === 'object' ? animated.tabPane : animated;
-            if (type !== 'line') {
+            if (type !== CONST.LINE) {
                 tabPaneAnimated = 'animated' in propsData ? tabPaneAnimated : false;
             }
             return tabPaneAnimated;
+        },
+        activeIndex(){
+            const { selfActiveKey } = this;
+            let index = -1;
+            this.panels.forEach((pane, i) => {
+                if(pane.key === selfActiveKey){
+                    index = i;
+                    return false;
+                }
+            })
+            return index;
+        }
+    },
+    watch: {
+        '$slots.default': {
+            handler(val){
+                console.error('watch', val);
+                let panels = [];
+                const { animated, type = CONST.LINE } = this;
+                const tabPanes = this.$slots.default || [];
+                const defaultCloseable = type === CONST.EDITABLE_CARD;
+
+                tabPanes.forEach(pane => {
+                    if(!pane.tag || !pane.data) return;
+                    const { componentOptions, data } = pane;
+                    const { key } = data; //pane.key
+                    const { propsData, children, disabled } = componentOptions;
+                    const { tab, closable = defaultCloseable, icon } = propsData;
+                    const tabNodes = children.filter(child => {
+                        return child.data && child.data.slot === 'tab';
+                    })
+                    panels.push({
+                        key,
+                        tab,
+                        icon,
+                        closable: !defaultCloseable ? defaultCloseable : closable,
+                        disabled,
+                        getTabNode: tabNodes.length ? function(){
+                            return tabNodes;
+                        } : undefined,
+                    })
+                })
+                this.panels = panels;
+            },
+            immediate: true,
+        },
+        panels(val, old){
+            // change selfActive;
         }
     },
     mounted(){
-
+        console.error('tabs', this);
     },
     methods: {
-        createNewTab(){
-
+        removeTab(targetKey, e) {
+            e.stopPropagation();
+            if (!targetKey) {
+                return;
+            }
+            this.$emit('edit', targetKey, 'remove');
         },
-        onTabClick(){
-
+        handleChange(activeKey) {
+            this.$emit('change', activeKey);
         },
-        onNavKeyDown(){
-
+        createNewTab(targetKey) {
+            this.$emit('edit', targetKey, 'add');
         },
-        onScroll(){
-
+        onTabClick(val) {
+            this.$emit('tabClick', val);
         },
-        setSentinelStart(){
-
+        onPrevClick(val) {
+            this.$emit('prevClick', val);
         },
-        setSentinelEnd(){
-
-        },
-        setPanelSentinelStart(){
-
-        },
-        setPanelSentinelEnd(){
-
-        },
-        setActiveKey(){
-
-        },
-        getNextActiveKey(){
-
-        },
-        updateSentinelContext(){
-
+        onNextClick(val) {
+            this.$emit('nextClick', val);
         },
     }
 }

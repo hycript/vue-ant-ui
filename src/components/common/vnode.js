@@ -55,8 +55,8 @@ const mergeListeners = (cdata = {}, odata = {}) => {
 export default {
     functional: true,
     render(h, ctx) {
-        let { attrs = {}, ...otherData } = ctx.data;
-        let { vnodes: _vnodes, ...otherAttrs } = attrs;
+        let { attrs = {}, slot, key, ...otherData } = ctx.data;
+        let { vnodes: _vnodes, slot: _slot, ...otherAttrs } = attrs;
 
         let data = {
             ...otherData,
@@ -67,12 +67,13 @@ export default {
         let vnodes = ctx.props.vnodes && ctx.props.vnodes.length > 0 ? ctx.props.vnodes : ctx.children;
 
         // console.error('.vuepress vnode', ctx, vnodes, vnodes[0] && Object.keys(vnodes[0].data));
-
+        if(!vnodes || vnodes.length === 0) return undefined;
         //keys.length > 0 &&
         vnodes.forEach(vnode => {
             if(!vnode || !vnode.tag || (vnode.text && vnode.text.trim() !== '')) return;
 
-            vnode.data = Object.assign({}, vnode.data, { slot: data.slot });
+            vnode.data = Object.assign({}, vnode.data, { slot });
+            vnode.key = key || vnode.key;
 
             if(keys.length === 0) return;
 

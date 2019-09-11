@@ -55,8 +55,8 @@ const mergeListeners = (cdata = {}, odata = {}) => {
 export default {
     functional: true,
     render(h, ctx) {
-        let { attrs = {}, ...otherData } = ctx.data;
-        let { vnodes: _vnodes, ...otherAttrs } = attrs;
+        let { attrs = {}, slot, key, ...otherData } = ctx.data;
+        let { vnodes: _vnodes, slot: _slot, ...otherAttrs } = attrs;
 
         let data = {
             ...otherData,
@@ -68,11 +68,13 @@ export default {
 
         console.error('.vuepress vnode', ctx, vnodes, vnodes[0] && Object.keys(vnodes[0].data));
 
+        if(!vnodes || vnodes.length === 0) return undefined;
         //keys.length > 0 &&
         vnodes.forEach(vnode => {
             if(!vnode || !vnode.tag || (vnode.text && vnode.text.trim() !== '')) return;
 
-            vnode.data = Object.assign({}, vnode.data, { slot: data.slot });
+            vnode.data = Object.assign({}, vnode.data, { slot });
+            vnode.key = key || vnode.key;
 
             if(keys.length === 0) return;
 
@@ -90,17 +92,17 @@ export default {
                 if (!odata || key === 'slot') return;
 
                 switch(key){
-                    case 'style':
-                        cdata = parseStyleText(cdata);
-                        odata = parseStyleText(odata);
-                        break;
-                    case 'class':
-                        cdata = stringifyClassData(cdata);
-                        odata = stringifyClassData(odata);
-                        break;
-                    case 'on':
-                        vnode.data[key] = mergeListeners(cdata, odata);
-                        return;
+                case 'style':
+                    cdata = parseStyleText(cdata);
+                    odata = parseStyleText(odata);
+                    break;
+                case 'class':
+                    cdata = stringifyClassData(cdata);
+                    odata = stringifyClassData(odata);
+                    break;
+                case 'on':
+                    vnode.data[key] = mergeListeners(cdata, odata);
+                    return;
                 }
 
                 let _type = is(cdata || odata);

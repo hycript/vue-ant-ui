@@ -1,21 +1,24 @@
 <style></style>
 <template>
-<div role="tablist" :class="classes" tabIndex="0" @keydown="onKeyDown">
-    <vnode key="extra" :style="tabBarExtraContentStyle">
-        <slot name="extraContent"></slot>
+<div role="tablist" :class="classes" tabIndex="0"> <!--  @keydown="onKeyDown" -->
+    <vnode v-if="topOrBottom" key="extra" :style="tabBarExtraContentStyle">
+        <slot name="tabBarExtraContent"></slot>
     </vnode>
-    <vnode key="content">
-        <slot></slot>
+    <ScrollableTabBarNode v-bind="{ ...$props }" v-if="topOrBottom" key="content"></ScrollableTabBarNode>
+    <vnode v-if="!topOrBottom" key="extra" :style="tabBarExtraContentStyle">
+        <slot name="tabBarExtraContent"></slot>
     </vnode>
 </div>
 </template>
 <script>
 import PropTypes from '~utils/vue-types';
 import vnode from '../../common/vnode';
+import ScrollableTabBarNode from './ScrollableTabBarNode';
 
 export default {
     components: {
         vnode,
+        ScrollableTabBarNode,
     },
     props: {
         prefixCls: PropTypes.string.def('ant-tabs'),

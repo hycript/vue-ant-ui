@@ -13,7 +13,7 @@
         </vTransition>
         <!-- {{ $slots.icon | log }} -->
         <vTransition>
-            <vnode class="hi" v-if="visible" slot="default" :vnodes="$slots.icon">
+            <vnode key="aaa" class="hi" v-if="visible" slot="default" :vnodes="$slots.icon">
                 <!-- <slot name="icon"></slot> -->
                 <!-- <Icon type="clock-circle" style="color: #f5222d" /> -->
             </vnode>
