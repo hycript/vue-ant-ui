@@ -1,20 +1,27 @@
 <style lang="less"></style>
 <template>
 <div :class="classes" :style="contentStyles">
-    <slot></slot>
+    <vnode :destroyInactiveTabPane="true" :active="true" > <!-- :propGenerators="{ active: isActive }"-->
+        <slot></slot>
+    </vnode>
 </div>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../../_util/vue-types';
+import vnode from '../../common/vnode';
 
 export default {
-    name: 'vTabContent',
+    name: 'TabContent',
+    components: {
+        vnode,
+    },
     props: {
         prefixCls: PropTypes.string.def('ant-tabs'),
         animated: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
         animatedWithMargin: PropTypes.bool.def(true),
         activeKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         tabPosition: PropTypes.oneOf(['top', 'right', 'bottom', 'left']).def('top'),
+        destroyInactiveTabPane: PropTypes.bool.def(false),
     },
     computed: {
         classes(){
@@ -32,6 +39,11 @@ export default {
         }
     },
     methods: {
+        isActive(vnode, data){
+            const { activeKey } = this;
+            console.error('vnode', vnode.key, activeKey, activeKey === vnode.key)
+            return activeKey === vnode.key;
+        }
     }
 }
 </script>

@@ -1,24 +1,20 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
 <div :class="classes" v-on="$$listeners">
-    <TabBar>
-        <slot slot="tabBarExtraContent" name="tabBarExtraContent"></slot>
-    </TabBar>
-    <!-- <span slot="extraContent" v-if="!hideAdd">
-        <Icon type="plus" :class="`${prefixCls}-new-tab`" @click="createNewTab" />
-        <slot name="tabBarExtraContent"></slot>
-    </span>
-    <div slot="extraContent" v-else-if="$slots.tabBarExtraContent" :class="`${prefixCls}-extra-content`">
-        <slot name="tabBarExtraContent"></slot>
-    </div> -->
-    <TabContent :class="contentClasses" :animated="tabPaneAnimated" animatedWithMargin>
-        <slot></slot>
-    </TabContent>
+    <vnode :vnodesReverse="tabPosition === 'bottom'">
+        <TabBar key="tabBar" v-bind="{ ...$props, activeKey: selfActiveKey, activeIndex, panels, isVertical }" :style="tabBarStyle">
+            <slot slot="tabBarExtraContent" name="tabBarExtraContent"></slot>
+        </TabBar>
+        <TabContent key="tabContent" v-bind="{ ...$props, activeKey: selfActiveKey, activeIndex, isVertical }" :class="contentClasses" :animated="tabPaneAnimated" animatedWithMargin>
+            <slot></slot>
+        </TabContent>
+    </vnode>
 </div>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../_util/vue-types';
 import events from '../common/events';
+import vnode from '../common/vnode';
 import TabBar from './lib/TabBar';
 import TabContent from './lib/TabContent';
 import CONST from './const';
@@ -28,18 +24,11 @@ export default {
     name: 'Tabs',
     mixins: [events],
     components: {
+        vnode,
         TabBar,
         TabContent,
     },
     exceptListeners: ['change', 'scroll'],
-    provide: function(){
-        return {
-            activeKey: this.selfActiveKey,
-            activeIndex: this.activeIndex,
-            isVertical: this.isVertical,
-            panels: this.panels,
-        }
-    },
     model: {
         prop: 'activeKey',
         event: 'change',
@@ -56,7 +45,7 @@ export default {
         defaultActiveKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         hideAdd: PropTypes.bool.def(false),
         tabBarStyle: PropTypes.object,
-        tabBarExtraContent: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func]),
+        // tabBarExtraContent: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.func]), // ***slot***
         destroyInactiveTabPane: PropTypes.bool.def(false),
         type: PropTypes.oneOf(['line', 'card', 'editable-card']),
         tabPosition: PropTypes.oneOf(['top', 'right', 'bottom', 'left']).def('top'),
@@ -116,7 +105,7 @@ export default {
                 }
             })
             return index;
-        }
+        },
     },
     watch: {
         '$slots.default': {
@@ -153,6 +142,9 @@ export default {
         },
         panels(val, old){
             // change selfActive;
+        },
+        activeKey(val){
+            this.selfActiveKey = val;
         }
     },
     mounted(){

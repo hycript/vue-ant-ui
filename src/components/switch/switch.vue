@@ -19,8 +19,9 @@
 </button>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../_util/vue-types';
 import events from '../common/events';
+import { hasProp } from '../_util/props-util';
 
 export default {
     name: 'vSwitch',
@@ -77,7 +78,7 @@ export default {
     methods: {
         setChecked(checked){
             if(this.disabled || !!this.loading) return;
-            if(!this.$options.hasOwnProperty('checked')){
+            if(!hasProp(this, 'checked')){
                 this.stateChecked = checked;
             }
             this.$emit('change', checked)

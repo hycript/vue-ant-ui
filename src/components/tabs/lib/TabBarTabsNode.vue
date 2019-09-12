@@ -19,19 +19,21 @@
 <script>
 import PropTypes from '~utils/vue-types';
 import vnode from '../../common/vnode';
+import emitter from '../../common/emitter';
 
 export default {
     name: 'TabBarTabsNode',
+    mixins: [emitter],
     components: {
         vnode,
     },
-    inject: ['isVertical', 'panels'],
     props: {
         prefixCls: PropTypes.string.def('ant-tabs'),
         activeKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        panels: PropTypes.any.def([]), //props of pane; { key, tab }
         tabBarGutter: PropTypes.any.def(null),
         tabPosition: PropTypes.string,
+        panels: PropTypes.any.def([]), //props of pane; { key, tab }
+        isVertical: PropTypes.bool,
     },
     methods: {
         getClasses(panel){
@@ -43,7 +45,7 @@ export default {
             }
         },
         getTabStyles(panel, index){
-            const { isVertical, panels, tabBarGutter } = this;
+            const { panels, isVertical, tabBarGutter } = this;
             let gutter = tabBarGutter && index === panels.length - 1 ? 0 : tabBarGutter;
             gutter = typeof gutter === 'number' ? `${gutter}px` : gutter;
             return {

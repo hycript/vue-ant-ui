@@ -14,7 +14,7 @@
     <div :class="`${prefixCls}-nav-wrap`">
         <div :class="`${prefixCls}-nav-scroll`">
             <div :class="navClasses">
-                <TabBarTabsNode></TabBarTabsNode>
+                <TabBarTabsNode v-bind="{ ...$props }"></TabBarTabsNode>
             </div>
         </div>
     </div>
@@ -29,18 +29,24 @@ export default {
     components: {
         TabBarTabsNode,
     },
-    inject: ['activeIndex', 'isVertical'],
     data(){
         return {
-            isScroll: true,
-            next: true,
-            prev: true,
+            isScroll: false,
+            next: false,
+            prev: false,
         }
     },
     props: {
         prefixCls: PropTypes.string.def('ant-tabs'),
         activeKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        tabPosition: PropTypes.oneOf(['left', 'right', 'top', 'bottom']).def('left'),
+        hideAdd: PropTypes.bool.def(false),
+        type: PropTypes.oneOf(['line', 'card', 'editable-card']),
+        tabPosition: PropTypes.oneOf(['top', 'right', 'bottom', 'left']).def('top'),
+        size: PropTypes.oneOf(['default', 'small', 'large']),
+        inkBarAnimated: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+        tabBarGutter: PropTypes.number,
+        isVertical: PropTypes.bool,
+        panels: PropTypes.array,
         scrollAnimated: PropTypes.bool.def(true),
     },
     computed: {

@@ -1,21 +1,24 @@
 <style></style>
 <template>
 <div role="tablist" :class="classes" tabIndex="0"> <!--  @keydown="onKeyDown" -->
-    <vnode v-if="topOrBottom" key="extra" :style="tabBarExtraContentStyle">
-        <slot name="tabBarExtraContent"></slot>
-    </vnode>
-    <ScrollableTabBarNode v-bind="{ ...$props }" v-if="topOrBottom" key="content"></ScrollableTabBarNode>
-    <vnode v-if="!topOrBottom" key="extra" :style="tabBarExtraContentStyle">
-        <slot name="tabBarExtraContent"></slot>
+    <vnode :vnodesReverse="isVertical">
+        <div key="extra" :class="`${prefixCls}-extra-content`" :style="tabBarExtraContentStyle">
+            <span>
+                <Icon v-if="!hideAdd" type="plus" class="`${prefixCls}-new-tab`"/>
+                <slot name="tabBarExtraContent"></slot>
+            </span>
+        </div>
+        <ScrollableTabBarNode v-bind="{ ...$props }" key="content"></ScrollableTabBarNode>
     </vnode>
 </div>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../../_util/vue-types';
 import vnode from '../../common/vnode';
 import ScrollableTabBarNode from './ScrollableTabBarNode';
 
 export default {
+    name: 'TabBar',
     components: {
         vnode,
         ScrollableTabBarNode,
@@ -23,11 +26,14 @@ export default {
     props: {
         prefixCls: PropTypes.string.def('ant-tabs'),
         activeKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        hideAdd: PropTypes.bool.def(false),
         type: PropTypes.oneOf(['line', 'card', 'editable-card']),
         tabPosition: PropTypes.oneOf(['top', 'right', 'bottom', 'left']).def('top'),
         size: PropTypes.oneOf(['default', 'small', 'large']),
         inkBarAnimated: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
         tabBarGutter: PropTypes.number,
+        isVertical: PropTypes.bool,
+        panels: PropTypes.array,
     },
     computed: {
         classes(){
@@ -39,14 +45,10 @@ export default {
                 [`${prefixCls}-card-bar`]: type && type.indexOf('card') >= 0,
             }
         },
-        topOrBottom(){
-            const { tabPosition } = this;
-            return tabPosition === 'top' || tabPosition === 'bottom';
-        },
         tabBarExtraContentStyle(){
-            const { topOrBottom } = this;
-            return topOrBottom ? { float: 'right' } : {};
+            const { isVertical } = this;
+            return !isVertical ? { float: 'right' } : {};
         }
-    }
+    },
 }
 </script>

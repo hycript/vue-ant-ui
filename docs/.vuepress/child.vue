@@ -22,7 +22,7 @@
 </div>
 </template>
 <script>
-import vnode from './vnode';
+import vnode from '~comps/common/vnode';
 export default {
     components: {
         vnode,
@@ -39,12 +39,6 @@ export default {
             console.error('filter::log', value);
             return '';
         }
-    },
-    mounted(){
-        console.error('child', this, this.$scopedSlots);
-    },
-    updated(){
-        console.error('child', this, this.$scopedSlots);
     },
     methods: {
         log(e){

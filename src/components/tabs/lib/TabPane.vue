@@ -1,21 +1,26 @@
 <style lang="less"></style>
 <template>
 <div :class="classes" role="tabpanel" :aria-hidden="active ? 'false' : 'true'">
-    <slot></slot>
-    <!-- <slot v-if="active"></slot>
+    <slot v-if="shouldRender"></slot>
     <slot v-else name="placeholder">
         {{ placeholder }}
-    </slot> -->
+    </slot>
 </div>
 </template>
 <script>
 import PropTypes from '~utils/vue-types';
 
 export default {
-    name: 'vTabPane',
+    name: 'TabPane',
+    data(){
+        return {
+            hasActived: false,
+        }
+    },
     props: {
         prefixCls: PropTypes.string.def('ant-tabs'),
         active: PropTypes.bool,
+        activeKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         destroyInactiveTabPane: PropTypes.bool,
         forceRender: PropTypes.bool,
         tab: PropTypes.any,
@@ -32,6 +37,28 @@ export default {
                 [`${prefixCls}-active`]: active,
             }
         },
+        slefKey(){
+            return this.$vnode.key;
+        },
+        slefActive(){
+            return this.activeKey === this.slefKey;
+        },
+        shouldRender(){
+            const { destroyInactiveTabPane, selfActive, hasActived, forceRender } = this;
+            const isRender = destroyInactiveTabPane ? selfActive : hasActived;
+            return isRender || forceRender;
+        },
+    },
+    watch: {
+        active: {
+            handler(val){
+                if(val) this.hasActived = true;
+            },
+            immediate: true,
+        }
+    },
+    mounted(){
+        console.error('tabPabe', this);
     },
     methods: {
     }

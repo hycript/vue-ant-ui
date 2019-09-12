@@ -9,3 +9,9 @@ export function filterEmpty(children = []){
 export function isNumeric(value){
     return /^[-+]?\d*(\.\d*)?$/.test(value);
 }
+
+export function hasProp(instance, prop){
+    const $options = instance.$options || {};
+    const propsData = $options.propsData || {};
+    return prop in propsData;
+}
