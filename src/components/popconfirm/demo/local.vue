@@ -1,5 +1,5 @@
 <template>
-<Popconfirm title="Are you sure？" okText="Yes" cancelText="No">
+<vPopconfirm title="Are you sure？" okText="Yes" cancelText="No">
     <a href="javascript:;">Delete</a>
-</Popconfirm>
+</vPopconfirm>
 </template>

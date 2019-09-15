@@ -1,10 +1,10 @@
 <template>
 <div>
-    <Avatar icon="user" />
-    <Avatar>U</Avatar>
-    <Avatar>USER</Avatar>
-    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-    <Avatar style="color: #f56a00; backgroundColor: #fde3cf">U</Avatar>
-    <Avatar style="backgroundColor:#87d068" icon="user" />
+    <vAvatar icon="user" />
+    <vAvatar>U</vAvatar>
+    <vAvatar>USER</vAvatar>
+    <vAvatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+    <vAvatar style="color: #f56a00; backgroundColor: #fde3cf">U</vAvatar>
+    <vAvatar style="backgroundColor:#87d068" icon="user" />
 </div>
 </template>

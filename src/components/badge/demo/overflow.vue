@@ -1,28 +1,19 @@
 <template>
 <div class="demo">
-    <Badge :count="99">
+    <vBadge :count="99">
         <a href="#" class="head-example"></a>
-    </Badge>
-    <Badge :count="100">
+    </vBadge>
+    <vBadge :count="100">
         <a href="#" class="head-example"></a>
-    </Badge>
-    <Badge :count="99" :overflowCount="10">
+    </vBadge>
+    <vBadge :count="99" :overflowCount="10">
         <a href="#" class="head-example"></a>
-    </Badge>
-    <Badge :count="1000" :overflowCount="999">
+    </vBadge>
+    <vBadge :count="1000" :overflowCount="999">
         <a href="#" class="head-example"></a>
-    </Badge>
+    </vBadge>
 </div>
 </template>
-<script>
-import Badge from '../badge';
-export default {
-    /* vuepree 默认组件包含 Badge 的缘故，该demo改为手动引入组件。 */
-    components: {
-        Badge,
-    }
-}
-</script>
 <style lang="less" scoped>
 .demo{
     ::v-deep .head-example{

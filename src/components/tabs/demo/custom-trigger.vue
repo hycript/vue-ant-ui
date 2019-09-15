@@ -1,16 +1,16 @@
 <template>
 <div>
     <div :style="{ marginBottom: '16px' }">
-        <Button @click="add">ADD</Button>
+        <vButton @click="add">ADD</vButton>
     </div>
-    <Tabs hideAdd v-model="activeKey" type="editable-card" @edit="onEdit">
-        <TabPane
+    <vTabs hideAdd v-model="activeKey" type="editable-card" @edit="onEdit">
+        <vTabPane
             v-for="pane in panes"
             :tab="pane.title"
             :key="pane.key"
             :closable="pane.closable"
-        >{{pane.content}}</TabPane>
-    </Tabs>
+        >{{pane.content}}</vTabPane>
+    </vTabs>
 </div>
 </template>
 <script>

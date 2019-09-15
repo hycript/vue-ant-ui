@@ -1,21 +1,21 @@
 <template>
 <div>
-    <Button type="primary" loading>
+    <vButton type="primary" loading>
         Loading
-    </Button>
-    <Button type="primary" size="small" loading>
+    </vButton>
+    <vButton type="primary" size="small" loading>
         Loading
-    </Button>
+    </vButton>
     <br><br>
-    <Button type="primary" :loading="loading" @mouseenter="enterLoading">
+    <vButton type="primary" :loading="loading" @mouseenter="enterLoading">
         mouseenter me!
-    </Button>
-    <Button type="primary" icon="poweroff" :loading="iconLoading" @click="enterIconLoading">
+    </vButton>
+    <vButton type="primary" icon="poweroff" :loading="iconLoading" @click="enterIconLoading">
         延迟1s
-    </Button>
+    </vButton>
     <br><br>
-    <Button shape="circle" loading />
-    <Button type="primary" shape="circle" loading />
+    <vButton shape="circle" loading />
+    <vButton type="primary" shape="circle" loading />
 </div>
 </template>
 <script>

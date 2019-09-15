@@ -1,14 +1,14 @@
 <template>
 <div>
-    <CheckableTag v-model="checked1" @change="handleChange">
+    <vCheckableTag v-model="checked1" @change="handleChange">
         Tag1
-    </CheckableTag>
-    <CheckableTag v-model="checked2" @change="handleChange">
+    </vCheckableTag>
+    <vCheckableTag v-model="checked2" @change="handleChange">
         Tag2
-    </CheckableTag>
-    <CheckableTag v-model="checked3" @change="handleChange">
+    </vCheckableTag>
+    <vCheckableTag v-model="checked3" @change="handleChange">
         Tag3
-    </CheckableTag>
+    </vCheckableTag>
 </div>
 </template>
 <script>

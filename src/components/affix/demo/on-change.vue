@@ -1,7 +1,7 @@
 <template>
-<Affix :offsetTop="120" @change="change">
-    <Button>120px to affix top</Button>
-</Affix>
+<vAffix :offsetTop="120" @change="change">
+    <vButton>120px to affix top</vButton>
+</vAffix>
 </template>
 <script>
 export default {

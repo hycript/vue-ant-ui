@@ -51,11 +51,15 @@ const components = {
     ...Popconfirm,
 }
 
+const prefix = 'v';
+
 function install(Vue){
     Vue.use(directive);
     Object.keys(components).forEach(key => {
-        key = components[key].name || key;
-        Vue.component(key, components[key]);
+        const component = components[key];
+        if(component) return;
+        key = component.name || key;
+        Vue.component(prefix + key, component);
     })
 }
 

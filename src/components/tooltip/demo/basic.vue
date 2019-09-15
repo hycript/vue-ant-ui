@@ -1,12 +1,12 @@
 <template>
 <div>
-    <Tooltip v-model="visible" placement="topLeft" arrowPointAtCenter>
+    <vTooltip v-model="visible" placement="topLeft" arrowPointAtCenter>
         <template slot='title'>
         prompt text
         </template>
         Tooltip will show when mouse enter.
-    </Tooltip>
-    <Button @click="visible = true">show</Button>
+    </vTooltip>
+    <vButton @click="visible = true">show</vButton>
 </div>
 </template>
 <script>

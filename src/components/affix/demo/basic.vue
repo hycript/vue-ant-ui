@@ -1,12 +1,12 @@
 <template>
 <div>
-    <Affix :offsetTop="this.top">
-        <Button type="primary" @click="top += 10">Affix top {{ top }}px</Button>
-    </Affix>
+    <vAffix :offsetTop="this.top">
+        <vButton type="primary" @click="top += 10">Affix top {{ top }}px</vButton>
+    </vAffix>
     <br />
-    <Affix :offsetBottom="this.bottom">
-        <Button type="primary" @click="bottom += 10">Affix bottom {{ bottom }}px</Button>
-    </Affix>
+    <vAffix :offsetBottom="this.bottom">
+        <vButton type="primary" @click="bottom += 10">Affix bottom {{ bottom }}px</vButton>
+    </vAffix>
 </div>
 </template>
 

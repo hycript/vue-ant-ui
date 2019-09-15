@@ -1,33 +1,33 @@
 <template>
 <div>
     <h4>Basic</h4>
-    <ButtonGroup>
-        <Button>Cancel</Button>
-        <Button>OK</Button>
-    </ButtonGroup>
-    <ButtonGroup>
-        <Button disabled>L</Button>
-        <Button disabled>M</Button>
-        <Button disabled>R</Button>
-    </ButtonGroup>
-    <ButtonGroup>
-        <Button>L</Button><Button>M</Button><Button>R</Button>
-    </ButtonGroup>
+    <vButtonGroup>
+        <vButton>Cancel</vButton>
+        <vButton>OK</vButton>
+    </vButtonGroup>
+    <vButtonGroup>
+        <vButton disabled>L</vButton>
+        <vButton disabled>M</vButton>
+        <vButton disabled>R</vButton>
+    </vButtonGroup>
+    <vButtonGroup>
+        <vButton>L</vButton><vButton>M</vButton><vButton>R</vButton>
+    </vButtonGroup>
 
     <h4>With Icon</h4>
-    <ButtonGroup>
-        <Button type="primary">
-            <Icon type="left" />Go back
-        </Button>
-        <Button type="primary">
+    <vButtonGroup>
+        <vButton type="primary">
+            <vIcon type="left" />Go back
+        </vButton>
+        <vButton type="primary">
             Go forward
-            <Icon type="right" />
-        </Button>
-    </ButtonGroup>
-    <ButtonGroup>
-        <Button type="primary" icon="cloud" />
-        <Button type="primary" icon="cloud-download" />
-    </ButtonGroup>
+            <vIcon type="right" />
+        </vButton>
+    </vButtonGroup>
+    <vButtonGroup>
+        <vButton type="primary" icon="cloud" />
+        <vButton type="primary" icon="cloud-download" />
+    </vButtonGroup>
 </div>
 </template>
 <style lang="less" scoped>

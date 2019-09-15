@@ -1,9 +1,9 @@
 <template>
 <div>
-    <Button type="primary" block>Primary</Button>
-    <Button block>Default</Button>
-    <Button type="dashed" block>Dashed</Button>
-    <Button type="danger" block>Danger</Button>
-    <Button type="link" block>Link</Button>
+    <vButton type="primary" block>Primary</vButton>
+    <vButton block>Default</vButton>
+    <vButton type="dashed" block>Dashed</vButton>
+    <vButton type="danger" block>Danger</vButton>
+    <vButton type="link" block>Link</vButton>
 </div>
 </template>

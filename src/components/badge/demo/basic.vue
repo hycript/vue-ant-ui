@@ -1,26 +1,17 @@
 <template>
 <div class="demo">
-    <Badge count="5">
+    <vBadge count="5">
         <a href="#" class="head-example"></a>
-    </Badge>
-    <Badge count="0" showZero>
+    </vBadge>
+    <vBadge count="0" showZero>
         <a href="#" class="head-example"></a>
-    </Badge>
-    <Badge>
-        <Icon slot="count" type="clock-circle" style="color: #f5222d" />
+    </vBadge>
+    <vBadge>
+        <vIcon slot="count" type="clock-circle" style="color: #f5222d" />
         <a href="#" class="head-example"></a>
-    </Badge>
+    </vBadge>
 </div>
 </template>
-<script>
-import Badge from '../badge';
-export default {
-    /* vuepree 默认组件包含 Badge 的缘故，该demo改为手动引入组件。 */
-    components: {
-        Badge,
-    }
-}
-</script>
 <style lang="less" scoped>
 .demo{
     ::v-deep .head-example{

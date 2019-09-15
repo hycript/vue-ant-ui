@@ -1,14 +1,14 @@
 <template>
-    <Popover title="Hover title" trigger="hover" v-model="hovered" @visibleChange="handleHoverChange">
+    <vPopover title="Hover title" trigger="hover" v-model="hovered" @visibleChange="handleHoverChange">
         <div slot="content">This is hover content.</div>
-        <Popover title="Click title" trigger="click" v-model="clicked" @visibleChange="handleClickChange">
+        <vPopover title="Click title" trigger="click" v-model="clicked" @visibleChange="handleClickChange">
             <div slot="content">
                 <div>This is click content.</div>
                 <a @click="hide">Close</a>
             </div>
-            <Button>Hover and click / 悬停并单击</Button>
-        </Popover>
-    </Popover>
+            <vButton>Hover and click / 悬停并单击</vButton>
+        </vPopover>
+    </vPopover>
 </template>
 <script>
 export default {

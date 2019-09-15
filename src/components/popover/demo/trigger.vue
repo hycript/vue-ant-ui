@@ -1,16 +1,16 @@
 <template>
 <div>
-    <Popover placement="topLeft" title="Propmt Text" content="Content" trigger="contextmenu">
-        <Button>右键/contextmenu</Button>
-    </Popover>
+    <vPopover placement="topLeft" title="Propmt Text" content="Content" trigger="contextmenu">
+        <vButton>右键/contextmenu</vButton>
+    </vPopover>
     <br>
-    <Popover placement="topRight" title="Propmt Text" content="Content" trigger="click">
-        <Button>点击/click</Button>
-    </Popover>
+    <vPopover placement="topRight" title="Propmt Text" content="Content" trigger="click">
+        <vButton>点击/click</vButton>
+    </vPopover>
     <br>
-    <Popover placement="topLeft" title="Propmt Text" content="Content" trigger="focus">
+    <vPopover placement="topLeft" title="Propmt Text" content="Content" trigger="focus">
         <input slot-scope="{ show, hide }" @focus="show" @blur="hide" class="inp" type="text" placeholder="focus">
-    </Popover>
+    </vPopover>
 </div>
 </template>
 <script>

@@ -1,19 +1,10 @@
 <template>
 <div class="demo">
-    <Badge :count="5" title="Custom hover text">
+    <vBadge :count="5" title="Custom hover text">
         <a href="#" class="head-example" />
-    </Badge>
+    </vBadge>
 </div>
 </template>
-<script>
-import Badge from '../badge';
-export default {
-    /* vuepree 默认组件包含 Badge 的缘故，该demo改为手动引入组件。 */
-    components: {
-        Badge,
-    }
-}
-</script>
 <style lang="less" scoped>
 .demo{
     ::v-deep .head-example{

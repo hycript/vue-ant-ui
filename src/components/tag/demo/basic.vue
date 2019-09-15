@@ -1,11 +1,11 @@
 <template>
 <div>
-    <Tag>Tag 1</Tag>
-    <Tag>
+    <vTag>Tag 1</vTag>
+    <vTag>
         <a href="https://github.com/vueComponent/ant-design">Link</a>
-    </Tag>
-    <Tag closable @close="log">Tag 2</Tag>
-    <Tag closable @close="preventDefault">Prevent Default</Tag>
+    </vTag>
+    <vTag closable @close="log">Tag 2</vTag>
+    <vTag closable @close="preventDefault">Prevent Default</vTag>
 </div>
 </template>
 <script>

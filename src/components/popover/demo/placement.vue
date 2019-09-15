@@ -1,7 +1,7 @@
 <template>
 <div id="components-popover-demo-placement">
     <div :style="{ marginLeft: `${buttonWidth}px`, whiteSpace: 'nowrap' }">
-        <Popover placement="topLeft">
+        <vPopover placement="topLeft">
             <template slot="content">
                 <p>Content</p>
                 <p>Content</p>
@@ -9,9 +9,9 @@
             <template slot="title">
                 <span>Title</span>
             </template>
-            <Button>TL</Button>
-        </Popover>
-        <Popover placement="top">
+            <vButton>TL</vButton>
+        </vPopover>
+        <vPopover placement="top">
             <template slot="content">
                 <p>Content</p>
                 <p>Content</p>
@@ -19,9 +19,9 @@
             <template slot="title">
                 <span>Title</span>
             </template>
-            <Button>Top</Button>
-        </Popover>
-        <Popover placement="topRight">
+            <vButton>Top</vButton>
+        </vPopover>
+        <vPopover placement="topRight">
             <template slot="content">
                 <p>Content</p>
                 <p>Content</p>
@@ -29,11 +29,11 @@
             <template slot="title">
                 <span>Title</span>
             </template>
-            <Button>TR</Button>
-        </Popover>
+            <vButton>TR</vButton>
+        </vPopover>
     </div>
     <div :style="{ width: `${buttonWidth}px`, float: 'left' }">
-        <Popover placement="leftTop">
+        <vPopover placement="leftTop">
             <template slot="content">
                 <p>Content</p>
                 <p>Content</p>
@@ -41,9 +41,9 @@
             <template slot="title">
                 <span>Title</span>
             </template>
-            <Button>LT</Button>
-        </Popover>
-        <Popover placement="left">
+            <vButton>LT</vButton>
+        </vPopover>
+        <vPopover placement="left">
             <template slot="content">
                 <p>Content</p>
                 <p>Content</p>
@@ -51,9 +51,9 @@
             <template slot="title">
                 <span>Title</span>
             </template>
-            <Button>Left</Button>
-        </Popover>
-        <Popover placement="leftBottom">
+            <vButton>Left</vButton>
+        </vPopover>
+        <vPopover placement="leftBottom">
             <template slot="content">
                 <p>Content</p>
                 <p>Content</p>
@@ -61,11 +61,11 @@
             <template slot="title">
                 <span>Title</span>
             </template>
-            <Button>LB</Button>
-        </Popover>
+            <vButton>LB</vButton>
+        </vPopover>
     </div>
     <div :style="{ width: `${buttonWidth}px`, marginLeft: `${buttonWidth * 4 + 24 }px`}">
-        <Popover placement="rightTop">
+        <vPopover placement="rightTop">
             <template slot="content">
                 <p>Content</p>
                 <p>Content</p>
@@ -73,9 +73,9 @@
             <template slot="title">
                 <span>Title</span>
             </template>
-            <Button>RT</Button>
-        </Popover>
-        <Popover placement="right">
+            <vButton>RT</vButton>
+        </vPopover>
+        <vPopover placement="right">
             <template slot="content">
                 <p>Content</p>
                 <p>Content</p>
@@ -83,9 +83,9 @@
             <template slot="title">
                 <span>Title</span>
             </template>
-            <Button>Right</Button>
-        </Popover>
-        <Popover placement="rightBottom">
+            <vButton>Right</vButton>
+        </vPopover>
+        <vPopover placement="rightBottom">
             <template slot="content">
                 <p>Content</p>
                 <p>Content</p>
@@ -93,11 +93,11 @@
             <template slot="title">
                 <span>Title</span>
             </template>
-            <Button>RB</Button>
-        </Popover>
+            <vButton>RB</vButton>
+        </vPopover>
     </div>
     <div :style="{ marginLeft: `${buttonWidth}px`, clear: 'both', whiteSpace: 'nowrap' }">
-        <Popover placement="bottomLeft">
+        <vPopover placement="bottomLeft">
             <template slot="content">
                 <p>Content</p>
                 <p>Content</p>
@@ -105,9 +105,9 @@
             <template slot="title">
                 <span>Title</span>
             </template>
-            <Button>BL</Button>
-        </Popover>
-        <Popover placement="bottom">
+            <vButton>BL</vButton>
+        </vPopover>
+        <vPopover placement="bottom">
             <template slot="content">
                 <p>Content</p>
                 <p>Content</p>
@@ -115,9 +115,9 @@
             <template slot="title">
                 <span>Title</span>
             </template>
-            <Button>Bottom</Button>
-        </Popover>
-        <Popover placement="bottomRight">
+            <vButton>Bottom</vButton>
+        </vPopover>
+        <vPopover placement="bottomRight">
             <template slot="content">
                 <p>Content</p>
                 <p>Content</p>
@@ -125,8 +125,8 @@
             <template slot="title">
                 <span>Title</span>
             </template>
-            <Button>BR</Button>
-        </Popover>
+            <vButton>BR</vButton>
+        </vPopover>
     </div>
 </div>
 </template>

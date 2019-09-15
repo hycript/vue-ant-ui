@@ -1,16 +1,16 @@
 <template>
 <div>
-    <Tooltip placement="topLeft" title="Propmt Text" trigger="contextmenu">
-        <Button>右键/contextmenu</Button>
-    </Tooltip>
+    <vTooltip placement="topLeft" title="Propmt Text" trigger="contextmenu">
+        <vButton>右键/contextmenu</vButton>
+    </vTooltip>
     <br>
-    <Tooltip placement="topRight" title="Propmt Text" trigger="click">
-        <Button>点击/click</Button>
-    </Tooltip>
+    <vTooltip placement="topRight" title="Propmt Text" trigger="click">
+        <vButton>点击/click</vButton>
+    </vTooltip>
     <br>
-    <Tooltip placement="topLeft" title="Propmt Text" trigger="focus">
+    <vTooltip placement="topLeft" title="Propmt Text" trigger="focus">
         <input slot-scope="{ show, hide }" @focus="show" @blur="hide" class="inp" type="text" placeholder="focus">
-    </Tooltip>
+    </vTooltip>
 </div>
 </template>
 <script>

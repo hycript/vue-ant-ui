@@ -1,14 +1,14 @@
 <template>
 <div>
     <template v-for="(tag, index) in tags">
-        <Tooltip v-if="tag.length > 20" :key="tag" :title="tag">
-            <Tag :key="tag" :closable="index !== 0" @afterClose="handleClose(tag)">
+        <vTooltip v-if="tag.length > 20" :key="tag" :title="tag">
+            <vTag :key="tag" :closable="index !== 0" @afterClose="handleClose(tag)">
                 {{`${tag.slice(0, 20)}...`}}
-            </Tag>
-        </Tooltip>
-        <Tag v-else :key="tag" :closable="index !== 0" @afterClose="handleClose(tag)">
+            </vTag>
+        </vTooltip>
+        <vTag v-else :key="tag" :closable="index !== 0" @afterClose="handleClose(tag)">
             {{tag}}
-        </Tag>
+        </vTag>
     </template>
 </div>
 </template>

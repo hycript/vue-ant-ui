@@ -1,10 +1,10 @@
 <template>
     <div class="wrapper">
-        <Tooltip placement="left" title="Prompt Text" :getPopupContainer="false">
-            <Button>Adjust automatically / 自动调整</Button>
-        </Tooltip>
+        <vTooltip placement="left" title="Prompt Text" :getPopupContainer="false">
+            <vButton>Adjust automatically / 自动调整</vButton>
+        </vTooltip>
         <br />
-        <Tooltip
+        <vTooltip
             style="marginTop: 10px"
             placement="left"
             title="Prompt Text"
@@ -12,8 +12,8 @@
             :target="false"
             :getPopupContainer="getPopupContainer"
         >
-            <Button>Ingore / 不处理</Button>
-        </Tooltip>
+            <vButton>Ingore / 不处理</vButton>
+        </vTooltip>
     </div>
 </template>
 <script>

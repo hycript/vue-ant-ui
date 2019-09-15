@@ -2,7 +2,7 @@
 <div>
     <h1>child</h1>
     <!-- <slot></slot> -->
-    <div><Button @click="toggle">toggle slot</Button> <Button v-if="!visible" @click="toggle">has hidden</Button> </div>
+    <div><vButton @click="toggle">toggle slot</vButton> <vButton v-if="!visible" @click="toggle">has hidden</vButton> </div>
 
     <!-- <vnode :vnodes="$slots.default" :class="['hello']" class="hoho" :style="{ lineHeight: 1 }" style="color:red;" @mouseenter="log"><div>1</div></vnode> -->
     <div style="height: 100px;">

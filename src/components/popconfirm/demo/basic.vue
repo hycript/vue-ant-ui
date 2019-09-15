@@ -1,5 +1,5 @@
 <template>
-    <Popconfirm
+    <vPopconfirm
         title="Are you sure delete this task?"
         @confirm="confirm"
         @cancel="cancel"
@@ -8,7 +8,7 @@
         @visibleChange="visibleChange"
     >
         <a href="javascript:;">Delete</a>
-    </Popconfirm>
+    </vPopconfirm>
 </template>
 <script>
 export default {

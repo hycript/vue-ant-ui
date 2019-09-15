@@ -1,11 +1,11 @@
 <template>
 <div>
-    <Button size="small" @click="visible = !visible">
+    <vButton size="small" @click="visible = !visible">
         Toggle
-    </Button>
-    <Tag closable v-model="visible">
+    </vButton>
+    <vTag closable v-model="visible">
         Movies
-    </Tag>
+    </vTag>
 </div>
 </template>
 <script>

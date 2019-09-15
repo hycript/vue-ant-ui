@@ -3,21 +3,21 @@
         <div style="marginBottom:16px">
             <span style="marginRight:6px">Gutter (px): </span>
             <div style="width:50%">
-                <Slider :min="0" :max="Object.keys(gutters).length - 1" v-model="gutterKey" :marks="this.gutters"
+                <vSlider :min="0" :max="Object.keys(gutters).length - 1" v-model="gutterKey" :marks="this.gutters"
                     :step="null" />
             </div>
             <span style="marginRight:6px">Column Count:</span>
             <div style="width:50%">
-                <Slider :min="0" :max="Object.keys(colCounts).length - 1" v-model="colCountKey"
+                <vSlider :min="0" :max="Object.keys(colCounts).length - 1" v-model="colCountKey"
                     :marks="this.colCounts" :step="null" />
             </div>
         </div>
-        <Row :gutter="gutters[gutterKey]">
-            <Col v-for="item in colCounts[colCountKey]" :key="item.toString()"
+        <vRow :gutter="gutters[gutterKey]">
+            <vCol v-for="item in colCounts[colCountKey]" :key="item.toString()"
                 :span="24/colCounts[colCountKey]">
                 <div>Column</div>
-            </Col>
-        </Row>
+            </vCol>
+        </vRow>
         <pre v-text="rowColHtml">
     </pre>
     </div>
@@ -46,12 +46,12 @@ export default {
         rowColHtml() {
             const colCount = this.colCounts[this.colCountKey]
             const getter = this.gutters[this.gutterKey]
-            let colCode = '<Row :gutter="' + getter + '">\n'
+            let colCode = '<vRow :gutter="' + getter + '">\n'
             for (let i = 0; i < colCount; i++) {
                 const spanNum = 24 / colCount
-                colCode += '  <Col :span="' + spanNum + '"/>\n'
+                colCode += '  <vCol :span="' + spanNum + '"/>\n'
             }
-            colCode += '</Row>'
+            colCode += '</vRow>'
             return colCode
         }
     },

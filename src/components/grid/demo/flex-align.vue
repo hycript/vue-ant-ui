@@ -1,52 +1,52 @@
 <template>
 <div>
     <p>Align Top</p>
-    <Row type="flex" justify="center" align="top">
-        <Col :span="4">
+    <vRow type="flex" justify="center" align="top">
+        <vCol :span="4">
             <p class="height-100">col-4</p>
-        </Col>
-        <Col :span="4">
+        </vCol>
+        <vCol :span="4">
             <p class="height-50">col-4</p>
-        </Col>
-        <Col :span="4">
+        </vCol>
+        <vCol :span="4">
             <p class="height-120">col-4</p>
-        </Col>
-        <Col :span="4">
+        </vCol>
+        <vCol :span="4">
             <p class="height-80">col-4</p>
-        </Col>
-    </Row>
+        </vCol>
+    </vRow>
 
     <p>Align Center</p>
-    <Row type="flex" justify="space-around" align="middle">
-        <Col :span="4">
+    <vRow type="flex" justify="space-around" align="middle">
+        <vCol :span="4">
             <p class="height-100">col-4</p>
-        </Col>
-        <Col :span="4">
+        </vCol>
+        <vCol :span="4">
             <p class="height-50">col-4</p>
-        </Col>
-        <Col :span="4">
+        </vCol>
+        <vCol :span="4">
             <p class="height-120">col-4</p>
-        </Col>
-        <Col :span="4">
+        </vCol>
+        <vCol :span="4">
             <p class="height-80">col-4</p>
-        </Col>
-    </Row>
+        </vCol>
+    </vRow>
 
     <p>Align Bottom</p>
-    <Row type="flex" justify="space-between" align="bottom">
-        <Col :span="4">
+    <vRow type="flex" justify="space-between" align="bottom">
+        <vCol :span="4">
             <p class="height-100">col-4</p>
-        </Col>
-        <Col :span="4">
+        </vCol>
+        <vCol :span="4">
             <p class="height-50">col-4</p>
-        </Col>
-        <Col :span="4">
+        </vCol>
+        <vCol :span="4">
             <p class="height-120">col-4</p>
-        </Col>
-        <Col :span="4">
+        </vCol>
+        <vCol :span="4">
             <p class="height-80">col-4</p>
-        </Col>
-    </Row>
+        </vCol>
+    </vRow>
 </div>
 </template>
 <style lang="less" src="./grid.less" scoped></style>

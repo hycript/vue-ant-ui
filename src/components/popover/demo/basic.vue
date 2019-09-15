@@ -1,14 +1,14 @@
 <template>
 <div>
-    <Popover class="popover" title="Title">
+    <vPopover class="popover" title="Title">
         <template slot="content">
             <div class="popover-content">
                 <p class="a">Content</p>
                 <p class="a">Content</p>
             </div>
         </template>
-        <Button type="primary">Hover me</Button>
-    </Popover>
+        <vButton type="primary">Hover me</vButton>
+    </vPopover>
 </div>
 </template>
 <style lang="less" scoped>

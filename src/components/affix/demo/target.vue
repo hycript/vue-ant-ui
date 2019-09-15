@@ -2,17 +2,17 @@
 <div>
     <div class="scrollable-container" ref="container1">
         <div class="background">
-            <Affix :target="() => this.$refs.container1" :offsetTop="30">
-                <Button type="primary">Fixed at the top of container</Button>
-            </Affix>
+            <vAffix :target="() => this.$refs.container1" :offsetTop="30">
+                <vButton type="primary">Fixed at the top of container</vButton>
+            </vAffix>
         </div>
     </div>
     <br><br>
     <div class="scrollable-container" ref="container2">
         <div class="background1">
-            <Affix :target="() => this.$refs.container2" :offsetBottom="30">
-                <Button type="primary">Fixed at the bottom of container</Button>
-            </Affix>
+            <vAffix :target="() => this.$refs.container2" :offsetBottom="30">
+                <vButton type="primary">Fixed at the bottom of container</vButton>
+            </vAffix>
         </div>
     </div>
 </div>

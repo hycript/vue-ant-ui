@@ -2,10 +2,10 @@
 <div>
     <strong :style="{ marginRight: 8 }">Categories:</strong>
     <template v-for=" tag in tags">
-        <CheckableTag :key="tag" :checked="selectedTags.indexOf(tag) > -1"
+        <vCheckableTag :key="tag" :checked="selectedTags.indexOf(tag) > -1"
             @change="(checked) => handleChange(tag, checked)">
             {{tag}}
-        </CheckableTag>
+        </vCheckableTag>
     </template>
 </div>
 </template>

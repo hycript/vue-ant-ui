@@ -1,6 +1,6 @@
 <template>
 <div>
-    <Popconfirm
+    <vPopconfirm
         title="Are you sure delete this task?"
         v-model="visible"
         @visibleChange="handleVisibleChange"
@@ -10,7 +10,7 @@
         cancelText="No"
     >
         <a href="javascript:;">Delete a task</a>
-    </Popconfirm>
+    </vPopconfirm>
     <br />
     <br />Whether directly execute：
     <input

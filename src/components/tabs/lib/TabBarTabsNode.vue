@@ -20,12 +20,14 @@
 import PropTypes from '../../_util/vue-types';
 import vnode from '../../common/vnode';
 import emitter from '../../common/emitter';
+import Icon from '../../icon/icon';
 
 export default {
     name: 'TabBarTabsNode',
     mixins: [emitter],
     components: {
         vnode,
+        Icon,
     },
     props: {
         prefixCls: PropTypes.string.def('ant-tabs'),

@@ -1,22 +1,14 @@
 <template>
 <div>
     <span style="margin-right:24px">
-        <Badge :count="1">
-            <Avatar shape="square" icon="user" />
-        </Badge>
+        <vBadge :count="1">
+            <vAvatar shape="square" icon="user" />
+        </vBadge>
     </span>
     <span>
-        <Badge dot>
-            <Avatar shape="square" icon="user" />
-        </Badge>
+        <vBadge dot>
+            <vAvatar shape="square" icon="user" />
+        </vBadge>
     </span>
 </div>
 </template>
-<script>
-import Badge from '../../badge/badge';
-export default {
-    components: {
-        Badge,
-    }
-}
-</script>

@@ -1,35 +1,30 @@
 <template>
 <div class="demo">
     <div>
-        <Badge :count="count">
+        <vBadge :count="count">
             <a href="#" class="head-example" />
-        </Badge>
-        <ButtonGroup>
-            <Button @click="dec">
-                <Icon type="minus" />
-            </Button>
-            <Button @click="inc">
-                <Icon type="plus" />
-            </Button>
-        </ButtonGroup>
+        </vBadge>
+        <vButtonGroup>
+            <vButton @click="dec">
+                <vIcon type="minus" />
+            </vButton>
+            <vButton @click="inc">
+                <vIcon type="plus" />
+            </vButton>
+        </vButtonGroup>
     </div>
     <div style="margin-top: 10px">
-        <Badge :dot="show">
+        <vBadge :dot="show">
             <a href="#" class="head-example" />
-        </Badge>
-        <Button @click="show = !show">
-            <Icon :type="show ? 'close' : 'eye'" />
-        </Button>
+        </vBadge>
+        <vButton @click="show = !show">
+            <vIcon :type="show ? 'close' : 'eye'" />
+        </vButton>
     </div>
 </div>
 </template>
 <script>
-import Badge from '../badge';
 export default {
-    /* vuepree 默认组件包含 Badge 的缘故，该demo改为手动引入组件。 */
-    components: {
-        Badge,
-    },
     data() {
         return {
             count: 5,

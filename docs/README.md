@@ -4,37 +4,29 @@
 
 <Test></Test> 
 
-<Demo></Demo>
-
 <TestC></TestC>
 
-<Code>
-<Temp></Temp>
-</Code>
 
 ---
 
-<Avatar 
+<v-avatar 
     src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" 
     shape="square" size="64"
     style="color: #f56a00; backgroundColor: #fde3cf"
-></Avatar>
+></v-avatar>
 
-<Avatar 
+<v-avatar 
     shape="square" size="64"
     style="color: #f56a00; backgroundColor: #fde3cf"
->U</Avatar>
+>U</v-avatar>
+
 
 <script>
-import Demo from '~comps/button/demo/demo';
 import Test from './.vuepress/test.md';
 import TestC from './.vuepress/test.vue';
-import Temp from '~comps/popconfirm/demo/basic';
 export default {
     components: {
-        Demo,
         Test,
-        Temp,
         TestC,
     },
     created(){

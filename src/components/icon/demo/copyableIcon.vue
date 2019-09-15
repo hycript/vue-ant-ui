@@ -32,7 +32,7 @@
 </style>
 <template>
 <div class="icon-wrapper" @click="click">
-    <Icon class="icon" :type="type" />
+    <vIcon class="icon" :type="type" />
     <div class="name">{{ type }}</div>
 </div>
 </template>
@@ -47,7 +47,7 @@ export default {
     methods: {
         click(){
             const { type } = this;
-            const text = `<Icon type="${type}" />`;
+            const text = `<vIcon type="${type}" />`;
             copy(text);
         }
     }

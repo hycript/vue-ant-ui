@@ -1,11 +1,11 @@
 <template>
 <div class="icons-list">
-    <Icon type="home" />
-    <Icon type="setting" />
-    <Icon type="smile" />
-    <Icon type="smile-o" />
-    <Icon type="sync" spin />
-    <Icon type="loading" />
+    <vIcon type="home" />
+    <vIcon type="setting" />
+    <vIcon type="smile" />
+    <vIcon type="smile-o" />
+    <vIcon type="sync" spin />
+    <vIcon type="loading" />
 </div>
 </template>
 <style scoped>

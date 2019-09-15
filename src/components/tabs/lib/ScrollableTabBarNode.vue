@@ -29,6 +29,7 @@ import emitter from '../../common/emitter';
 import TabBarTabsNode from './TabBarTabsNode';
 import InkTabBarNode from './InkTabBarNode';
 import isTransformSupported from '../../_util/isTransformSupported';
+import Icon from '../../icon/icon';
 
 const TransformSupported = isTransformSupported();
 
@@ -38,6 +39,7 @@ export default {
     components: {
         TabBarTabsNode,
         InkTabBarNode,
+        Icon,
     },
     data(){
         return {

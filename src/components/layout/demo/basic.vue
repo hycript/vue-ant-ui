@@ -1,37 +1,37 @@
 <template>
 <div class="demo">
-    <Layout>
-        <Header>Header</Header>
-        <Content>Content</Content>
-        <Footer>Footer</Footer>
-    </Layout>
+    <vLayout>
+        <vHeader>Header</vHeader>
+        <vContent>Content</vContent>
+        <vFooter>Footer</vFooter>
+    </vLayout>
 
-    <Layout>
-        <Header>Header</Header>
-        <Layout>
-            <Sider>Sider</Sider>
-            <Content>Content</Content>
-        </Layout>
-        <Footer>Footer</Footer>
-    </Layout>
+    <vLayout>
+        <vHeader>Header</vHeader>
+        <vLayout>
+            <vSider>Sider</vSider>
+            <vContent>Content</vContent>
+        </vLayout>
+        <vFooter>Footer</vFooter>
+    </vLayout>
 
-    <Layout>
-        <Header>Header</Header>
-        <Layout>
-            <Content>Content</Content>
-            <Sider>Sider</Sider>
-        </Layout>
-        <Footer>Footer</Footer>
-    </Layout>
+    <vLayout>
+        <vHeader>Header</vHeader>
+        <vLayout>
+            <vContent>Content</vContent>
+            <vSider>Sider</vSider>
+        </vLayout>
+        <vFooter>Footer</vFooter>
+    </vLayout>
 
-    <Layout>
-        <Sider>Sider</Sider>
-        <Layout>
-            <Header>Header</Header>
-            <Content>Content</Content>
-            <Footer>Footer</Footer>
-        </Layout>
-    </Layout>
+    <vLayout>
+        <vSider>Sider</vSider>
+        <vLayout>
+            <vHeader>Header</vHeader>
+            <vContent>Content</vContent>
+            <vFooter>Footer</vFooter>
+        </vLayout>
+    </vLayout>
 </div>
 </template>
 <script>

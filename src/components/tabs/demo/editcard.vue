@@ -1,13 +1,13 @@
 <template>
 <div>
-    <Tabs v-model="activeKey" type="editable-card" @edit="onEdit">
-        <TabPane
+    <vTabs v-model="activeKey" type="editable-card" @edit="onEdit">
+        <vTabPane
             v-for="pane in panes"
             :tab="pane.title"
             :key="pane.key"
             :closable="pane.closable"
-        >{{ pane.content }}</TabPane>
-    </Tabs>
+        >{{ pane.content }}</vTabPane>
+    </vTabs>
 </div>
 </template>
 <script>

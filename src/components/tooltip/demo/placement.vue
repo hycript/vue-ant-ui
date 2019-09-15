@@ -1,84 +1,84 @@
 <template>
 <div id="components-Tooltip-demo-placement">
     <div :style="{ marginLeft: `${buttonWidth}px`, whiteSpace: 'nowrap' }">
-        <Tooltip placement="topLeft">
+        <vTooltip placement="topLeft">
             <template slot="title">
                 <span>prompt text</span>
             </template>
-            <Button>TL</Button>
-        </Tooltip>
-        <Tooltip placement="top">
+            <vButton>TL</vButton>
+        </vTooltip>
+        <vTooltip placement="top">
             <template slot="title">
                 <span>prompt text</span>
             </template>
-            <Button>Top</Button>
-        </Tooltip>
-        <Tooltip placement="topRight">
+            <vButton>Top</vButton>
+        </vTooltip>
+        <vTooltip placement="topRight">
             <template slot="title">
                 <span>prompt text</span>
             </template>
-            <Button>TR</Button>
-        </Tooltip>
+            <vButton>TR</vButton>
+        </vTooltip>
     </div>
     <div :style="{ width: `${buttonWidth}px`, float: 'left' }">
-        <Tooltip placement="leftTop">
+        <vTooltip placement="leftTop">
             <template slot="title">
                 <span>prompt text</span>
             </template>
-            <Button>LT</Button>
-        </Tooltip>
-        <Tooltip placement="left">
+            <vButton>LT</vButton>
+        </vTooltip>
+        <vTooltip placement="left">
             <template slot="title">
                 <span>prompt text</span>
             </template>
-            <Button>Left</Button>
-        </Tooltip>
-        <Tooltip placement="leftBottom">
+            <vButton>Left</vButton>
+        </vTooltip>
+        <vTooltip placement="leftBottom">
             <template slot="title">
                 <span>prompt text</span>
             </template>
-            <Button>LB</Button>
-        </Tooltip>
+            <vButton>LB</vButton>
+        </vTooltip>
     </div>
     <div :style="{ width: `${buttonWidth}px`, marginLeft: `${buttonWidth * 4 + 24 }px`}">
-        <Tooltip placement="rightTop">
+        <vTooltip placement="rightTop">
             <template slot="title">
                 <span>prompt text</span>
             </template>
-            <Button>RT</Button>
-        </Tooltip>
-        <Tooltip placement="right">
+            <vButton>RT</vButton>
+        </vTooltip>
+        <vTooltip placement="right">
             <template slot="title">
                 <span>prompt text</span>
             </template>
-            <Button>Right</Button>
-        </Tooltip>
-        <Tooltip placement="rightBottom">
+            <vButton>Right</vButton>
+        </vTooltip>
+        <vTooltip placement="rightBottom">
             <template slot="title">
                 <span>prompt text</span>
             </template>
-            <Button>RB</Button>
-        </Tooltip>
+            <vButton>RB</vButton>
+        </vTooltip>
     </div>
     <div :style="{ marginLeft: `${buttonWidth}px`, clear: 'both', whiteSpace: 'nowrap' }">
-        <Tooltip placement="bottomLeft">
+        <vTooltip placement="bottomLeft">
             <template slot="title">
                 <span>prompt text</span>
             </template>
-            <Button>BL</Button>
-        </Tooltip>
-        <Tooltip placement="bottom">
+            <vButton>BL</vButton>
+        </vTooltip>
+        <vTooltip placement="bottom">
             <template slot="title">
                 <span>prompt text</span>
             </template>
-            <Button>Bottom</Button>
-        </Tooltip>
-        <Tooltip placement="bottomRight">
+            <vButton>Bottom</vButton>
+        </vTooltip>
+        <vTooltip placement="bottomRight">
             <template slot="title">
                 <span>prompt text</span>
             </template>
-            <Button>BR</Button>
-        </Tooltip>
+            <vButton>BR</vButton>
+        </vTooltip>
     </div>
 </div>
 </template>

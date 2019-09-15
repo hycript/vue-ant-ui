@@ -1,15 +1,15 @@
 <template>
 <div>
-    <Avatar
+    <vAvatar
         shape="square"
         size="large"
         :style="{ backgroundColor: color, verticalAlign: 'middle' }"
-    >{{avatarValue}}</Avatar>
-    <Button
+    >{{avatarValue}}</vAvatar>
+    <vButton
         size="small"
         :style="{ marginLeft: 16, verticalAlign: 'middle' }"
         @click="changeValue"
-    >改变</Button>
+    >改变</vButton>
 </div>
 </template>
 <script>
