@@ -3,7 +3,7 @@
     <div></div>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../_util/vue-types';
 
 export default {
     data(){

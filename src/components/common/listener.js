@@ -1,4 +1,4 @@
-import eventListner from '~utils/eventListener';
+import eventListner from '../_util/eventListener';
 
 export default {
     created(){

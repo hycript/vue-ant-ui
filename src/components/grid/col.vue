@@ -5,7 +5,7 @@
     </div>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../_util/vue-types';
 
 const stringOrNumber = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
 

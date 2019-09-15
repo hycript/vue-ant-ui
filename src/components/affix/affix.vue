@@ -7,9 +7,9 @@
     </div>
 </template>
 <script>
-import { isEqual, isFunction } from '~utils/lodash';
-import getScroll from '~utils/getScroll';
-import PropTypes from '~utils/vue-types';
+import { isEqual, isFunction } from '../_util/lodash';
+import getScroll from '../_util/getScroll';
+import PropTypes from '../_util/vue-types';
 import listener from '../common/listener';
 
 const EVENTS = [

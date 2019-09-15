@@ -45,7 +45,7 @@
 </Tooltip>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../_util/vue-types';
 import Tooltip from '../tooltip/tooltip';
 import { abstractTooltipProps, triggerType } from '../tooltip/abstractTooltipProps.js';
 import Icon from '../icon/icon';

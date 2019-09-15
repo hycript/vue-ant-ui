@@ -7,9 +7,7 @@
     </component>
 </template>
 <script>
-import isString from 'lodash/isString';
-import PropTypes from '~utils/vue-types';
-
+import PropTypes from '../_util/vue-types';
 import click from '../common/click';
 import events from '../common/events';
 import buttonType from './buttonType.js';

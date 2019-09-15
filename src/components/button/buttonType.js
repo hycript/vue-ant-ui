@@ -1,4 +1,4 @@
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../_util/vue-types';
 
 const buttonType = ['primary', 'danger', 'dashed', 'ghost', 'default'];
 

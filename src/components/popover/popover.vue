@@ -29,7 +29,7 @@
 </Tooltip>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../_util/vue-types';
 import Tooltip from '../tooltip/tooltip';
 import abstractTooltipProps from '../tooltip/abstractTooltipProps.js';
 

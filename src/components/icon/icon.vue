@@ -5,7 +5,7 @@
 <i :class="classes" v-on="$$listeners"></i>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../_util/vue-types';
 import events from '../common/events';
 
 export default {

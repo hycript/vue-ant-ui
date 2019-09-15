@@ -21,7 +21,7 @@
 </div>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../_util/vue-types';
 import Icon from '../icon/icon';
 
 // matchMedia polyfill for

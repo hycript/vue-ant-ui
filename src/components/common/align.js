@@ -1,6 +1,6 @@
 import domAlign from 'dom-align';
-import PropTypes from '~utils/vue-types';
-import { throttle } from '~utils/lodash';
+import PropTypes from '../_util/vue-types';
+import { throttle } from '../_util/lodash';
 import listener from './listener';
 
 function noop () {}

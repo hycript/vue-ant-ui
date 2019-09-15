@@ -1,4 +1,4 @@
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../_util/vue-types';
 
 const triggerType = PropTypes.oneOf(['hover', 'focus', 'click', 'contextmenu'])
 

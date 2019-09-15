@@ -1,5 +1,5 @@
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../_util/vue-types';
 import Basic from './basic';
 
 export default {

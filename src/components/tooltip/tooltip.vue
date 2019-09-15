@@ -29,8 +29,8 @@
 </div>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
-import { contains } from '~utils/dom';
+import PropTypes from '../_util/vue-types';
+import { contains } from '../_util/dom';
 import abstractTooltipProps from './abstractTooltipProps.js';
 import getPlacement from './getPlacement';
 import Align from '../common/align.js';
