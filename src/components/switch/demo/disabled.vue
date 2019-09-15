@@ -2,7 +2,7 @@
 <div>
     <vSwitch defaultChecked :disabled="disabled" style="margin-bottom:5px" />
     <br />
-    <Button type="primary" @click='onToggle'>Toggle disabled</Button>
+    <vButton type="primary" @click='onToggle'>Toggle disabled</vButton>
 </div>
 </template>
 <script>

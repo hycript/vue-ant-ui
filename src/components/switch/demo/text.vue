@@ -5,8 +5,8 @@
     <vSwitch checkedChildren="1" unCheckedChildren="0" />
     <br>
     <vSwitch defaultChecked>
-        <Icon type="check" slot="checkedChildren" />
-        <Icon type="close" slot="unCheckedChildren" />
+        <vIcon type="check" slot="checkedChildren" />
+        <vIcon type="close" slot="unCheckedChildren" />
     </vSwitch>
 </div>
 </template>

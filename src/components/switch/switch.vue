@@ -22,11 +22,15 @@
 import PropTypes from '../_util/vue-types';
 import events from '../common/events';
 import { hasProp } from '../_util/props-util';
+import Icon from '../icon/icon';
 
 export default {
     name: 'vSwitch',
     mixins: [events],
     exceptListeners: ['change', 'click', 'keydown', 'mouseup'],
+    components: {
+        Icon,
+    },
     model: {
         prop: 'checked',
         event: 'change',
