@@ -8,16 +8,16 @@
         :style="getTabStyles(panel, index)"
         @click="click(panel)"
     >
-        <div :class="panel.closable ? undefined : `${prefixCls}-tab-unclosable`">
-            <vnode v-if="panel.getTabNode" :vnodes="panel.getTabNode()"></vnode>
+        <div :class="isClosable(panel) ? undefined : `${prefixCls}-tab-unclosable`">
+            <vnode v-if="panel.getTabNode" :vnodes="panel.getTabNode()" style="display: inline-block;"></vnode>
             <template v-else><Icon v-if="panel.icon" :type="panel.icon"/>{{ panel.tab }}</template>
-            <Icon v-if="panel.closable" type="close" :class="`${prefixCls}-close-x`" @click="void 0"/>
+            <Icon v-if="isClosable(panel)" type="close" :class="`${prefixCls}-close-x`" @click="removeTab(panel.key, $event)"/>
         </div>
     </div>
 </div>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../../_util/vue-types';
 import vnode from '../../common/vnode';
 import emitter from '../../common/emitter';
 
@@ -30,10 +30,14 @@ export default {
     props: {
         prefixCls: PropTypes.string.def('ant-tabs'),
         activeKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        activeIndex: PropTypes.number,
         tabBarGutter: PropTypes.any.def(null),
         tabPosition: PropTypes.string,
         panels: PropTypes.any.def([]), //props of pane; { key, tab }
         isVertical: PropTypes.bool,
+    },
+    created(){
+        // warning(tab !== undefined, 'There must be `tab` property or slot on children of Tabs.');
     },
     methods: {
         getClasses(panel){
@@ -52,9 +56,18 @@ export default {
                 [isVertical ? 'marginBottom' : 'marginRight']: gutter,
             };
         },
+        isClosable(panel){
+            const { closable } = panel;
+            return closable === undefined || !!closable || closable === '';
+        },
         click(panel){
-            if(panel.disabled || panel.disabled === '') return;
-            this.$emit('tabClick', panel.key);
+            const { disabled, key } = panel;
+            if(disabled || disabled === '') return;
+            // this.$emit('tabClick', panel.key);
+            this.$dispatch('TabBar', 'tabClick', key);
+        },
+        removeTab(key, e){
+            this.$dispatch('TabBar', 'removeTab', key, e);
         }
     }
 }

@@ -1,7 +1,7 @@
 <style lang="less"></style>
 <template>
 <div :class="classes" :style="contentStyles">
-    <vnode :destroyInactiveTabPane="true" :active="true" > <!-- :propGenerators="{ active: isActive }"-->
+    <vnode :propGenerator="generatorPaneProps">
         <slot></slot>
     </vnode>
 </div>
@@ -17,11 +17,13 @@ export default {
     },
     props: {
         prefixCls: PropTypes.string.def('ant-tabs'),
+        activeKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        activeIndex: PropTypes.number,
         animated: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
         animatedWithMargin: PropTypes.bool.def(true),
-        activeKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         tabPosition: PropTypes.oneOf(['top', 'right', 'bottom', 'left']).def('top'),
         destroyInactiveTabPane: PropTypes.bool.def(false),
+        isVertical: PropTypes.bool,
     },
     computed: {
         classes(){
@@ -32,17 +34,30 @@ export default {
             }
         },
         contentStyles(){
-            const { activeKey, tabBarPosition, animated, animatedWithMargin, classes } = this;
-            return {
-
+            const { activeIndex, animated, animatedWithMargin, isVertical } = this;
+            let style = {}
+            if(!animated || !this.$slots.default) return;
+            if(activeIndex === -1) return { display: 'none' };
+            if(animatedWithMargin){
+                style[isVertical ? 'marginTop' : 'marginLeft'] = `${-activeIndex * 100}%`;
+            }else{
+                const translate = isVertical ? 'translateY' : 'translateX';
+                style['transform'] = `${translate}(${-activeIndex * 100}%) translateZ(0)`
             }
+            return style;
         }
     },
     methods: {
-        isActive(vnode, data){
-            const { activeKey } = this;
-            console.error('vnode', vnode.key, activeKey, activeKey === vnode.key)
-            return activeKey === vnode.key;
+        generatorPaneProps(vnode, data){
+            const { activeKey, destroyInactiveTabPane, prefixCls } = this;
+            // console.error('vnode isActive', vnode.key, activeKey, activeKey === vnode.key)
+            let active = activeKey === vnode.key;
+            return {
+                destroyInactiveTabPane,
+                activeKey,
+                active,
+                prefixCls,
+            }
         }
     }
 }

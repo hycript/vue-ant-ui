@@ -8,7 +8,7 @@
 </div>
 </template>
 <script>
-import PropTypes from '~utils/vue-types';
+import PropTypes from '../../_util/vue-types';
 
 export default {
     name: 'TabPane',
@@ -24,15 +24,17 @@ export default {
         destroyInactiveTabPane: PropTypes.bool,
         forceRender: PropTypes.bool,
         tab: PropTypes.any,
+        icon: PropTypes.string,
         closable: PropTypes.bool,
         disabled: PropTypes.bool,
         placeholder: PropTypes.any,
     },
     computed: {
         classes(){
-            const { active, prefixCls } = this;
+            let { active, prefixCls } = this;
+            prefixCls = `${prefixCls}-tabpane`;
             return {
-                [`${prefixCls}-tabpane`]: true,
+                [`${prefixCls}`]: true,
                 [`${prefixCls}-inactive`]: !active,
                 [`${prefixCls}-active`]: active,
             }
@@ -40,12 +42,12 @@ export default {
         slefKey(){
             return this.$vnode.key;
         },
-        slefActive(){
+        /* slefActive(){
             return this.activeKey === this.slefKey;
-        },
+        }, */
         shouldRender(){
-            const { destroyInactiveTabPane, selfActive, hasActived, forceRender } = this;
-            const isRender = destroyInactiveTabPane ? selfActive : hasActived;
+            const { destroyInactiveTabPane, active, hasActived, forceRender } = this;
+            const isRender = destroyInactiveTabPane ? active : hasActived;
             return isRender || forceRender;
         },
     },
@@ -58,7 +60,6 @@ export default {
         }
     },
     mounted(){
-        console.error('tabPabe', this);
     },
     methods: {
     }

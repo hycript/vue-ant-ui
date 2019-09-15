@@ -1,84 +1,59 @@
-const is = (data, type) => {
-    let _type = Object.prototype.toString.call(data).slice(8, -1).toLowerCase();
-    if(type === undefined) return _type;
-    return _type === type;
-}
 
-const parseStyleText = (cssText = '', camel) => {
-    if(!cssText) return {};
-    if(is(cssText, 'object')) return cssText;
-    const res = {};
-    const listDelimiter = /;(?![^(]*\))/g;
-    const propertyDelimiter = /:(.+)/;
-    cssText.split(listDelimiter).forEach(function (item) {
-        if (item) {
-            const tmp = item.split(propertyDelimiter);
-            if (tmp.length > 1) {
-                const k = tmp[0].trim().replace(/-(\w)/g, function($$, $1){
-                    return $1.toUpperCase();
-                });
-                res[k] = tmp[1].trim();
-            }
-        }
-    });
-    return res;
-};
-
-const stringifyClassData = (classData) => {
-    let _type = is(classData);
-    if(_type === 'object'){
-        return Object.keys(classData).filter(cls => {
-            return !!classData[cls];
-        }).join(' ');
-    }else if(_type === 'array'){
-        return classData.join(' ');
-    }
-    return classData;
-}
-
-const mergeListeners = (cdata = {}, odata = {}) => {
-    Object.keys(odata).forEach(key => {
-        let clistener = cdata[key];
-        let olistener = odata[key];
-        if(!clistener){
-            cdata[key] = olistener
-        }else{
-            cdata[key] = function(...params){
-                olistener(...params);
-                clistener(...params);
-            }
-        }
-    })
-    return cdata;
-}
+import { is, type, parseStyleText, stringifyClassData, mergeListeners } from '../_util/props-util';
+import { cloneVNode, cloneVNodes } from '../_util/vnode';
+import PropTypes from '../_util/vue-types';
 
 export default {
     functional: true,
-    props: ['vnodes', 'vnodesReverse', 'vnodesFilter', 'slot', 'propGenerators', 'dataGenerators'],
+    // props: ['vnodes', 'vnodesReverse', 'vnodesFilter', 'slot', 'propGenerator', 'dataGenerator'],
+    props: {
+        vnodes: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
+        vnodesReverse: PropTypes.bool,
+        slot: PropTypes.string,
+        vnodesFilter: PropTypes.func,
+        propGenerator: PropTypes.func,
+        dataGenerator: PropTypes.func,
+    },
     render(h, ctx) {
         let { attrs = {}, key, ...otherData } = ctx.data;
-        let { vnodes: _vnodes, vnodesReverse = false, slot, propGenerators = {}, dataGenerators = {} } = ctx.props || {};
+        let { vnodes: _vnodes, vnodesReverse = false, slot, propGenerator, dataGenerator } = ctx.props || {};
 
-        let keysOfGenerators = Object.keys(propGenerators);
-        let keysOfDataGenerators = Object.keys(dataGenerators);
+        let hasPropGenerator = typeof propGenerator === 'function';
+        let hasDataGenerator = typeof dataGenerator === 'function';
 
         let data = {
             ...otherData,
-            ...dataGenerators,
         };
 
-        if(Object.keys(attrs).length > 0 || keysOfGenerators.length > 0) data['attrs'] = attrs;
+        if(Object.keys(attrs).length > 0 || hasPropGenerator) data['attrs'] = attrs;
 
         let keys = Object.keys(data);
 
-        let vnodes = ctx.props.vnodes && ctx.props.vnodes.length > 0 ? ctx.props.vnodes : ctx.children;
+        // let vnodes = ctx.props.vnodes && ctx.props.vnodes.length > 0 ? ctx.props.vnodes : ctx.children;
+        let vnodes = _vnodes ? typeof _vnodes === 'function' ? _vnodes() : _vnodes :ctx.children;
 
-        // console.error('.vuepress vnode', ctx, ctx.data, vnodes, vnodes[0] && Object.keys(vnodes[0].data));
+        if(_vnodes){
+            vnodes = cloneVNodes(vnodes, true);
+        }
+
+        // console.error('.vuepress vnode', ctx, ctx.data, vnodes);
 
         if(!vnodes || vnodes.length === 0) return undefined;
 
         if(vnodesReverse){
             vnodes = vnodes.reverse();
+        }
+
+        for(let i = 0; i < vnodes.length; i++){
+            let vnode = vnodes[i];
+            if(vnode.tag && vnode.tag === 'template'){
+                if(!vnode.children || vnode.children.length === 0){
+                    vnodes.splice(i, 1);
+                }else{
+                    vnodes.splice(i, 1, ...vnode.children);
+                }
+                i --;
+            }
         }
 
         //keys.length > 0 &&
@@ -91,31 +66,24 @@ export default {
             let propsKey = [];
             let propsData = {}
 
-            if(keys.length === 0) return;
+            if(keys.length === 0 && !hasDataGenerator) return;
 
             let { componentOptions } = vnode;
             if(componentOptions){
-                propsData = componentOptions.propsData;
+                propsData = Object.assign(componentOptions.propsData || {});
                 propsKey = Object.keys((componentOptions.Ctor && componentOptions.Ctor.options.props) || {});
             }
 
             let _data = data;
-
-            if(keysOfDataGenerators > 0 || keysOfGenerators.length > 0){
+            // propGenerator, dataGenerator
+            if(hasPropGenerator || hasDataGenerator){
                 _data = Object.assign({}, data);
-
-                keysOfDataGenerators.forEach(key => {
-                    const generator = propGenerators[key]
-                    if(typeof generator !== 'function') return;
-                    _data[key] = generator(vnode, vnode.data);
-                })
+                hasDataGenerator && Object.assign(_data, dataGenerator(vnode, vnode.data) || {});
 
                 let _attrs = {};
-                keysOfGenerators.forEach(key => {
-                    const generator = propGenerators[key]
-                    if(typeof generator !== 'function') return;
-                    _attrs[key] = generator(vnode, vnode.data);
-                });
+                if(hasPropGenerator){
+                    _attrs = propGenerator(vnode, vnode.data) || {};
+                }
 
                 _data.attrs = Object.assign({}, _data.attrs || {}, _attrs);
             }
@@ -151,16 +119,17 @@ export default {
                     odata = Object.assign({}, odata);
                     Object.keys(odata || {}).forEach(k => {
                         if(propsKey.indexOf(k) === -1) return;
-                        if(!(k in propsData)){
-                            propsData[k] = odata[k];
-                            delete odata[k];
-                        }
+                        // if(!(k in propsData)){
+                        propsData[k] = odata[k];
+                        delete odata[k];
+                        // }
                     })
+                    componentOptions.propsData = propsData;
                 }
 
-                let _type = is(cdata || odata);
+                let _type = type(cdata || odata);
 
-                if(_type !== is(odata)) return;
+                if(_type !== type(odata)) return;
 
                 switch (_type) {
                 case 'string':

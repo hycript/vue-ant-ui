@@ -21,6 +21,7 @@ import Switch from './components/switch';
 import Avatar from './components/avatar';
 import Popover from './components/popover';
 import Tooltip from './components/tooltip';
+import Tabs from './components/tabs';
 import Tag from './components/tag';
 import Badge from './components/badge';
 
@@ -43,6 +44,7 @@ const components = {
     ...Avatar,
     ...Popover,
     ...Tooltip,
+    ...Tabs,
     ...Tag,
     ...Badge,
     //Feedback
