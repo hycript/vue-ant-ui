@@ -17,16 +17,12 @@ export default ({
     }
     // ...做一些其他的应用级别的优化
     console.log('VUe', Vue, options, router, siteData);
-    // Vue.use(UI);
-    // const { Layout: vLayout, Header: vHeader, Footer: vFooter, Content: vContent, Badge: vBadge, ...others } = Components;
-    // let components = { vLayout, vHeader, vFooter, vContent, vBadge, ...others, ContentSlotsDistributor };
     Vue.component('ContentSlotsDistributor', ContentSlotsDistributor);
 
     Object.keys(Components).forEach(key => {
         if(!Components[key]) return;
         let component = Components[key];
         key = component.name.indexOf('v') === 0 ? component.name : 'v' + component.name;
-        console.log('key', key)
         Vue.component(key, component);
     })
 }

@@ -19,11 +19,12 @@ import Switch from './components/switch';
 
 //Data Display
 import Avatar from './components/avatar';
+import Badge from './components/badge';
+import Card from './components/card';
 import Popover from './components/popover';
 import Tooltip from './components/tooltip';
 import Tabs from './components/tabs';
 import Tag from './components/tag';
-import Badge from './components/badge';
 
 //Feedback
 import Popconfirm from './components/popconfirm';
@@ -42,11 +43,12 @@ const components = {
     ...Switch,
     //Data Display
     ...Avatar,
+    ...Badge,
+    ...Card,
     ...Popover,
     ...Tooltip,
     ...Tabs,
     ...Tag,
-    ...Badge,
     //Feedback
     ...Popconfirm,
 }
