@@ -1,6 +1,6 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
-<div :class="classes">
+<div :class="classes" v-on="$$listeners">
     <div v-if="hasHead" :class="`${prefixCls}-head`" :style="headStyle">
         <div :class="`${prefixCls}-head-wrapper`">
             <div v-if="$slots.title || title" :class="`${prefixCls}-head-title`">
@@ -53,6 +53,7 @@
 import PropTypes from '../_util/vue-types';
 import { is, filterEmpty } from '../_util/props-util';
 import vnode from '../common/vnode';
+import events from '../common/events';
 import TabsComponents from '../tabs';
 import GridComponents from '../grid';
 
@@ -61,6 +62,8 @@ const { Col, Row } = GridComponents;
 
 export default {
     name: 'Card',
+    mixins: [events],
+    exceptListeners: ['tabChange', 'tab-change'],
     components: {
         Tabs,
         TabPane,

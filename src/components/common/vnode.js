@@ -30,7 +30,7 @@ export default {
         let keys = Object.keys(data);
 
         // let vnodes = ctx.props.vnodes && ctx.props.vnodes.length > 0 ? ctx.props.vnodes : ctx.children;
-        let vnodes = _vnodes ? typeof _vnodes === 'function' ? _vnodes() : _vnodes :ctx.children;
+        let vnodes = _vnodes ? typeof _vnodes === 'function' ? _vnodes(h) : _vnodes :ctx.children;
 
         if(!is(vnodes, 'array')){
             vnodes = [vnodes];

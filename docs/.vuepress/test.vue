@@ -4,7 +4,7 @@
 </div>
 </template>
 <script>
-import Demo from '~comps/card/demo/tabs';
+import Demo from '~comps/spin/demo/basic';
 export default {
     components: {
         Demo,

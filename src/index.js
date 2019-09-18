@@ -28,6 +28,7 @@ import Tag from './components/tag';
 
 //Feedback
 import Popconfirm from './components/popconfirm';
+import Spin from './components/spin';
 
 const components = {
     //general
@@ -51,6 +52,7 @@ const components = {
     ...Tag,
     //Feedback
     ...Popconfirm,
+    ...Spin,
 }
 
 const prefix = 'v';
