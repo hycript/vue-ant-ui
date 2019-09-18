@@ -15,12 +15,14 @@
 <script>
 import PropTypes from '../../_util/vue-types';
 import vnode from '../../common/vnode';
+import Icon from '../../icon/icon';
 import ScrollableTabBarNode from './ScrollableTabBarNode';
 
 export default {
     name: 'TabBar',
     components: {
         vnode,
+        Icon,
         ScrollableTabBarNode,
     },
     props: {
