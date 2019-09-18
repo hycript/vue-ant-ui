@@ -1,35 +1,21 @@
 <template>
-<div class="test">
-    <vButton slot="tabBarExtraContent" @click="change">POS</vButton>
-    <hr> <!--  type="editable-card" style="height: 220px;"-->
-    <vCard loading></vCard>
+<div class="test" style="margin: 1em;">
+    <Demo></Demo>
 </div>
 </template>
 <script>
+import Demo from '~comps/card/demo/tabs';
 export default {
     components: {
+        Demo,
     },
     data(){
         return {
             key: 'test',
-            tabPosition: 'top',
         }
     },
     methods: {
-        log(e){
-            console.log(e.type, this.key);
-        },
-        log2(e){
-            console.log('log2', e.type);
-        },
-        change(){
-            let pos = ['top', 'right', 'bottom', 'left'];
-            const { tabPosition } = this;
-            let index = pos.indexOf(tabPosition);
-            index = index + 1;
-            if(index >= pos.length) index = 0;
-            this.tabPosition = pos[index];
-        }
+
     }
 }
 </script>

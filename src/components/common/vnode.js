@@ -7,7 +7,7 @@ export default {
     functional: true,
     // props: ['vnodes', 'vnodesReverse', 'vnodesFilter', 'slot', 'propGenerator', 'dataGenerator'],
     props: {
-        vnodes: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
+        vnodes: PropTypes.oneOfType([PropTypes.array, PropTypes.func, PropTypes.object]),
         vnodesReverse: PropTypes.bool,
         slot: PropTypes.string,
         vnodesFilter: PropTypes.func,
@@ -31,6 +31,10 @@ export default {
 
         // let vnodes = ctx.props.vnodes && ctx.props.vnodes.length > 0 ? ctx.props.vnodes : ctx.children;
         let vnodes = _vnodes ? typeof _vnodes === 'function' ? _vnodes() : _vnodes :ctx.children;
+
+        if(!is(vnodes, 'array')){
+            vnodes = [vnodes];
+        }
 
         if(_vnodes){
             vnodes = cloneVNodes(vnodes, true);

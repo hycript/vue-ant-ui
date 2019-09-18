@@ -17,11 +17,11 @@
             :defaultActiveTabKey="defaultActiveTabKey"
             @change="onTabChange"
         >
-            <TabPane v-for="(item, index) in tabList" v-bind="item" :key="index">
+            <TabPane v-for="item in tabList" :key="item.key" v-bind="item">
                 <template v-if="item.scopedSlots">
                     <template v-for="(slot, index) in item.scopedSlots">
-                        <template v-if="$slots[slot]" :slot="index">
-                            <slot :name="slot"></slot>
+                        <template v-if="$scopedSlots[slot]" :slot="index">
+                            <slot :name="slot" v-bind="item"></slot>
                         </template>
                         <!-- <vnode v-if="$slots[slot]" :key="index" :slot="index" :vnodes="$slots[slot]"></!-->
                     </template>
@@ -40,12 +40,19 @@
                 </Col>
             </Row>
         </div>
+        <slot v-else></slot>
     </div>
+    <ul v-if="slotActions && slotActions.length" :class="`${prefixCls}-actions`">
+        <li v-for="(action, index) in slotActions" :key="index"  :style="{ width: `${100 / slotActions.length}%` }">
+            <span><vnode :vnodes="action"></vnode></span>
+        </li>
+    </ul>
 </div>
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import { is } from '../_util/props-util';
+import { is, filterEmpty } from '../_util/props-util';
+import vnode from '../common/vnode';
 import TabsComponents from '../tabs';
 import GridComponents from '../grid';
 
@@ -55,10 +62,11 @@ const { Col, Row } = GridComponents;
 export default {
     name: 'Card',
     components: {
-        // Tabs,
-        // TabPane,
+        Tabs,
+        TabPane,
         Col,
         Row,
+        vnode,
     },
     data(){
         this.updateWiderPaddingCalled = false;
@@ -81,12 +89,26 @@ export default {
         type: PropTypes.string,
         actions: PropTypes.any,
         tabList: PropTypes.array,
-        activeTabKey: PropTypes.string,
-        defaultActiveTabKey: PropTypes.string,
+        activeTabKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        defaultActiveTabKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     },
     computed: {
+        isContainGrid(){
+            let isGrid = false;
+            (this.$slots.default || []).forEach(vnode => {
+                const { componentOptions } = vnode;
+                if(!componentOptions || !componentOptions.Ctor) return;
+                const { options = {} } = componentOptions.Ctor;
+                const { name } = options;
+                if(name === 'CardGrid'){
+                    isGrid = true;
+                    return false;
+                }
+            })
+            return isGrid;
+        },
         classes(){
-            const { prefixCls, loading, bordered, hoverable, tabList, type } = this;
+            const { prefixCls, loading, bordered, hoverable, tabList, type, isContainGrid } = this;
             return {
                 [`${prefixCls}`]: true,
                 [`${prefixCls}-loading`]: loading,
@@ -94,7 +116,7 @@ export default {
                 [`${prefixCls}-hoverable`]: !!hoverable,
                 // [`${prefixCls}-wider-padding`]: this.widerPadding,
                 // [`${prefixCls}-padding-transition`]: this.updateWiderPaddingCalled,
-                // [`${prefixCls}-contain-grid`]: this.isContainGrid($slots.default),
+                [`${prefixCls}-contain-grid`]: isContainGrid,
                 [`${prefixCls}-contain-tabs`]: tabList && tabList.length,
                 [`${prefixCls}-type-${type}`]: !!type,
             };
@@ -107,12 +129,20 @@ export default {
             return undefined;
         },
         hasHead(){
-            const { title, extra, $slots } = this;
-            return !!title || !!extra || !!$slots.title || !!$slots.extra;
-        }
+            const { title, extra, $slots, tabList = [] } = this;
+            return !!title || !!extra || !!$slots.title || !!$slots.extra || (tabList && tabList.length);
+        },
+        slotActions(){
+            const actions = filterEmpty(this.$slots.actions)
+            return actions;
+        },
+    },
+    created(){
+        console.log(this.$slots, this);
     },
     methods: {
         onTabChange(key){
+            console.log('on tab change', key);
             this.$emit('tabChange', key);
         }
     }
