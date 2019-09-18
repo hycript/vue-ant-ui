@@ -137,12 +137,8 @@ export default {
             return actions;
         },
     },
-    created(){
-        console.log(this.$slots, this);
-    },
     methods: {
         onTabChange(key){
-            console.log('on tab change', key);
             this.$emit('tabChange', key);
         }
     }

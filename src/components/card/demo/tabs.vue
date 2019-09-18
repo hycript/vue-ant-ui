@@ -52,7 +52,6 @@ export default {
     },
     methods: {
         onTabChange(key, type) {
-            console.log('demo', key, type)
             this[type] = key
         },
     },
