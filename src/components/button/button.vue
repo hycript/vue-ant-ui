@@ -13,7 +13,7 @@ import events from '../common/events';
 import buttonType from './buttonType.js';
 import buttonSize from './buttonSize.js';
 import buttonSizeMapper from './buttonSizeMapper.js';
-import Icon from '../icon/icon';
+import Icon from '../icon';
 
 const rxTwoCNChar = /^[\u4e00-\u9fa5]{2}$/;
 const isTwoCNChar = rxTwoCNChar.test.bind(rxTwoCNChar);

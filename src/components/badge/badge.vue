@@ -23,7 +23,7 @@ import PropTypes from '../_util/vue-types';
 import { filterEmpty, isNumeric } from '../_util/props-util';
 import events from '../common/events';
 import vnode from '../common/vnode';
-import vTransition from '../transition/transition';
+import vTransition from '../transition';
 
 export default {
     name: 'Badge',

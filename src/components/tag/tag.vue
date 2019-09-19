@@ -9,8 +9,8 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import vTransition from '../transition/transition';
-import Icon from '../icon/icon';
+import vTransition from '../transition';
+import Icon from '../icon';
 import { omit } from '../_util/lodash';
 
 function _isPresetColor(color){

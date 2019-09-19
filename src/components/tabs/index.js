@@ -1,7 +1,11 @@
 import Tabs from './tabs';
 import TabPane from './lib/TabPane';
 
-export default {
+Tabs.TabPane = TabPane;
+
+export default Tabs;
+
+export {
     Tabs,
     TabPane,
 }

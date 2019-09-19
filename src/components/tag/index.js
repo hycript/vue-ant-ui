@@ -1,7 +1,11 @@
 import Tag from './tag';
 import CheckableTag from './checkableTag';
 
-export default {
+Tag.CheckableTag = CheckableTag;
+
+export default Tag;
+
+export {
     Tag,
     CheckableTag,
 }

@@ -1,5 +1,3 @@
 import Affix from './affix';
 
-export default {
-    Affix
-}
+export default Affix;

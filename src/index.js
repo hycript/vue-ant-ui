@@ -3,13 +3,13 @@ import './components/style/index.less';
 import directive from './components/_util/directive';
 
 // general
-import Button from './components/button';
 import Icon from './components/icon';
+import Button from './components/button';
 import Transition from './components/transition';
 
 //layout
-import Grid from './components/grid';
-import Layout from './components/layout';
+import { Col, Row } from './components/grid';
+import { Layout, Header, Footer, Content, Sider } from './components/layout';
 
 //navigation
 import Affix from './components/affix';
@@ -32,27 +32,48 @@ import Spin from './components/spin';
 
 const components = {
     //general
-    ...Icon,
-    ...Button,
-    ...Transition,
+    Icon,
+    Button,
+    ButtonGroup: Button.Group,
+    Transition,
+
     //layout
-    ...Grid,
-    ...Layout,
+    //- Grid-0
+    Col,
+    Row,
+    //- Grid-1
+    //- Layout-0
+    Layout,
+    Header,
+    Footer,
+    Content,
+    Sider,
+    //- Layout-1
+
     //navigation
-    ...Affix,
+    Affix,
+
     //Data Entry
-    ...Switch,
+    Switch,
+
     //Data Display
-    ...Avatar,
-    ...Badge,
-    ...Card,
-    ...Popover,
-    ...Tooltip,
-    ...Tabs,
-    ...Tag,
+    Avatar,
+    Badge,
+    //- Card-0
+    Card,
+    CardMeta: Card.Meta,
+    CardGrid: Card.Grid,
+    //- Card-1
+    Popover,
+    Tooltip,
+    Tabs,
+    TabPane: Tabs.TabPane,
+    Tag,
+    CheckableTag: Tag.CheckableTag,
+
     //Feedback
-    ...Popconfirm,
-    ...Spin,
+    Popconfirm,
+    Spin,
 }
 
 const prefix = 'v';
@@ -73,4 +94,37 @@ export default {
 
 export {
     components as Components,
+
+    //general
+    Icon,
+    Button,
+    Transition,
+
+    //layout
+    Col,
+    Row,
+    Layout,
+    Header,
+    Footer,
+    Content,
+    Sider,
+
+    //navigation
+    Affix,
+
+    //Data Entry
+    Switch,
+
+    //Data Display
+    Avatar,
+    Badge,
+    Card,
+    Popover,
+    Tooltip,
+    Tabs,
+    Tag,
+
+    //Feedback
+    Popconfirm,
+    Spin,
 }

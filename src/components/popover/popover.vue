@@ -30,7 +30,7 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import Tooltip from '../tooltip/tooltip';
+import Tooltip from '../tooltip';
 import abstractTooltipProps from '../tooltip/abstractTooltipProps.js';
 
 export default {

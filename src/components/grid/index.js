@@ -1,7 +1,7 @@
 import Col from './col';
 import Row from './row';
 
-export default {
+export {
     Col,
     Row,
 }

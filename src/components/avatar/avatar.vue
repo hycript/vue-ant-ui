@@ -11,7 +11,7 @@
 <script>
 import PropTypes from '../_util/vue-types';
 import events from '../common/events';
-import Icon from '../icon/icon';
+import Icon from '../icon';
 
 export default {
     name: 'Avatar',

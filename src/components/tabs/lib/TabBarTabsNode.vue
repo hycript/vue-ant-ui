@@ -20,7 +20,7 @@
 import PropTypes from '../../_util/vue-types';
 import vnode from '../../common/vnode';
 import emitter from '../../common/emitter';
-import Icon from '../../icon/icon';
+import Icon from '../../icon';
 
 export default {
     name: 'TabBarTabsNode',

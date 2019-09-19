@@ -35,7 +35,7 @@ import abstractTooltipProps from './abstractTooltipProps.js';
 import getPlacement from './getPlacement';
 import Align from '../common/align.js';
 import Popup from '../common/popup.js';
-import vTransition from '../transition/transition';
+import vTransition from '../transition';
 import listener from '../common/listener';
 
 export default {

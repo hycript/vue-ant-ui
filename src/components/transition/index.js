@@ -1,5 +1,3 @@
-import Transition from './transition.vue';
+import Transition from './transition';
 
-export default {
-    Transition,
-}
+export default Transition;

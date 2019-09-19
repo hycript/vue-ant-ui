@@ -6,7 +6,7 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import vTransition from '../transition/transition';
+import vTransition from '../transition';
 
 export default {
     name: 'CheckableTag',

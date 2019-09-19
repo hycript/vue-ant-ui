@@ -54,11 +54,8 @@ import PropTypes from '../_util/vue-types';
 import { is, filterEmpty } from '../_util/props-util';
 import vnode from '../common/vnode';
 import events from '../common/events';
-import TabsComponents from '../tabs';
-import GridComponents from '../grid';
-
-const { Tabs, TabPane } = TabsComponents;
-const { Col, Row } = GridComponents;
+import { Tabs, TabPane } from '../tabs';
+import { Col, Row } from '../grid';
 
 export default {
     name: 'Card',

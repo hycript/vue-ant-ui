@@ -15,7 +15,7 @@
 <script>
 import PropTypes from '../../_util/vue-types';
 import vnode from '../../common/vnode';
-import Icon from '../../icon/icon';
+import Icon from '../../icon';
 import ScrollableTabBarNode from './ScrollableTabBarNode';
 
 export default {

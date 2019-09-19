@@ -34,22 +34,6 @@
     </vLayout>
 </div>
 </template>
-<script>
-import comps from '../index';
-
-const { Layout, Header, Footer, Content, Sider } = comps;
-
-export default {
-    /* vuepree 默认组件包含 Layout, Header, Footer, Content 的缘故，该demo改为手动引入组件。 */
-    components: {
-        Layout,
-        Header,
-        Footer,
-        Content,
-        Sider,
-    }
-}
-</script>
 <style lang="less" scoped>
 .demo{
     text-align: center;

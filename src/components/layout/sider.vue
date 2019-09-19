@@ -22,7 +22,7 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import Icon from '../icon/icon';
+import Icon from '../icon';
 
 // matchMedia polyfill for
 // https://github.com/WickyNilliams/enquire.js/issues/82

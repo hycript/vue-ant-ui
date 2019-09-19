@@ -4,7 +4,7 @@ import Footer from './footer';
 import Content from './content';
 import Sider from './sider';
 
-export default {
+export {
     Layout,
     Header,
     Footer,

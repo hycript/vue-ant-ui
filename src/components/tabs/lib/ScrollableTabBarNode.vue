@@ -29,7 +29,7 @@ import emitter from '../../common/emitter';
 import TabBarTabsNode from './TabBarTabsNode';
 import InkTabBarNode from './InkTabBarNode';
 import isTransformSupported from '../../_util/isTransformSupported';
-import Icon from '../../icon/icon';
+import Icon from '../../icon';
 
 const TransformSupported = isTransformSupported();
 
