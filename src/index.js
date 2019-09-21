@@ -27,6 +27,7 @@ import Tabs from './components/tabs';
 import Tag from './components/tag';
 
 //Feedback
+import Alert from './components/alert';
 import Popconfirm from './components/popconfirm';
 import Spin from './components/spin';
 
@@ -72,6 +73,7 @@ const components = {
     CheckableTag: Tag.CheckableTag,
 
     //Feedback
+    Alert,
     Popconfirm,
     Spin,
 }
@@ -125,6 +127,7 @@ export {
     Tag,
 
     //Feedback
+    Alert,
     Popconfirm,
     Spin,
 }

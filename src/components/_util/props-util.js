@@ -26,6 +26,18 @@ export function hasProp(instance, prop){
     return prop in propsData;
 }
 
+export function getProp(instance, prop){
+    const $options = instance.$options || {};
+    const propsData = $options.propsData || {};
+    const props = $options.props || {};
+    let val = propsData[prop];
+    let vueType = props[prop];
+    if(val === '' && vueType && vueType.type === Boolean){
+        return true;
+    }
+    return val;
+}
+
 export const parseStyleText = (cssText = '', camel) => {
     if(!cssText) return {};
     if(is(cssText, 'object')) return cssText;
