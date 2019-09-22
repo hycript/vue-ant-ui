@@ -1,10 +1,10 @@
 <template>
 <div class="test" style="margin: 1em;">
-    <Demo></Demo>
+    <Demo ref="demo"></Demo>
 </div>
 </template>
 <script>
-import Demo from '~comps/spin/demo/basic';
+import Demo from '~comps/alert/demo/banner';
 export default {
     components: {
         Demo,
@@ -13,6 +13,9 @@ export default {
         return {
             key: 'test',
         }
+    },
+    mounted(){
+        console.log('dmeo', this.$refs.demo);
     },
     methods: {
 

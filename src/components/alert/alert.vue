@@ -14,7 +14,7 @@
             <slot v-if="$slots.description" name="description"></slot>
             <slot v-else>{{ description }}</slot>
         </span>
-        <a v-if="closable || closeText" :class="`${prefixCls}-close-icon`" href="javascript:;" @click="handleClose">
+        <a v-if="closable || closeText" :class="`${prefixCls}-close-icon`" @click="handleClose">
             <slot name="closeText">
                 <template v-if="closeText">{{ closeText}}</template>
                 <Icon v-else type="close" />
