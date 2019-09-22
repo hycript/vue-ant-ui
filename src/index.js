@@ -37,6 +37,7 @@ const components = {
     Button,
     ButtonGroup: Button.Group,
     Transition,
+    TransitionGroup: Transition.Group,
 
     //layout
     //- Grid-0
