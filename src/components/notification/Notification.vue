@@ -3,11 +3,14 @@
 <div :class="prefixCls" :style="defaultStyles">
     <vTransitionGroup :transitionName="noticeTransition">
         <Notice v-for="notice in notices"
+            :class="notice.class" :style="notice.style" :key="notice.key"
             v-bind="{ prefixCls, duration: notice.duration, closable: notice.closable, update: notice.update, }"
-            :key="notice.key" @click="onNoticeClick(notice, $event)" @close="onNoticeClose(notice, $event)"
+            @click="onNoticeClick(notice, $event)" @close="onNoticeClose(notice, $event)"
         >
             <vnode :vnodes="notice.content"></vnode>
-            <template slot="closeIcon"><slot name="closeIcon"></slot></template>
+            <vnode slot="closeIcon" :vnodes="closeIcon">
+                <slot name="closeIcon"></slot>
+            </vnode>
         </Notice>
     </vTransitionGroup>
 </div>
@@ -18,6 +21,7 @@ import Notice from './Notice';
 import { TransitionGroup as vTransitionGroup } from '../transition'
 import modal from '../common/modal';
 import vnode from '../common/vnode';
+import Icon from '../icon';
 
 let seed = 0;
 const now = Date.now();
@@ -32,6 +36,7 @@ const Notification = {
         Notice,
         vTransitionGroup,
         vnode,
+        Icon,
     },
     data(){
         return {
@@ -43,7 +48,7 @@ const Notification = {
         transitionName: PropTypes.string,
         animation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).def('fade'),
         maxCount: PropTypes.number,
-        // closeIcon: PropTypes.any,
+        closeIcon: PropTypes.any,
     },
     computed: {
         defaultStyles(){
@@ -60,10 +65,14 @@ const Notification = {
             const key = (notice.key = notice.key || getUuid());
             const { maxCount } = this.$props;
             const index = this.notices.map(notice => notice.key).indexOf(key);
+
             if(index > -1){
+                notice.update = true;
                 this.notices.splice(index, 1, notice);
+            }else{
+                this.notices.push(notice);
             }
-            this.notices.push(notice);
+
             if(maxCount && this.notices.length > maxCount){
                 this.notices.shift();
             }

@@ -69,6 +69,7 @@ module.exports = [
         children: [
             '/components/feedback/alert',
             '/components/feedback/message',
+            '/components/feedback/notification',
             '/components/feedback/popconfirm',
             '/components/feedback/spin',
         ]

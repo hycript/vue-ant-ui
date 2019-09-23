@@ -29,6 +29,7 @@ import Tag from './components/tag';
 //Feedback
 import Alert from './components/alert';
 import message from './components/message';
+import notification from './components/notification';
 import Popconfirm from './components/popconfirm';
 import Spin from './components/spin';
 
@@ -93,6 +94,7 @@ function install(Vue){
     });
 
     Vue.prototype.$message = message;
+    Vue.prototype.$notification = notification;
 }
 
 export default {

@@ -32,7 +32,8 @@ function getMessageInstance(callback){
 }
 
 function notice(params){
-    const { duration = defaultConfig.duration, onClose, icon, type, content, ...others } = params;
+    const { prefixCls: _prefixCls, duration: _duration } = defaultConfig;
+    const { prefixCls = _prefixCls, duration = _duration, onClose, icon, type, content, ...others } = params;
     const target = key++;
     const closePromise = new Promise((resolve, reject) => {
         const callback = () => {
@@ -43,7 +44,7 @@ function notice(params){
         }
         getMessageInstance(instance => {
             const props = {
-                prefixCls: defaultConfig.prefixCls,
+                prefixCls,
                 icon,
                 type,
                 content,
