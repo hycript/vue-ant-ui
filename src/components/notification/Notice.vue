@@ -7,7 +7,7 @@
     <div :class="`${componentClass}-content`">
         <slot></slot>
     </div>
-    <a tabIndex="0" @click="close" :class="`${componentClass}-close`">
+    <a v-if="closable" tabIndex="0" @click="close" :class="`${componentClass}-close`">
         <slot name="closeIcon">
             <span :class="`${componentClass}-close-x`" />
         </slot>
