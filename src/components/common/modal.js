@@ -54,7 +54,7 @@ function vnodeCreator(createElement, component, $data){
 export default function({
     component,
     getContainer,
-    $options,
+    options,
     store,
     router,
     // data,
@@ -78,8 +78,9 @@ export default function({
             }
         },
         render(createElement, ctx){
+            console.error('modal options', options);
             return createElement(component, {
-                ...$options,
+                ...options,
                 ref,
             }, childCreator(createElement, children, this.$data));
         },

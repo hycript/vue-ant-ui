@@ -68,6 +68,7 @@ module.exports = [
         sidebarDepth: 2,
         children: [
             '/components/feedback/alert',
+            '/components/feedback/message',
             '/components/feedback/popconfirm',
             '/components/feedback/spin',
         ]

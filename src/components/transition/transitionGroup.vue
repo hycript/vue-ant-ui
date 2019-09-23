@@ -10,6 +10,7 @@
     :enter-active-class="enterActiveCls"
     :leave-active-class="leaveActiveCls"
     :appear="appear"
+    :tag="tag"
 >
     <slot></slot>
 </transition-group>
@@ -24,6 +25,7 @@ export default {
     props: {
         transitionName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).def(defaultTransitionName),
         appear: PropTypes.bool.def(true),
+        tag: PropTypes.string,
     },
     computed: {
         enterActiveCls(){
@@ -73,12 +75,19 @@ export default {
             this.emit(el, 'after-leave');
         },
         emit(el, event){
-            let child = this.$children.filter(child => {
+            let container = (this.$children && this.$children[0]) || {};
+            let { $children } = container;
+
+            this.$emit(event);
+
+            if(!$children) return;
+
+            let child = $children.filter(child => {
                 return child.$el === el;
             })[0];
+
             child && child.$emit(event);
             child = null;
-            this.$emit(event);
         },
     }
 }

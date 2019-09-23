@@ -4,7 +4,7 @@
 </div>
 </template>
 <script>
-import Demo from '~comps/alert/demo/banner';
+import Demo from '~comps/message/demo/basic';
 export default {
     components: {
         Demo,

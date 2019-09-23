@@ -10,6 +10,8 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
+import Icon from '../icon';
+import vnode from '../common/vnode';
 
 const IconType = {
     info: 'info-circle',
@@ -20,6 +22,11 @@ const IconType = {
 }
 
 export default {
+    name: 'Message',
+    components: {
+        Icon,
+        vnode,
+    },
     props: {
         prefixCls: PropTypes.string.def('ant-message'),
         type: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'loading']),
@@ -38,6 +45,6 @@ export default {
             const { type } = this;
             return IconType[type] || IconType['info'];
         }
-    }
+    },
 }
 </script>

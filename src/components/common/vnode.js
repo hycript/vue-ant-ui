@@ -1,13 +1,13 @@
 
 import { is, type, parseStyleText, stringifyClassData, mergeListeners } from '../_util/props-util';
-import { cloneVNode, cloneVNodes } from '../_util/vnode';
+import { cloneVNodes } from '../_util/vnode';
 import PropTypes from '../_util/vue-types';
 
 export default {
     functional: true,
-    // props: ['vnodes', 'vnodesReverse', 'vnodesFilter', 'slot', 'propGenerator', 'dataGenerator'],
     props: {
-        vnodes: PropTypes.oneOfType([PropTypes.array, PropTypes.func, PropTypes.object]),
+        // vnodes: PropTypes.oneOfType([PropTypes.array, PropTypes.func, PropTypes.object]),
+        vnodes: PropTypes.any,
         vnodesReverse: PropTypes.bool,
         slot: PropTypes.string,
         vnodesFilter: PropTypes.func,
@@ -16,7 +16,7 @@ export default {
     },
     render(h, ctx) {
         let { attrs = {}, key, ...otherData } = ctx.data;
-        let { vnodes: _vnodes, vnodesReverse = false, slot, propGenerator, dataGenerator } = ctx.props || {};
+        let { vnodes: _vnodes, vnodesReverse = false, slot, propGenerator, dataGenerator, vnodesFilter } = ctx.props || {};
 
         let hasPropGenerator = typeof propGenerator === 'function';
         let hasDataGenerator = typeof dataGenerator === 'function';
@@ -32,25 +32,24 @@ export default {
         // let vnodes = ctx.props.vnodes && ctx.props.vnodes.length > 0 ? ctx.props.vnodes : ctx.children;
         let vnodes = _vnodes ? typeof _vnodes === 'function' ? _vnodes(h) : _vnodes :ctx.children;
 
+        if(!vnodes) return;
+
+        if(['string', 'number', 'boolean'].indexOf(is(vnodes)) > -1){
+            return ctx._v(vnodes);
+        }
+
         if(!is(vnodes, 'array')){
             vnodes = [vnodes];
         }
 
-        if(_vnodes){
-            vnodes = cloneVNodes(vnodes, true);
-        }
-
-        // console.error('.vuepress vnode', ctx, ctx.data, vnodes);
-
         if(!vnodes || vnodes.length === 0) return undefined;
-
-        if(vnodesReverse){
-            vnodes = vnodes.reverse();
-        }
+        // console.error('.vuepress vnode', ctx, ctx.data, vnodes);
 
         for(let i = 0; i < vnodes.length; i++){
             let vnode = vnodes[i];
-            if(vnode.tag && vnode.tag === 'template'){
+            if(['string', 'number', 'boolean'].indexOf(is(vnode)) > -1){
+                vnodes[i] = ctx._v(vnode);
+            }else if(vnode.tag && vnode.tag === 'template'){
                 if(!vnode.children || vnode.children.length === 0){
                     vnodes.splice(i, 1);
                 }else{
@@ -58,6 +57,18 @@ export default {
                 }
                 i --;
             }
+        }
+
+        if(_vnodes){
+            vnodes = cloneVNodes(vnodes, true);
+        }
+
+        if(vnodesReverse){
+            vnodes = vnodes.reverse();
+        }
+
+        if(typeof vnodesFilter === 'function'){
+            vnodes = vnodesFilter(vnodes);
         }
 
         //keys.length > 0 &&

@@ -1,5 +1,6 @@
 import pageComponents from '@internal/page-components'
-import { Components } from '~/index';
+// import { Components } from '~/index';
+import UI from '~/index';
 import ContentSlotsDistributor from '@/pages/common/ContentSlotsDistributor';
 
 export default ({
@@ -19,10 +20,12 @@ export default ({
     console.log('VUe', Vue, options, router, siteData);
     Vue.component('ContentSlotsDistributor', ContentSlotsDistributor);
 
-    Object.keys(Components).forEach(key => {
+    /* Object.keys(Components).forEach(key => {
         if(!Components[key]) return;
         let component = Components[key];
         key = component.name.indexOf('v') === 0 ? component.name : 'v' + component.name;
         Vue.component(key, component);
-    })
+    }) */
+    console.error('UI', UI);
+    Vue.use(UI);
 }

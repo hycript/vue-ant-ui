@@ -1,10 +1,10 @@
 <style></style>
 <template>
 <div :class="prefixCls" :style="defaultStyles">
-    <vTransitionGroup name="noticeTransition">
+    <vTransitionGroup :transitionName="noticeTransition">
         <Notice v-for="notice in notices"
-            v-bind="{ prefixCls: prefixCls, ...notice }"
-            :key="notice.key" @click="notice.onClick(notice)" @close="() => { notice.onClose && notice.onClose(notice) ;this.remove(notice.key)}"
+            v-bind="{ prefixCls, duration: notice.duration, closable: notice.closable, update: notice.update, }"
+            :key="notice.key" @click="onNoticeClick(notice, $event)" @close="onNoticeClose(notice, $event)"
         >
             <vnode :vnodes="notice.content"></vnode>
             <template slot="closeIcon"><slot name="closeIcon"></slot></template>
@@ -74,14 +74,26 @@ const Notification = {
                 this.notices.splice(index, 1);
             }
         },
+        onNoticeClick(notice){
+            if(typeof notice.onClick === 'function'){
+                notice.onClick(notice);
+            }
+        },
+        onNoticeClose(notice){
+            if(typeof notice.onClose === 'function'){
+                notice.onClose(notice);
+            }
+            this.remove(notice.key)
+        }
     }
 }
 
 Notification.newInstance = function (properties, hook){
     const { getContainer, style, class: className, ...props } = properties || {};
+
     return modal({
         component: Notification,
-        $options: {
+        options: {
             style,
             class: className,
             props,

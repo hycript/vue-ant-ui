@@ -28,6 +28,7 @@ import Tag from './components/tag';
 
 //Feedback
 import Alert from './components/alert';
+import message from './components/message';
 import Popconfirm from './components/popconfirm';
 import Spin from './components/spin';
 
@@ -85,10 +86,13 @@ function install(Vue){
     Vue.use(directive);
     Object.keys(components).forEach(key => {
         const component = components[key];
-        if(component) return;
+        if(!component) return;
         key = component.name || key;
-        Vue.component(prefix + key, component);
-    })
+        key = key.indexOf(prefix) === 0 ? key : prefix + key;
+        Vue.component(key, component);
+    });
+
+    Vue.prototype.$message = message;
 }
 
 export default {
@@ -129,6 +133,7 @@ export {
 
     //Feedback
     Alert,
+    message,
     Popconfirm,
     Spin,
 }
