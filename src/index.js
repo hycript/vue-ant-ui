@@ -21,6 +21,7 @@ import Switch from './components/switch';
 import Avatar from './components/avatar';
 import Badge from './components/badge';
 import Card from './components/card';
+import Collapse from './components/Collapse';
 import Popover from './components/popover';
 import Tooltip from './components/tooltip';
 import Tabs from './components/tabs';
@@ -63,11 +64,11 @@ const components = {
     //Data Display
     Avatar,
     Badge,
-    //- Card-0
     Card,
     CardMeta: Card.Meta,
     CardGrid: Card.Grid,
-    //- Card-1
+    Collapse,
+    CollapsePanel: Collapse.Panel,
     Popover,
     Tooltip,
     Tabs,
@@ -128,6 +129,7 @@ export {
     Avatar,
     Badge,
     Card,
+    Collapse,
     Popover,
     Tooltip,
     Tabs,

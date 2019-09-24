@@ -2,6 +2,7 @@
 import { is, type, parseStyleText, stringifyClassData, mergeListeners } from '../_util/props-util';
 import { cloneVNodes } from '../_util/vnode';
 import PropTypes from '../_util/vue-types';
+import listener from './listener';
 
 export default {
     functional: true,
@@ -128,7 +129,9 @@ export default {
                     odata = stringifyClassData(odata);
                     break;
                 case 'on':
-                    vnode.data[key] = mergeListeners(cdata, odata);
+                    let listeners = mergeListeners(componentOptions && componentOptions['listeners'], odata);
+                    componentOptions['listeners'] = listeners;
+                    // vnode.data[key]
                     return;
                 case 'attrs':
                     odata = Object.assign({}, odata);

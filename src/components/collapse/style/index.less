@@ -43,11 +43,14 @@
         line-height: 46px;
         vertical-align: top;
         top: 50%;
-        transform: translateY(-50%);
+        transform: translateY(-50%) rotate(0deg);;
         left: @padding-md;
+        width: auto;
+        height: auto;
+        transition: transform 0.24s;
         & svg {
-          .collapse-close();
-          transition: transform 0.24s;
+        //   .collapse-close();
+        //   transition: transform 0.24s;
         }
       }
 
@@ -64,7 +67,7 @@
   }
 
   &-anim-active {
-    transition: height 0.2s @ease-out;
+    transition: height .2s @ease-out;
   }
 
   &-content {
@@ -89,8 +92,11 @@
   }
 
   & > &-item > &-header[aria-expanded='true'] {
-    .anticon-right svg {
-      .collapse-open();
+    .anticon-right{
+        transform: translateY(-50%) rotate(90deg);
+        svg {
+            // .collapse-open();
+        }
     }
   }
 

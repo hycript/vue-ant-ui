@@ -39,11 +39,11 @@ export default {
                 [`${prefixCls}-active`]: active,
             }
         },
-        slefKey(){
+        selfKey(){
             return this.$vnode.key;
         },
         /* slefActive(){
-            return this.activeKey === this.slefKey;
+            return this.activeKey === this.selfKey;
         }, */
         shouldRender(){
             const { destroyInactiveTabPane, active, hasActived, forceRender } = this;

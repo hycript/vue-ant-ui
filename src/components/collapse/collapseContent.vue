@@ -10,7 +10,7 @@
 import PropTypes from '../_util/vue-types';
 
 export default {
-    name: 'CollapsePanelContent',
+    name: 'CollapseContent',
     data(){
         return {
             selfIsActive: undefined,

@@ -45,7 +45,7 @@ export default {
             const { $vnode } = this;
             return !($vnode.data.staticStyle || $vnode.data.style) && 'right: 50%';
         },
-        slefKey(){
+        selfKey(){
             return this.$vnode.key;
         },
     },

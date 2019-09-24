@@ -4,10 +4,12 @@
 </div>
 </template>
 <script>
-import Demo from '~comps/notification/demo/basic';
+import Demo from '~comps/collapse/demo/basic';
+import vnode from '~comps/common/vnode';
 export default {
     components: {
         Demo,
+        vnode,
     },
     data(){
         return {
@@ -16,6 +18,9 @@ export default {
     },
     mounted(){
         console.log('dmeo', this.$refs.demo);
+    },
+    updated(){
+        console.log('test updated');
     },
     methods: {
 

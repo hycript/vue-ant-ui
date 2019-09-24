@@ -1,6 +1,6 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
-<div :calss="classes"  role="accordion ? 'tablist' : null">
+<div :class="classes" :role="accordion ? 'tablist' : null">
     <vnode :propGenerator="generatorPanelProps" @itemClick="onClickItem">
         <slot></slot>
     </vnode>
@@ -52,7 +52,7 @@ export default {
     watch: {
         '$slots.default': {
             handler(val){
-                this.handlePanels();
+                this.handlePanels(this.panels);
             },
             immediate: true,
         },
@@ -64,7 +64,7 @@ export default {
         this.handlePanels();
     },
     methods: {
-        handlePanels(){
+        handlePanels(prevPanels){
             let panels = [];
             const collapsePanels = this.$slots.default || [];
 
@@ -80,15 +80,17 @@ export default {
                     disabled,
                 })
             })
-            this.panels = panels;
-            /* if(this.selfActiveKey === undefined){
+
+            if((prevPanels && prevPanels.length === 0) && !this.selfActiveKey.length){
                 let enables = panels.filter(panel => {
                     return !(panel.disabled || panel.disabled === '')
                 });
                 if(enables.length > 0){
-                    this.onTabClick(enables[0].key)
+                    this.onClickItem(enables[0].key)
                 }
-            } */
+            }
+
+            this.panels = panels;
         },
         generatorPanelProps(){
             const { selfActiveKey: activeKey, destroyInactiveTabPane, prefixCls, accordion } = this;
@@ -112,14 +114,15 @@ export default {
             } else {
                 const index = activeKey.indexOf(key);
                 if(index > -1){
-                    activeKey.push(key);
-                }else{
                     activeKey.splice(index, 1);
+                }else{
+                    activeKey.push(key);
                 }
             }
-            if(!hasProp(this, 'activeKey')){
+            /* if(!hasProp(this, 'activeKey')){
                 this.selfActiveKey = activeKey;
-            }
+            } */
+            this.selfActiveKey = activeKey;
             this.$emit('change', accordion ? activeKey[0] : activeKey);
         }
     }

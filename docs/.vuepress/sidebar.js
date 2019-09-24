@@ -55,6 +55,7 @@ module.exports = [
             '/components/data-display/avatar',
             '/components/data-display/badge',
             '/components/data-display/card',
+            '/components/data-display/collapse',
             '/components/data-display/popover',
             '/components/data-display/tabs',
             '/components/data-display/tag',
