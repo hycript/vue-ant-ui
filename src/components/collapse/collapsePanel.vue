@@ -6,43 +6,36 @@
         :tabIndex="disabled ? -1 : 0" :aria-expanded="isActive"
     >
         <Icon v-if="showArrow" type="right" class="arrow" />
-        <slot name="header">{{ header }}</slot>
+        <slot name="header" :isActive="isActive">{{ header }}</slot>
     </div>
-    <!-- :enter-active-class="`${prefixCls}-anim-active`"
-        :leave-active-class="`${prefixCls}-anim-active`" -->
-    <transition
-        @before-enter="beforeEnter"
-        @enter="enter"
-        @after-enter="afterEnter"
-        @before-leave="beforeLeave"
-        @leave="leave"
-        @after-leave="afterLeave"
-    >
-        <div ref="content" v-show="isActive" :class="contentClasses">
+    <CollapseTransition :transitionClass="`${this.prefixCls}-anim-active`" @aaa="handleItemClick">
+        <div ref="content" v-show="isShow" :class="contentClasses">
             <div v-if="shouldRender" :class="`${prefixCls}-content-box`">
                 <slot></slot>
             </div>
         </div>
-    </transition>
+    </CollapseTransition>
 </div>
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
 import Icon from '../icon';
+import CollapseTransition from '../transition/collapseTransition';
 
 export default {
     name: 'CollapsePanel',
     components: {
         Icon,
+        CollapseTransition,
     },
     data(){
         return {
             hasActived: false,
+            isShow: undefined,
         }
     },
     props: {
         prefixCls: PropTypes.string,
-        // key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         header: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         headerClass: PropTypes.string,
         showArrow: PropTypes.bool.def(true),
@@ -51,8 +44,7 @@ export default {
         accordion: PropTypes.bool,
         forceRender: PropTypes.bool.def(false),
         activeKey: PropTypes.array,
-        // isActive: PropTypes.bool,
-        // expandIcon: PropTypes.func,
+        expandIcon: PropTypes.any,
     },
     computed: {
         selfKey(){
@@ -60,14 +52,15 @@ export default {
         },
         isActive(){
             const { activeKey, selfKey } = this;
-            return activeKey.indexOf(selfKey) > -1;
+            return activeKey && activeKey.indexOf(selfKey) > -1;
         },
         classes(){
-            const { prefixCls, isActive, disabled } = this;
+            const { prefixCls, isActive, disabled, showArrow } = this;
             return {
                 [`${prefixCls}-item`]: true,
                 [`${prefixCls}-item-active`]: isActive,
                 [`${prefixCls}-item-disabled`]: disabled,
+                [`${prefixCls}-no-arrow`]: !showArrow,
             }
         },
         headerClasses(){
@@ -91,6 +84,13 @@ export default {
         isActive: {
             handler(val){
                 if(val) this.hasActived = true;
+                if(this.isShow === undefined){
+                    this.isShow = val;
+                }else{
+                    this.$nextTick(() => {
+                        this.isShow = val;
+                    })
+                }
             },
             immediate: true,
         }
@@ -105,45 +105,6 @@ export default {
                 this.handleItemClick();
             }
         },
-        beforeEnter(){
-            const node = this.$refs.content;
-            this.offsetHeight = node.offsetHeight;
-            console.log('this.offsetHeight', this.offsetHeight);
-            // node.style.height = 0;
-        },
-        enter(){
-            const node = this.$refs.content;
-            this.offsetHeight = node.offsetHeight;
-            console.log('this.offsetHeight', this.offsetHeight);
-            node.style.height = 0;
-            setTimeout(_ => {
-                node.classList.add(`${this.prefixCls}-anim-active`);
-                node.style.height = `${this.offsetHeight}px`;
-            })
-            // node.style.height = `${this.offsetHeight}px`;
-        },
-        afterEnter(){
-            const node = this.$refs.content;
-            node.classList.remove(`${this.prefixCls}-anim-active`);
-            node.style.height = '';
-        },
-        beforeLeave(){
-            const node = this.$refs.content;
-            node.style.height = `${node.offsetHeight}px`;
-        },
-        leave(){
-            const node = this.$refs.content;
-            setTimeout(_ => {
-                node.classList.add(`${this.prefixCls}-anim-active`);
-                node.style.height = 0;
-            })
-        },
-        afterLeave(){
-            console.error('after leave')
-            const node = this.$refs.content;
-            node.classList.remove(`${this.prefixCls}-anim-active`);
-            node.style.height = '';
-        }
     }
 }
 </script>

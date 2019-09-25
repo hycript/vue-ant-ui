@@ -2,7 +2,6 @@
 import { is, type, parseStyleText, stringifyClassData, mergeListeners } from '../_util/props-util';
 import { cloneVNodes } from '../_util/vnode';
 import PropTypes from '../_util/vue-types';
-import listener from './listener';
 
 export default {
     functional: true,
