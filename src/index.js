@@ -64,6 +64,8 @@ const components = {
     Checkbox,
     CheckboxGroup: Checkbox.Group,
     Radio,
+    RadioGroup: Radio.Group,
+    RadioButton: Radio.Button,
     Switch,
 
     //Data Display
@@ -129,6 +131,7 @@ export {
 
     //Data Entry
     Checkbox,
+    Radio,
     Switch,
 
     //Data Display

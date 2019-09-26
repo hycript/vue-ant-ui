@@ -2,9 +2,9 @@
 <style lang="less">
 @import "../style/themes/default.less";
 
-.@{ant-prefix}-btn-group{
+/* .@{ant-prefix}-btn-group{
     font-size: 0;
-}
+} */
 </style>
 <template>
     <div :class="classes">

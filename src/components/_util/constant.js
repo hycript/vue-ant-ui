@@ -1,17 +1,45 @@
+import { isArray } from "util";
+
+function set(target, key, value){
+    target[key] = value;
+}
+
 class Constants{
     constructor(namespace){
         this.namespace = namespace;
     }
     of(key, value){
-        if(typeof key !== 'string'){
+        /* if(typeof key !== 'string'){
             throw new Error(`Expect key of constants to be string, but accpet type ${typeof key} and value 'of'`);
-        }
-        key = key.toUpperCase();
+        } */
         if(typeof this[key] !== 'undefined'){
             return this[key];
         }
-        this[key] = value !== undefined ? value : `${this.namespace}.${key}`.toUpperCase();
-        return this[key];
+
+        if(key !== 0 && !key) return;
+
+        let originString;
+
+        if(typeof key === 'string'){
+            originString = key;
+            if(value === undefined){
+                key = [key];
+            }else{
+                key = {
+                    [key]: value,
+                }
+            }
+        }
+
+        let isArray = Array.isArray(key);
+
+        for(let i in key){
+            let value = key[i];
+            let k = (isArray ? key[i] : i).toString().toUpperCase();
+            this[k] = isArray || value === undefined ? `${this.namespace}.${value}`.toUpperCase() : value;
+        }
+
+        return originString !== undefined ? this[originString] : this;
     }
 }
 

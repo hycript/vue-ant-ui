@@ -38,8 +38,8 @@ export default {
     },
     provide() {
         return {
-            inGroup: name,
-            groupContext: this,
+            InGroup: name,
+            GroupContext: this,
         }
     },
     data(){
@@ -50,7 +50,7 @@ export default {
     props: {
         prefixCls: PropTypes.string.def('ant-checkbox'),
         defaultValue: PropTypes.array,
-        value: PropTypes.array,
+        value: PropTypes.any,
         options: PropTypes.array.def([]),
         disabled: PropTypes.bool,
     },
