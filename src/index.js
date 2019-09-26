@@ -16,6 +16,7 @@ import Affix from './components/affix';
 
 //Data Entry
 import Checkbox from './components/checkbox';
+import Radio from './components/radio';
 import Switch from './components/switch';
 
 //Data Display
@@ -62,6 +63,7 @@ const components = {
     //Data Entry
     Checkbox,
     CheckboxGroup: Checkbox.Group,
+    Radio,
     Switch,
 
     //Data Display

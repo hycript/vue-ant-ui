@@ -106,7 +106,7 @@ export default {
 
             const { inGroup, value } = this;
             if(!!inGroup){
-                this.$dispatch(inGroup, 'checkboxChange', value, targetChecked);
+                this.$dispatch(inGroup, 'checkboxChange', value, targetChecked, event);
             }
         },
         focus() {

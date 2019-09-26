@@ -3,8 +3,8 @@
 <div :class="`${prefixCls}-group`" v-on="$$listeners">
     <template v-if="options && options.length">
         <!-- @change="checked => toggleOption(option, checked)" -->
-        <Checkbox
-            v-for="option in checkboxOptions"
+        <Radio
+            v-for="option in radioOptions"
             :prefixCls="prefixCls" :key="option.value"
             :disabled="disabled || option.disabled"
             :value="option.value"
@@ -13,7 +13,7 @@
             :class="`${prefixCls}-group-item`"
         >
             <slot name="label" v-bind="option">{{ option.label }}</slot>
-        </Checkbox>
+        </Radio>
     </template>
     <slot v-else></slot>
 </div>
@@ -22,16 +22,16 @@
 import PropTypes from '../_util/vue-types';
 import { hasProp } from '../_util/props-util';
 import events from '../common/events';
-import Checkbox from './checkbox';
+import Radio from './radio';
 
-const name = 'CheckboxGroup'
+const name = 'RadioGroup'
 
 export default {
     name,
     mixins: [events],
     exceptListeners: ['change', 'input'],
     components: {
-        Checkbox,
+        Radio,
     },
     model: {
         prop: 'value'
@@ -41,22 +41,25 @@ export default {
     },
     data(){
         return {
-            selfValue: this.value || this.defaultValue || [],
+            selfValue: this.value || this.defaultValue,
         }
     },
     props: {
-        prefixCls: PropTypes.string.def('ant-checkbox'),
+        prefixCls: PropTypes.string.def('ant-radio'),
         defaultValue: PropTypes.array,
+        name: PropTypes.name,
         value: PropTypes.array,
         options: PropTypes.array.def([]),
         disabled: PropTypes.bool,
+        size: PropTypes.oneOf(['large', 'default', 'small']),
+        buttonStyle: PropTypes.string.def('outline'),
     },
     computed: {
-        checkboxOptions(){
+        radioOptions() {
             const { options, disabled } = this;
             return options.map(option => {
                 return typeof option === 'string' ? { label: option, value: option } : option;
-            })
+            });
         },
     },
     watch: {
@@ -65,31 +68,26 @@ export default {
         }
     },
     created(){
+        this.noop = function(){};
         this.$on('checkboxChange', this.fromChecboxToggle);
     },
     methods: {
-        toggleOption(option, checked){
+        toggleOption(option){
             const { selfValue } = this;
-            const value = [].concat(selfValue);
-            const index = value.indexOf(option.value);
-            if (index === -1) {
-                value.push(option.value);
-            } else {
-                value.splice(index, 1);
-            }
+            const { value } = option;
+            if(value === selfValue) return;
+
             if(!hasProp(this, 'value')){
                 this.selfValue = value;
             }
+
             this.$emit('input', value);
             this.$emit('change', value);
-            /* if(typeof option.onChange === 'function'){
-                option.onChange(checked);
-            } */
         },
-        fromChecboxToggle(value, checked){
+        fromChecboxToggle(value){
             // const { options } = this;
             // if(options && options.length) return;
-            this.toggleOption({ value }, checked);
+            this.toggleOption({ value });
         },
     }
 }

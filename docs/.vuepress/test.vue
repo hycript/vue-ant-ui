@@ -4,7 +4,7 @@
 </div>
 </template>
 <script>
-import Demo from '~comps/checkbox/demo/basic';
+import Demo from '~comps/radio/demo/disabled';
 import vnode from '~comps/common/vnode';
 export default {
     components: {
