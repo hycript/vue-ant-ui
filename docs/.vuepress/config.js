@@ -8,7 +8,10 @@ module.exports = {
     description: '',
     base: '/vue-ant-ui/',
     head: [
-        ['link', { rel: 'icon', href: `/favicon.png` }],
+        ['link', {
+            rel: 'icon',
+            href: `/favicon.png`
+        }],
     ],
     configureWebpack: {
         resolve: {
@@ -21,9 +24,22 @@ module.exports = {
             }
         }
     },
+    chainWebpack: webpackConfig => {
+        // webpackConfig.plugins.delete('prefetch');
+        webpackConfig.module
+            .rule('vue')
+            .test(/\.vue$/)
+            .use('vue-loader')
+            .loader('vue-loader')
+            .options({
+                compilerOptions: {
+                    preserveWhitespace: false
+                }
+            });
+    },
     themeConfig: {
         // sidebar: 'auto',
         sidebar,
-        sidebarDepth : 3,
+        sidebarDepth: 3,
     }
 }

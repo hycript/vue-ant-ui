@@ -27,5 +27,18 @@ module.exports = {
         });
         config.resolve.alias = alias;
         // return config;
-    }
+    },
+    chainWebpack: webpackConfig => {
+        // webpackConfig.plugins.delete('prefetch');
+        webpackConfig.module
+            .rule('vue')
+            .test(/\.vue$/)
+            .use('vue-loader')
+            .loader('vue-loader')
+            .options({
+                compilerOptions: {
+                    preserveWhitespace: false
+                }
+            });
+    },
 }
