@@ -15,6 +15,7 @@ import { Layout, Header, Footer, Content, Sider } from './components/layout';
 import Affix from './components/affix';
 
 //Data Entry
+import Checkbox from './components/checkbox';
 import Switch from './components/switch';
 
 //Data Display
@@ -59,6 +60,8 @@ const components = {
     Affix,
 
     //Data Entry
+    Checkbox,
+    CheckboxGroup: Checkbox.Group,
     Switch,
 
     //Data Display
@@ -123,6 +126,7 @@ export {
     Affix,
 
     //Data Entry
+    Checkbox,
     Switch,
 
     //Data Display

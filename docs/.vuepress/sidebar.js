@@ -43,6 +43,8 @@ module.exports = [
         collapsable: false,
         sidebarDepth: 2,
         children: [
+            '/components/data-entry/checkbox',
+            '/components/data-entry/radio',
             '/components/data-entry/switch',
         ]
     },
