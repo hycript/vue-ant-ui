@@ -7,10 +7,10 @@
           :id="id"
           :type="type"
           :readOnly="readOnly"
-          :disabled="disabled"
+          :disabled="groupContext && groupContext.disabled || disabled"
           :tabIndex="tabIndex"
           :class="`${prefixCls}-input`"
-          :checked="!!selfChecked"
+          :checked="!!isChecked"
           :autoFocus="autoFocus"
           ref="input"
           :value="value"
@@ -27,6 +27,7 @@ import PropTypes from '../_util/vue-types';
 import { hasProp } from '../_util/props-util';
 import events from '../common/events';
 import emitter from '../common/emitter';
+import { CHECKBOX } from './const';
 
 export default {
     name: 'Checkbox',
@@ -37,7 +38,8 @@ export default {
         prop: 'checked',
     },
     inject: {
-        inGroup: { default: undefined }
+        inGroup: { default: undefined },
+        groupContext: { default: undefined },
     },
     data(){
         return {
@@ -60,21 +62,33 @@ export default {
         readOnly: PropTypes.bool,
     },
     computed: {
+        isChecked(){
+            const { inGroup, groupContext, value, selfChecked } = this;
+            if(!!inGroup){
+                const { selfValue } = groupContext;
+                return typeof selfValue === 'string' ? selfValue === value : selfValue.indexOf(value) > -1;
+            }
+            return selfChecked;
+        },
+        isDisabled(){
+            const { groupContext, disabled } = this;
+            return (groupContext && groupContext.disabled) || disabled;
+        },
         classes(){
-            const { prefixCls, checked, disabled } = this;
+            const { prefixCls, isChecked, isDisabled } = this;
 
             return {
                 [`${prefixCls}-wrapper`]: true,
-                [`${prefixCls}-wrapper-checked`]: checked,
-                [`${prefixCls}-wrapper-disabled`]: disabled,
+                [`${prefixCls}-wrapper-checked`]: isChecked,
+                [`${prefixCls}-wrapper-disabled`]: isDisabled,
             }
         },
         checkboxClasses(){
-            const { prefixCls, selfChecked, disabled, indeterminate } = this;
+            const { prefixCls, isChecked, isDisabled, indeterminate } = this;
             return {
                 [`${prefixCls}`]: true,
-                [`${prefixCls}-checked`]: selfChecked,
-                [`${prefixCls}-disabled`]: disabled,
+                [`${prefixCls}-checked`]: isChecked,
+                [`${prefixCls}-disabled`]: isDisabled,
                 [`${prefixCls}-indeterminate`]: indeterminate,
             }
         },
@@ -86,7 +100,7 @@ export default {
                     prev[key] = $attrs[key];
                 }
             }, {})
-        }
+        },
     },
     watch: {
         checked(val) {
@@ -106,7 +120,7 @@ export default {
 
             const { inGroup, value } = this;
             if(!!inGroup){
-                this.$dispatch(inGroup, 'checkboxChange', value, targetChecked, event);
+                this.$dispatch(inGroup, CHECKBOX.CHANGE, value, targetChecked, event);
             }
         },
         focus() {

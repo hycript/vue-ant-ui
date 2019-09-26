@@ -2,14 +2,13 @@
 <template>
 <div :class="`${prefixCls}-group`" v-on="$$listeners">
     <template v-if="options && options.length">
-        <!-- @change="checked => toggleOption(option, checked)" -->
+        <!-- :checked="selfValue.indexOf(option.value) !== -1" -->
         <Checkbox
             v-for="option in checkboxOptions"
             :prefixCls="prefixCls" :key="option.value"
             :disabled="disabled || option.disabled"
             :value="option.value"
-            :checked="selfValue.indexOf(option.value) !== -1"
-            @change="option.onChange || function(){}"
+            v-on="option.onChange ? { change: option.onChange } : {}"
             :class="`${prefixCls}-group-item`"
         >
             <slot name="label" v-bind="option">{{ option.label }}</slot>
@@ -23,6 +22,7 @@ import PropTypes from '../_util/vue-types';
 import { hasProp } from '../_util/props-util';
 import events from '../common/events';
 import Checkbox from './checkbox';
+import { CHECKBOX } from './const';
 
 const name = 'CheckboxGroup'
 
@@ -36,8 +36,11 @@ export default {
     model: {
         prop: 'value'
     },
-    provide: {
-        inGroup: name,
+    provide() {
+        return {
+            inGroup: name,
+            groupContext: this,
+        }
     },
     data(){
         return {
@@ -65,26 +68,25 @@ export default {
         }
     },
     created(){
-        this.$on('checkboxChange', this.fromChecboxToggle);
+        this.$on(CHECKBOX.CHANGE, this.fromChecboxToggle);
     },
     methods: {
         toggleOption(option, checked){
             const { selfValue } = this;
             const value = [].concat(selfValue);
             const index = value.indexOf(option.value);
+
             if (index === -1) {
                 value.push(option.value);
             } else {
                 value.splice(index, 1);
             }
+
             if(!hasProp(this, 'value')){
                 this.selfValue = value;
             }
             this.$emit('input', value);
             this.$emit('change', value);
-            /* if(typeof option.onChange === 'function'){
-                option.onChange(checked);
-            } */
         },
         fromChecboxToggle(value, checked){
             // const { options } = this;
