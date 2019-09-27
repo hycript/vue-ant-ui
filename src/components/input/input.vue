@@ -1,16 +1,20 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
-    <div></div>
+<vnode></vnode>
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
 import { hasProp } from '../_util/props-util';
+import vnode from '../common/vnode';
 import inputProps from './inputProps';
 import INPUT from './const';
 
 export default {
     name: 'Input',
     inheritAttrs: false,
+    components: {
+        vnode,
+    },
     model: {
         prop: 'value',
         event: INPUT.CHANGE,
@@ -24,6 +28,7 @@ export default {
     props: {
         ...inputProps,
         prefixCls: PropTypes.string.def('ant-input'),
+        format: PropTypes.any, //regexp, function
     },
     computed: {
         classes(){
