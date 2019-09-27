@@ -34,8 +34,8 @@ export default {
         };
     },
     methods: {
-        onChange(e) {
-            console.log(`checked = ${e.target.value}`);
+        onChange(value) {
+            console.log(`checked = ${value}`);
         }
     }
 };

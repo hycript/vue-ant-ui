@@ -16,8 +16,8 @@ export default {
         };
     },
     methods: {
-        onChange(e) {
-            console.log('radio checked', e.target.value);
+        onChange(value) {
+            console.log('radio checked', value);
         }
     }
 };

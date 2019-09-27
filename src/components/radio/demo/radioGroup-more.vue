@@ -5,7 +5,7 @@
         <vRadio :style="radioStyle" :value="3">Option C</vRadio>
         <vRadio :style="radioStyle" :value="4">
             More...
-            <a-input v-if="value === 4" :style="{ width: 100, marginLeft: 10 }" />
+            <input class="input" v-if="value === 4" :style="{ width: 100, marginLeft: 10 }" />
         </vRadio>
     </vRadioGroup>
 </template>
@@ -22,9 +22,21 @@ export default {
         };
     },
     methods: {
-        onChange(e) {
-            console.log('radio checked', e.target.value);
+        onChange(value) {
+            console.log('radio checked', value);
         }
     }
 };
 </script>
+<style lang="less" scoped>
+.input{
+    width: 100px;
+    margin-left: 10px;
+    border-radius: 4px;
+    padding: 4px 11px;
+    height: 32px;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid #d9d9d9;
+}
+</style>

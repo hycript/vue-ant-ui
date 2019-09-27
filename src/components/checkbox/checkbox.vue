@@ -3,11 +3,11 @@
 <label :class="classes" @mouseenter="$emit('mouseenter', $event)" @mouseleave="$emit('mouseleave', $event)">
     <span :class="checkboxClasses">
         <input
-          :name="name"
+          :name="GroupContext && GroupContext.name || name"
           :id="id"
           :type="type"
           :readOnly="readOnly"
-          :disabled="GroupContext && GroupContext.disabled || disabled"
+          :disabled="isDisabled"
           :tabIndex="tabIndex"
           :class="`${prefixCls}-input`"
           :checked="!!isChecked"

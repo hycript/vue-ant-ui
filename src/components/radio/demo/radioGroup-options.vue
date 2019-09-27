@@ -36,14 +36,14 @@ export default {
         };
     },
     methods: {
-        onChange1(e) {
-            console.log('radio1 checked', e.target.value);
+        onChange1(value) {
+            console.log('radio1 checked', value);
         },
-        onChange2(e) {
-            console.log('radio2 checked', e.target.value);
+        onChange2(value) {
+            console.log('radio2 checked', value);
         },
-        onChange3(e) {
-            console.log('radio3 checked', e.target.value);
+        onChange3(value) {
+            console.log('radio3 checked', value);
         }
     }
 };

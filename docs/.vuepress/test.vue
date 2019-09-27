@@ -4,7 +4,7 @@
 </div>
 </template>
 <script>
-import Demo from '~comps/radio/demo/radioButton';
+import Demo from '~comps/radio/demo/radioButton-solid';
 import vnode from '~comps/common/vnode';
 export default {
     components: {

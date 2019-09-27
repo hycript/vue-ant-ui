@@ -1,6 +1,6 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
-<div :class="`${prefixCls}-group`" v-on="$$listeners">
+<div :class="classes" v-on="$$listeners">
     <template v-if="options && options.length">
         <!-- :checked="selfValue === option.value" -->
         <Radio
