@@ -4,7 +4,7 @@ export default {
         $$listeners(){
             let { $options, $listeners = {} } = this;
             let { exceptListeners } = $options;
-            if(!Array.isArray(exceptListeners)) exceptListeners = [];
+            if(!Array.isArray(exceptListeners) || exceptListeners.length === 0) return $listeners;
             let keys = Object.keys($listeners).filter(key => {
                 return !exceptListeners.includes(key);
             })

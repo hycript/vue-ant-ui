@@ -4,7 +4,7 @@
 </div>
 </template>
 <script>
-import Demo from '~comps/radio/demo/radioButton-solid';
+import Demo from '~comps/input/demo/autosize-textarea';
 import vnode from '~comps/common/vnode';
 export default {
     components: {

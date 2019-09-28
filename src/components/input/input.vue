@@ -1,23 +1,39 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
-<vnode></vnode>
+<AddonWrapper v-if="type !== 'textarea'" v-bind="$props">
+    <template slot="addonBefore"><slot name="addonBefore"></slot></template>
+    <AffixWrapper v-bind="$props">
+        <template slot="prefix"><slot name="prefix"></slot></template>
+        <input ref="input" :class="inputClasses"
+            v-bind="inputProps" :value="selfValue"
+            v-on="$$listeners" @keydown="handleKeydown" @input="handleChange"
+            @compositionstart="handleCompositionStart" @compositionend="handleCompositionEnd"
+        >
+        <template slot="suffix"><slot name="suffix"></slot></template>
+    </AffixWrapper>
+    <template slot="addonAfter"><slot name="addonAfter"></slot></template>
+</AddonWrapper>
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import { hasProp } from '../_util/props-util';
-import vnode from '../common/vnode';
+import { omit } from '../_util/lodash';
+import { is, hasProp } from '../_util/props-util';
 import inputProps from './inputProps';
-import INPUT from './const';
+import inputMixin from './inputMixin';
+import AddonWrapper from './lib/addonWrapper';
+import AffixWrapper from './lib/affixWrapper';
 
 export default {
     name: 'Input',
+    mixins: [inputMixin],
     inheritAttrs: false,
     components: {
-        vnode,
+        AddonWrapper,
+        AffixWrapper,
     },
     model: {
         prop: 'value',
-        event: INPUT.CHANGE,
+        // event: INPUT.CHANGE,
     },
     data(){
         const { value, defaultValue } = this;
@@ -28,21 +44,38 @@ export default {
     props: {
         ...inputProps,
         prefixCls: PropTypes.string.def('ant-input'),
-        format: PropTypes.any, //regexp, function
+        // format: PropTypes.any, //regexp, function
+        format: {
+            validator(value) {
+                return is(value, 'function') || is(value, 'regexp');
+            },
+        }
     },
     computed: {
-        classes(){
-            const { prefixCls } = this;
-
+        inputClasses(){
+            const { type, prefixCls, size, disabled } = this;
+            if(type === 'textarea') return;
             return {
                 [`${prefixCls}`]: true,
-            }
+                [`${prefixCls}-sm`]: size === 'small',
+                [`${prefixCls}-lg`]: size === 'large',
+                [`${prefixCls}-disabled`]: disabled,
+            };
         },
+        inputProps(){
+            const { type } = this;
+            if(type === 'textarea') return {};
+            const props = omit(this.$props, ['prefixCls', 'addonBefore', 'addonAfter', 'prefix', 'suffix', 'value', 'defaultValue']);
+            return props;
+        }
     },
     watch: {
         value(val){
-            this.selfValue = val;
+            this.selfValue = val === undefined || val === null || isNaN(val) || isFinite(val) ? '' : val;
         }
+    },
+    created(){
+        this._tempValue = this.selfValue;
     },
     mounted() {
         this.$nextTick(() => {
@@ -50,21 +83,6 @@ export default {
         });
     },
     methods: {
-        handleKeyDown(e) {
-            if (e.keyCode === 13) {
-                this.$emit('pressEnter', e);
-            }
-            this.$emit('keydown', e);
-        },
-        handleChange(e){
-
-        },
-        focus(){
-            this.$refs.input.focus();
-        },
-        blur(){
-            this.$refs.input.blur();
-        },
         select() {
             this.$refs.input.select();
         },

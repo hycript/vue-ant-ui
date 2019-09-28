@@ -59,7 +59,8 @@ export default {
             }
         }
 
-        if(_vnodes){
+        // _vnodes !== 'function' untest
+        if(_vnodes && typeof _vnodes !== 'function'){
             vnodes = cloneVNodes(vnodes, true);
         }
 

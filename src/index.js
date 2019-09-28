@@ -16,6 +16,7 @@ import Affix from './components/affix';
 
 //Data Entry
 import Checkbox from './components/checkbox';
+import Input from './components/input';
 import Radio from './components/radio';
 import Switch from './components/switch';
 
@@ -63,6 +64,8 @@ const components = {
     //Data Entry
     Checkbox,
     CheckboxGroup: Checkbox.Group,
+    Input,
+    Textarea: Input.Textarea,
     Radio,
     RadioGroup: Radio.Group,
     RadioButton: Radio.Button,
@@ -131,6 +134,7 @@ export {
 
     //Data Entry
     Checkbox,
+    Input,
     Radio,
     Switch,
 
