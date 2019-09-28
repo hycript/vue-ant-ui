@@ -48,7 +48,7 @@ export default {
     },
     watch: {
         value(val){
-            this.selfValue = val === undefined || val === null || isNaN(val) || isFinite(val) ? '' : val;
+            this.selfValue = val === undefined || val === null ? '' : val;
         },
         selfValue() {
             this.$nextTick(this.resizeTextarea);

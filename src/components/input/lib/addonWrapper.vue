@@ -1,11 +1,11 @@
 <template>
-<span v-if="hasAddon" :class="classes">
+<span v-if="$slots.addonBefore || addonBefore || $slots.addonAfter || addonAfter" :class="classes">
     <span :class="wrapperClasses">
-        <span v-if="hasAddonBefore" :class="`${prefixCls}-group-addon`">
+        <span v-if="$slots.addonBefore || addonBefore" :class="`${prefixCls}-group-addon`">
             <slot name="addonBefore">{{ addonBefore }}</slot>
         </span>
         <slot></slot>
-        <span v-if="addonAfter" :class="`${prefixCls}-group-addon`">
+        <span v-if="$slots.addonAfter || addonAfter" :class="`${prefixCls}-group-addon`">
             <slot name="addonAfter">{{ addonAfter }}</slot>
         </span>
     </span>
@@ -24,21 +24,8 @@ export default {
         ...inputProps,
     },
     computed: {
-        hasAddonBefore(){
-            const { $slots, addonBefore } = this;
-            return !!$slots.addonBefore || !!addonBefore;
-        },
-        hasAddonAfter(){
-            const { $slots, addonAfter } = this;
-            return !!$slots.addonAfter || !!addonAfter;
-        },
-        hasAddon(){
-            const { hasAddonBefore, hasAddonAfter } = this;
-            return hasAddonBefore || hasAddonAfter;
-        },
         classes(){
-            const { hasAddon, prefixCls, size } = this;
-            if(hasAddon) return;
+            const { prefixCls, size } = this;
             return {
                 [`${prefixCls}-group-wrapper`]: true,
                 [`${prefixCls}-group-wrapper-sm`]: size === 'small',
@@ -46,8 +33,7 @@ export default {
             }
         },
         wrapperClasses(){
-            const { hasAddon, prefixCls, size } = this;
-            if(hasAddon) return;
+            const { prefixCls, size } = this;
             return [`${prefixCls}-wrapper`, `${prefixCls}-group`];
         }
     }

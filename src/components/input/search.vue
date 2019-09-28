@@ -4,15 +4,18 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
+import inputProps from './inputProps';
 
 export default {
-    name: '',
+    name: 'InputSearch',
+    inheritAttrs: false,
     data(){
         return {
         }
     },
     props: {
-        prefixCls: PropTypes.string.def('ant-btn'),
+        ...inputProps,
+        prefixCls: PropTypes.string.def('ant-input'),
     },
     computed: {
         classes(){

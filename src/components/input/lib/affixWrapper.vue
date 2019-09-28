@@ -1,10 +1,10 @@
 <template>
-<span v-if="hasAffix" :class="classes">
-    <span v-if="hasPrefix" :class="`${prefixCls}-prefix`">
+<span v-if="$slots.prefix || prefix || $slots.suffix || suffix" :class="classes">
+    <span v-if="$slots.prefix || prefix" :class="`${prefixCls}-prefix`">
         <slot name="prefix">{{ prefix }}</slot>
     </span>
     <slot></slot>
-    <span v-if="hasSuffix" :class="`${prefixCls}-suffix`">
+    <span v-if="$slots.suffix || suffix" :class="`${prefixCls}-suffix`">
         <slot name="suffix">{{ suffix }}</slot>
     </span>
 </span>
@@ -22,27 +22,14 @@ export default {
         ...inputProps,
     },
     computed: {
-        hasPrefix(){
-            const { $slots, prefix } = this;
-            return !!$slots.prefix || !!prefix;
-        },
-        hasSuffix(){
-            const { $slots, suffix } = this;
-            return !!$slots.suffix || !!suffix;
-        },
-        hasAffix(){
-            const { hasPrefix, hasSuffix } = this;
-            return hasPrefix || hasSuffix;
-        },
         classes(){
-            const { hasAffix, prefixCls, size } = this;
-            if(hasAffix) return;
+            const { prefixCls, size } = this;
             return {
                 [`${prefixCls}-affix-wrapper`]: true,
                 [`${prefixCls}-affix-wrapper-sm`]: size === 'small',
                 [`${prefixCls}-affix-wrapper-lg`]: size === 'large',
             }
         }
-    }
+    },
 }
 </script>

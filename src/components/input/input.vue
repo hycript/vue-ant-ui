@@ -4,12 +4,12 @@
     <template slot="addonBefore"><slot name="addonBefore"></slot></template>
     <AffixWrapper v-bind="$props">
         <template slot="prefix"><slot name="prefix"></slot></template>
+        <template slot="suffix"><slot name="suffix"></slot></template>
         <input ref="input" :class="inputClasses"
             v-bind="inputProps" :value="selfValue"
             v-on="$$listeners" @keydown="handleKeydown" @input="handleChange"
             @compositionstart="handleCompositionStart" @compositionend="handleCompositionEnd"
-        >
-        <template slot="suffix"><slot name="suffix"></slot></template>
+        />
     </AffixWrapper>
     <template slot="addonAfter"><slot name="addonAfter"></slot></template>
 </AddonWrapper>
@@ -31,10 +31,10 @@ export default {
         AddonWrapper,
         AffixWrapper,
     },
-    model: {
+    /* model: {
         prop: 'value',
         // event: INPUT.CHANGE,
-    },
+    }, */
     data(){
         const { value, defaultValue } = this;
         return {
@@ -71,7 +71,7 @@ export default {
     },
     watch: {
         value(val){
-            this.selfValue = val === undefined || val === null || isNaN(val) || isFinite(val) ? '' : val;
+            this.selfValue = val === undefined || val === null ? '' : val;
         }
     },
     created(){
