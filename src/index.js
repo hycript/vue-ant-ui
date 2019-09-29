@@ -66,6 +66,8 @@ const components = {
     CheckboxGroup: Checkbox.Group,
     Input,
     Textarea: Input.Textarea,
+    InputSearch: Input.Search,
+    InputGroup: Input.Group,
     Radio,
     RadioGroup: Radio.Group,
     RadioButton: Radio.Button,

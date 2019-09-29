@@ -4,7 +4,7 @@
 </div>
 </template>
 <script>
-import Demo from '~comps/input/demo/affix';
+import Demo from '~comps/input/demo/tooltip';
 import vnode from '~comps/common/vnode';
 export default {
     components: {
