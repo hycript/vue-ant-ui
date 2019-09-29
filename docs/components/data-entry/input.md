@@ -89,7 +89,7 @@
 </Code>
 
 ### 输入时格式化展示
-结合 [Tooltip](/components/tooltip-cn/) 组件，实现一个数值输入框，方便内容超长时的全量展现。
+结合 [Tooltip](/components/data-display/tooltip.html) 组件，实现一个数值输入框，方便内容超长时的全量展现。
 
 <Code>
 <Tooltip></Tooltip>
@@ -105,14 +105,14 @@
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| addonAfter | 带标签的 input，设置后置标签 | string\|slot |  |
-| addonBefore | 带标签的 input，设置前置标签 | string\|slot |  |
+| addonAfter | 带标签的 input，设置后置标签 | string \| slot |  |
+| addonBefore | 带标签的 input，设置前置标签 | string \| slot |  |
 | defaultValue | 输入框默认内容 | string |  |
 | disabled | 是否禁用状态，默认为 false | boolean | false |
 | id | 输入框的 id | string |  |
-| prefix | 带有前缀图标的 input | string\|slot |  |
+| prefix | 带有前缀图标的 input | string \| slot |  |
 | size | 控件大小。注：标准表单内的输入框大小限制为 `large`。可选 `large` `default` `small` | string | `default` |
-| suffix | 带有后缀图标的 input | string\|slot |  |
+| suffix | 带有后缀图标的 input | string \| slot |  |
 | type | 声明 input 类型，同原生 input 标签的 type 属性，见：[MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/input#属性)(请直接使用 `Input.TextArea` 代替 `type="textarea"`)。 | string | `text` |
 | value(v-model) | 输入框内容 | string |  |
 
@@ -129,7 +129,7 @@
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| autosize | 自适应内容高度，可设置为 `true|false` 或对象：`{ minRows: 2, maxRows: 6 }` | boolean\|object | false |
+| autosize | 自适应内容高度，可设置为 `true|false` 或对象：`{ minRows: 2, maxRows: 6 }` | boolean \| object | false |
 | defaultValue | 输入框默认内容 | string |  |
 | value(v-model) | 输入框内容 | string |  |
 
@@ -145,7 +145,7 @@
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| enterButton | 是否有确认按钮，可设为按钮文字 | boolean\|slot | false |
+| enterButton | 是否有确认按钮，可设为按钮文字 | boolean \| slot | false |
 
 ### Input.Search 事件
 | 事件名称 | 说明 | 回调参数 |
