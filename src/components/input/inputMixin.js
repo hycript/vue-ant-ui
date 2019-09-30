@@ -27,11 +27,17 @@ export default {
             }
             this.update(e, value);
         },
+        handleReset(e){
+            if(this.disabled) return;
+            this.update(e, '');
+            this.$nextTick(this.focus);
+        },
         update(e, value){
             if(value === this.selfValue) return;
             if(!hasProp(this, 'value')){
                 this.selfValue = value;
             }
+            e.target.value = value;
             this.$emit('input', value);
             this.$emit('change', e);
         },

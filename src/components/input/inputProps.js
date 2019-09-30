@@ -5,7 +5,7 @@ export default {
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).def(''),
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    type: PropTypes.oneOf(['text', 'textarea', 'password']).def('text'),
+    type: PropTypes.string.def('text'),
     name: PropTypes.string,
     size: PropTypes.oneOf(['small', 'large', 'default']),
     disabled: PropTypes.bool.def(false),
@@ -16,4 +16,5 @@ export default {
     suffix: PropTypes.any,
     spellCheck: PropTypes.bool,
     autoFocus: PropTypes.bool,
+    allowClear: PropTypes.bool,
 }

@@ -4,16 +4,20 @@
 </div>
 </template>
 <script>
-import Demo from '~comps/input/demo/tooltip';
+import Demo from '~comps/input/demo/autosize-textarea';
 import vnode from '~comps/common/vnode';
+import ResizeObserver from '~comps/common/resizeObserver';
+
 export default {
     components: {
         Demo,
         vnode,
+        ResizeObserver,
     },
     data(){
         return {
             key: 'test',
+            show: true,
         }
     },
     mounted(){
@@ -23,7 +27,9 @@ export default {
         console.log('test updated');
     },
     methods: {
-
+        toggle(){
+            this.show = !this.show;
+        }
     }
 }
 </script>

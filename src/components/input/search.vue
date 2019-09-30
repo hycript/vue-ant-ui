@@ -5,12 +5,8 @@
     v-on="$$listeners" v-bind="inputProps" @pressEnter="onPressEnter"
 >
     <template slot="addonBefore"><slot name="addonBefore"></slot></template>
-    <template slot="addonAfter"><slot name="addonAfter"></slot></template>
-    <template slot="prefix"><slot name="prefix"></slot></template>
-    <template slot="suffix">
-        <slot name="suffix"></slot>
-        <!-- <slot v-if="$slots.enterButton" name="enterButton"></slot> -->
-        <vnode @click="onSearch">
+    <template slot="addonAfter">
+        <vnode v-if="$slots.enterButton || enterButton" @click="onSearch">
             <vnode v-if="$slots.enterButton" :class="`${prefixCls}-button`" :size="size">
                 <slot name="enterButton"></slot>
             </vnode>
@@ -18,8 +14,14 @@
                 <Icon v-if="enterButton === true" type="search" />
                 <template v-else>{{ enterButton }}</template>
             </Button>
-            <Icon v-else :class="`${prefixCls}-icon`" type="search" key="searchIcon" />
         </vnode>
+        <slot name="addonAfter"></slot>
+    </template>
+    <template slot="prefix"><slot name="prefix"></slot></template>
+    <template slot="suffix">
+        <slot name="suffix"></slot>
+        <!-- <slot v-if="$slots.enterButton" name="enterButton"></slot> -->
+        <Icon v-if="!$slots.enterButton && !enterButton" :class="`${prefixCls}-icon`" @click="onSearch" type="search" key="searchIcon" />
     </template>
 </vInput>
 </template>
@@ -67,9 +69,8 @@ export default {
     },
     methods: {
         onSearch(e){
-            console.log('this.$refs.input.selfValue', this.$refs.input.selfValue);
             this.$emit('search', this.$refs.input.selfValue, e);
-            this.$refs.input.focus();
+            this.focus();
         },
         onPressEnter(e){
             this.$emit('pressEnter', e);

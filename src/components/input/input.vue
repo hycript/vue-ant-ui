@@ -1,10 +1,15 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
-<AddonWrapper v-if="type !== 'textarea'" v-bind="$props">
+<AddonWrapper v-bind="$props">
     <template slot="addonBefore"><slot name="addonBefore"></slot></template>
-    <AffixWrapper v-bind="$props">
+    <AffixWrapper :class="[ allowClear && !!value ? `${prefixCls}-affix-wrapper-with-clear-btn` : '']" v-bind="$props">
         <template slot="prefix"><slot name="prefix"></slot></template>
-        <template slot="suffix"><slot name="suffix"></slot></template>
+        <template slot="suffix">
+            <template v-if="allowClear">
+                <Icon v-show="!!selfValue" :class="`${prefixCls}-clear-icon`" type="close-circle" theme="filled" @click="handleReset" role="button"/>
+            </template>
+            <slot name="suffix"></slot>
+        </template>
         <input ref="input" :class="inputClasses"
             v-bind="inputProps" :value="selfValue"
             v-on="$$listeners" @keydown="handleKeydown" @input="handleChange"
@@ -22,6 +27,7 @@ import inputProps from './inputProps';
 import inputMixin from './inputMixin';
 import AddonWrapper from './lib/addonWrapper';
 import AffixWrapper from './lib/affixWrapper';
+import Icon from '../icon';
 
 export default {
     name: 'Input',
@@ -30,6 +36,7 @@ export default {
     components: {
         AddonWrapper,
         AffixWrapper,
+        Icon,
     },
     /* model: {
         prop: 'value',
@@ -67,7 +74,7 @@ export default {
             if(type === 'textarea') return {};
             const props = omit(this.$props, ['prefixCls', 'addonBefore', 'addonAfter', 'prefix', 'suffix', 'value', 'defaultValue']);
             return props;
-        }
+        },
     },
     watch: {
         value(val){

@@ -67,6 +67,7 @@ const components = {
     Input,
     Textarea: Input.Textarea,
     InputSearch: Input.Search,
+    InputPassword: Input.Password,
     InputGroup: Input.Group,
     Radio,
     RadioGroup: Radio.Group,

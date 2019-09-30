@@ -11,12 +11,13 @@ import PropTypes from '../_util/vue-types';
 import { omit } from '../_util/lodash';
 import { is, hasProp } from '../_util/props-util';
 import events from '../common/events';
+import resizable from '../common/resizable'
 import inputProps from './inputProps';
 import inputMixin from './inputMixin';
 
 export default {
     name: 'Textarea',
-    mixins: [inputMixin],
+    mixins: [inputMixin, resizable],
     model: {
         prop: 'value',
     },
@@ -59,6 +60,7 @@ export default {
             this.autoFocus && this.focus();
         });
         setTimeout(this.resizeTextarea, 0);
+        this.$on('resize', this.resizeTextarea);
     },
     methods: {
         resizeTextarea(){
@@ -103,7 +105,12 @@ export default {
             const max = maxRows ? maxRows * line + (include ? padding + border : 0) : 0;
             let _h = height;
             height = height < min ? min : max > 0 && height > max ? max : height;
-            this.textareaStyles = { height: `${height}px`, 'overflow-y': height < _h ? '' : 'hidden' };
+            this.textareaStyles = {
+                height: `${height}px`,
+                'overflow-y': height < _h ? '' : 'hidden',
+                maxHeight: `${max}px`,
+                minHeight: `${min}px`
+            };
             document.body.removeChild(node);
         }
     }

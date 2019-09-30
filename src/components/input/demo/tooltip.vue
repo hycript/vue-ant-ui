@@ -1,5 +1,6 @@
 <template>
-    <vTooltip placement="topLeft" overlayClassName="numeric-input">
+<div>
+    <vTooltip placement="topLeft" :trigger="['focus']" v-model="visible" overlayClassName="numeric-input">
         <span slot="title" v-if="value" class="numeric-input-title">
             {{value !== '-' ? formatNumber(value) : '-'}}
         </span>
@@ -7,14 +8,16 @@
             Input a number
         </template>
         <vInput :value="value" @change="onChange" @blur="onBlur" placeholder="Input a number" maxLength="25"
-            style="width: 120px" />
+            style="width: 120px" allowClear/>
     </vTooltip>
+</div>
 </template>
 <script>
 export default {
     data() {
         return {
             value: '',
+            visible: false,
         }
     },
     methods: {
