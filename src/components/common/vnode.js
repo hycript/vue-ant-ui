@@ -1,7 +1,8 @@
 
-import { is, type, parseStyleText, stringifyClassData, mergeListeners } from '../_util/props-util';
+import { is, type } from '../_util/props-util';
 import { cloneVNodes } from '../_util/vnode';
 import PropTypes from '../_util/vue-types';
+import listener from './listener';
 
 export default {
     functional: true,
@@ -85,7 +86,9 @@ export default {
             if(keys.length === 0 && !hasDataGenerator) return;
 
             let { componentOptions } = vnode;
-            if(componentOptions){
+            let isComponent = !!componentOptions;
+
+            if(isComponent){
                 propsData = Object.assign(componentOptions.propsData || {});
                 propsKey = Object.keys((componentOptions.Ctor && componentOptions.Ctor.options.props) || {});
             }
@@ -129,9 +132,15 @@ export default {
                     odata = stringifyClassData(odata);
                     break;
                 case 'on':
-                    let listeners = mergeListeners(componentOptions && componentOptions['listeners'], odata);
-                    componentOptions['listeners'] = listeners;
-                    // vnode.data[key]
+                    let listenerTarget = isComponent ? componentOptions['listeners'] : cdata;
+
+                    let listeners = mergeListeners(listenerTarget, odata);
+
+                    if(isComponent){
+                        componentOptions['listeners'] = listeners;
+                    }else{
+                        vnode.data[key] = listeners;
+                    }
                     return;
                 case 'attrs':
                     odata = Object.assign({}, odata);
@@ -164,4 +173,102 @@ export default {
         })
         return vnodes;
     }
+}
+
+
+export function parseStyleText(cssText = '', camel) {
+    if(!cssText) return {};
+    if(is(cssText, 'object')) return cssText;
+    const res = {};
+    const listDelimiter = /;(?![^(]*\))/g;
+    const propertyDelimiter = /:(.+)/;
+    cssText.split(listDelimiter).forEach(function (item) {
+        if (item) {
+            const tmp = item.split(propertyDelimiter);
+            if (tmp.length > 1) {
+                const k = tmp[0].trim().replace(/-(\w)/g, function($$, $1){
+                    return $1.toUpperCase();
+                });
+                res[k] = tmp[1].trim();
+            }
+        }
+    });
+    return res;
+}
+
+export function stringifyClassData(classData) {
+    let _type = type(classData);
+    if(_type === 'object'){
+        return Object.keys(classData).filter(cls => {
+            return !!classData[cls];
+        }).join(' ');
+    }else if(_type === 'array'){
+        return classData.join(' ');
+    }
+    return classData;
+}
+
+
+export function mergeListeners(cdata = {}, odata = {}) {
+    let ckeys = Object.keys(cdata);
+    Object.keys(odata).forEach(key => {
+        let clistener = cdata[key];
+        let olistener = odata[key];
+        let index = ckeys.indexOf(key);
+        if(index > -1){
+            ckeys.splice(index, 1);
+        }
+        olistener.__vnode_inject__ = true;
+        if(!clistener){
+            cdata[key] = olistener;
+            return;
+        }
+
+        let listeners = !!clistener.fns ? clistener.fns : clistener;
+
+        if(!Array.isArray(listeners)){
+            listeners = [listeners];
+        }
+
+        let hasOlistener = false;
+        for(let i = 0; i < listeners.length; i++){
+            let listener = listeners[i];
+            if(listener.__vnode_inject__){
+                if(listener !== olistener){
+                    listeners.splice(i, 1);
+                    i --;
+                }else{
+                    hasOlistener = true;
+                }
+            }
+        }
+        if(!hasOlistener){
+            listeners.push(olistener);
+        }
+
+        if(clistener.fns){
+            clistener.fns = listeners;
+        }else{
+            cdata[key] = listeners;
+        }
+    })
+
+    ckeys.forEach(key => {
+        let listener = cdata[key];
+        if(listener.__vnode_inject__ || (listener.fns && listener.fns.__vnode_inject__)){
+            delete cdata[key];
+        }
+        let _listener = listener.fns || listener;
+
+        if(!Array.isArray(_listener)) return;
+        _listener = _listener.filter(listener => {
+            return !!listener.__vnode_inject__;
+        })
+        if(listener.fns){
+            listener.fns = _listener;
+        }else{
+            cdata[key] = _listener;
+        }
+    })
+    return cdata;
 }
