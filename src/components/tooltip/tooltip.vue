@@ -8,16 +8,17 @@
 </style>
 <template>
 <div :class="`${prefixCls}-wrapper`" @mouseenter="onMouseenter" @mouseleave="onMouseleave" @click="onClick" @contextmenu="onContextmenu">
-    <!-- @focus="onFocus" @blur="onBlur" -->
-    <slot :show="show" :hide="hide" :visible="selfVisible"></slot>
+    <vnode @focus="onFocus" @blur="onBlur">
+        <slot :show="show" :hide="hide" :visible="selfVisible"></slot>
+    </vnode>
     <vTransition>
         <Align v-if="selfVisible" :target="getTarget" :align="selfPlacement" :monitorWindowResize="true" :style="originStyle" @align="onAlign">
             <Popup :getPopupContainer="getPopupContainer">
-                <div v-on="$contentsListener" ref="contents" :class="classes">
+                <div v-on="$contentsListener" ref="contents" :class="classes" :style="overlayStyle">
                     <div :class="[`${prefixCls}-content`]">
                         <slot name="contents" :show="show" :hide="hide" :visible="selfVisible">
-                            <div :class="[`${prefixCls}-arrow`]"></div>
-                            <div :class="[`${prefixCls}-inner`, overlayClassName || '']" :style="overlayStyle">
+                            <div :class="`${prefixCls}-arrow`"></div>
+                            <div :class="`${prefixCls}-inner`">
                                 <slot name="title">{{ title }}</slot>
                             </div>
                         </slot>
@@ -35,6 +36,7 @@ import abstractTooltipProps from './abstractTooltipProps.js';
 import getPlacement from './getPlacement';
 import Align from '../common/align.js';
 import Popup from '../common/popup.js';
+import vnode from '../common/vnode.js';
 import vTransition from '../transition';
 import listener from '../common/listener';
 
@@ -44,6 +46,7 @@ export default {
     components: {
         Align,
         Popup,
+        vnode,
         vTransition,
     },
     model: {
@@ -73,11 +76,12 @@ export default {
             return [].concat(trigger);
         },
         classes(){
-            const { prefixCls, placement, realPlacement } = this;
+            const { prefixCls, placement, realPlacement, overlayClassName } = this;
 
             return {
                 [`${prefixCls}`]: true,
                 [`${prefixCls}-placement-${realPlacement || placement}`]: true,
+                [overlayClassName]: overlayClassName,
             }
         },
         isNoTitle(){

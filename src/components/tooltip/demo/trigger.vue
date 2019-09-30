@@ -9,7 +9,7 @@
     </vTooltip>
     <br>
     <vTooltip placement="topLeft" title="Propmt Text" trigger="focus">
-        <input slot-scope="{ show, hide }" @focus="show" @blur="hide" class="inp" type="text" placeholder="focus">
+        <input class="inp" type="text" placeholder="focus">
     </vTooltip>
 </div>
 </template>
