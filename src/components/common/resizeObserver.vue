@@ -5,9 +5,7 @@
 </template>
 <script>
 import ResizeObserver from 'resize-observer-polyfill';
-import PropTypes from '../_util/vue-types';
 import { filterEmpty } from '../_util/props-util';
-import { throttle } from '../_util/lodash';
 import vnode from './vnode';
 import resizable from './resizable';
 
@@ -26,7 +24,7 @@ export default {
                 window.console.error('`children` of ResizeObserver is empty. Nothing is in observe.');
             }
             vnodes = vnodes.slice(0, 1);
-            console.log('vnodesFilter', vnodes);
+            // console.log('vnodesFilter', vnodes);
             return vnodes;
         },
     }

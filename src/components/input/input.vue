@@ -2,7 +2,7 @@
 <template>
 <AddonWrapper v-bind="$props">
     <template slot="addonBefore"><slot name="addonBefore"></slot></template>
-    <AffixWrapper :class="[ allowClear && !!value ? `${prefixCls}-affix-wrapper-with-clear-btn` : '']" v-bind="$props">
+    <AffixWrapper :class="[ ($slots.suffix || suffix) && allowClear && !!selfValue ? `${prefixCls}-affix-wrapper-with-clear-btn` : '']" v-bind="$props">
         <template slot="prefix"><slot name="prefix"></slot></template>
         <template slot="suffix">
             <template v-if="allowClear">
