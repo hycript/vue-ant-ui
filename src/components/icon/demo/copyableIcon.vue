@@ -48,6 +48,7 @@ export default {
         click(){
             const { type } = this;
             const text = `<vIcon type="${type}" />`;
+            this.$message.success(`<vIcon type="${type}" />  copied 🎉`);
             copy(text);
         }
     }

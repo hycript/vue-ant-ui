@@ -8,7 +8,7 @@
     <template slot="addonAfter"><slot name="addonAfter"></slot></template>
     <template slot="prefix"><slot name="prefix"></slot></template>
     <template slot="suffix">
-        <Icon v-if="visibilityToggle" :class="`${prefixCls}-icon`" @click="toggleVisible" :type="visible ? 'eye' : 'eye-invisible'" key="passwordIcon" />
+        <Icon v-if="visibilityToggle" :class="`${prefixCls}-icon`" @click="toggleVisible" :type="visible ? 'eye' : 'eye-invisible'" key="passwordIcon" theme="outlined"/>
         <slot name="suffix"></slot>
     </template>
 </vInput>

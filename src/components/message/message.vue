@@ -2,7 +2,7 @@
 <template>
 <div :class="classes">
     <vnode v-if="icon" :vnodes="icon"></vnode>
-    <Icon v-else :type="iconType" :theme="iconType === 'loading' ? 'outlined' : 'filled'" />
+    <Icon v-else :type="iconType" /> <!--  :theme="iconType === 'loading' ? 'outlined' : 'filled'" -->
     <span>
         <vnode :vnodes="content"></vnode>
     </span>

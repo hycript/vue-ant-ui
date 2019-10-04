@@ -6,7 +6,7 @@
         <template slot="prefix"><slot name="prefix"></slot></template>
         <template slot="suffix">
             <template v-if="allowClear">
-                <Icon v-show="!!selfValue" :class="`${prefixCls}-clear-icon`" type="close-circle" theme="filled" @click="handleReset" role="button"/>
+                <Icon v-show="!!selfValue" :class="`${prefixCls}-clear-icon`" type="close-circle" @click="handleReset" role="button"/>
             </template>
             <slot name="suffix"></slot>
         </template>

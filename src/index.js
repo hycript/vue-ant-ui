@@ -40,6 +40,8 @@ import Spin from './components/spin';
 const components = {
     //general
     Icon,
+    IconSVG: Icon.SVG,
+    IconFont: Icon.Font,
     Button,
     ButtonGroup: Button.Group,
     Transition,

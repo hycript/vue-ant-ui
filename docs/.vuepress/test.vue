@@ -4,7 +4,7 @@
 </div>
 </template>
 <script>
-import Demo from '~comps/input/demo/autosize-textarea';
+import Demo from '~comps/icon/demo/svg';
 import vnode from '~comps/common/vnode';
 import ResizeObserver from '~comps/common/resizeObserver';
 

@@ -10,6 +10,7 @@
     "pack": "rollup -c"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^2.0.0",
     "add-dom-event-listener": "^1.1.0",
     "core-js": "^2.6.5",
     "dom-align": "^1.10.2",
@@ -19,6 +20,7 @@
     "vue-types": "^1.6.0"
   },
   "devDependencies": {
+    "@ant-design/icons": "^2.1.1",
     "@vue/cli-plugin-babel": "^3.9.0",
     "@vue/cli-plugin-eslint": "^3.9.0",
     "@vue/cli-service": "^3.9.0",

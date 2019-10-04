@@ -144,14 +144,16 @@ export default {
                     return;
                 case 'attrs':
                     odata = Object.assign({}, odata);
-                    Object.keys(odata || {}).forEach(k => {
-                        if(propsKey.indexOf(k) === -1) return;
-                        // if(!(k in propsData)){
-                        propsData[k] = odata[k];
-                        delete odata[k];
-                        // }
-                    })
-                    componentOptions.propsData = propsData;
+                    if(isComponent){
+                        Object.keys(odata || {}).forEach(k => {
+                            if(propsKey.indexOf(k) === -1) return;
+                            // if(!(k in propsData)){
+                            propsData[k] = odata[k];
+                            delete odata[k];
+                            // }
+                        })
+                        componentOptions.propsData = propsData;
+                    }
                 }
 
                 let _type = type(cdata || odata);

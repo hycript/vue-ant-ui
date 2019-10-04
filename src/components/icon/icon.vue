@@ -1,28 +1,49 @@
 <style lang="less">
 @import '../style/index.less';
+@import './style/index.less';
 </style>
 <template>
-<i :class="classes" v-on="$$listeners"></i>
+<i v-if="isDefaultIcon" :class="classes" v-on="$listeners"></i>
+<IconSVG v-else v-bind="$props" v-on="$listeners"><slot></slot></IconSVG>
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
 import events from '../common/events';
+import IconSVG from './iconSVG';
+import defaultIcon from './defaultIcon';
+import iconProps from './iconProps.js';
+import { withThemeSuffix, removeTypeTheme, alias } from './utils';
 
 export default {
     name: 'Icon',
-    mixins: [events],
+    components: {
+        IconSVG,
+    },
     props: {
-        type: PropTypes.string.isRequired,
-        spin: PropTypes.bool.def(false),
+        ...iconProps,
     },
     computed: {
+        themeType(){
+            const { type, theme } = this;
+            if(!type) return;
+            return withThemeSuffix(
+                removeTypeTheme(alias(type)), theme
+            );
+        },
         classes(){
-            const { type, spin } = this;
+            const { themeType, type, spin } = this;
+            if(!themeType) return;
             return {
                 anticon: true,
+                'anticon-usefont': true,
                 'anticon-spin': !!spin || type === 'loading',
-                [`anticon-${type}`]: true,
+                [`anticon-${themeType}`]: true,
             };
+        },
+        isDefaultIcon(){
+            const { themeType } = this;
+            if(!themeType) return false;
+            return defaultIcon.indexOf(themeType) > -1;
         }
     },
 }
