@@ -42,8 +42,7 @@
 ### SVG图标
 - svg图标支持theme. 
 - 且只支持`手动import` @ant-design/icons 中的图标来使用. 
-- 使用Icon来显示图标的话, 默认情况下会优先使用旧版的iconfont图标.
-- 旧版图标不存在时,则尝试用svg来渲染.前提是这些svg图标已经手动import.
+- 使用Icon来显示图标的话, 默认情况下会优先使用已手动引用的svg图标. 如果没有手动引用则使用旧版的iconfont图标.
 - svg图标可在项目初始化时统一import.
 
 <Code>

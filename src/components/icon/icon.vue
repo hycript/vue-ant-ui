@@ -30,9 +30,15 @@ export default {
                 removeTypeTheme(alias(type)), theme
             );
         },
+        isDefaultIcon(){
+            const { themeType, type, theme = 'outlined' } = this;
+            if(!themeType) return false;
+            if(IconSVG.has(type, theme)) return false;
+            return defaultIcon.indexOf(themeType) > -1;
+        },
         classes(){
-            const { themeType, type, spin } = this;
-            if(!themeType) return;
+            const { isDefaultIcon, themeType, type, spin } = this;
+            if(!isDefaultIcon) return;
             return {
                 anticon: true,
                 'anticon-usefont': true,
@@ -40,11 +46,6 @@ export default {
                 [`anticon-${themeType}`]: true,
             };
         },
-        isDefaultIcon(){
-            const { themeType } = this;
-            if(!themeType) return false;
-            return defaultIcon.indexOf(themeType) > -1;
-        }
     },
 }
 </script>

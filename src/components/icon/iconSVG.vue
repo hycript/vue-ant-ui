@@ -72,6 +72,10 @@ export default {
             customCache[`${icon.name}-${getTypeTheme(icon.theme)}`] = true;
         })
         VueIcon.add(...icons)
+    },
+    has(type, theme){
+        const name = `${type}-${getTypeTheme(theme)}`;
+        return !!customCache[name];
     }
 }
 </script>
