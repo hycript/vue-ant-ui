@@ -39,6 +39,10 @@ export default {
     },
     data(){
         const { value, defaultValue } = this;
+        let _value = hasProp(this, 'value') ? value : defaultValue;
+        if(isNaN){
+
+        }
         return {
             focused: false,
             selfValue: (hasProp(this, 'value') ? value : defaultValue) || '',
@@ -50,7 +54,7 @@ export default {
         max: PropTypes.number.def(Infinity),
         value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         step: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).def(1),
-        defaultValue: PropTypes.number,
+        defaultValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         tabIndex: PropTypes.number,
         disabled: PropTypes.bool,
         size: PropTypes.oneOf(['large', 'small', 'default']),
@@ -74,22 +78,45 @@ export default {
                 [`${prefixCls}-focused`]: focused,
             }
         },
-        inputProps(){
-            const { selfValue: value, disabled, size, placeholder, name, id, autoFocus, prefixCls } = this;
-            return {
-                value, disabled, size, placeholder, name, id, autoFocus, inputClass: `${prefixCls}-input`,
-            }
-        },
         upDisabled(){
             const { max, selfValue } = this;
-            if(max === undefined || max === null) return false;
+            if(max === undefined || max === null || selfValue === '') return false;
             return selfValue >= max;
         },
         downDisabled(){
             const { min, selfValue } = this;
-            if(min === undefined || min === null) return false;
+            if(min === undefined || min === null || selfValue === '') return false;
             return selfValue <= min;
-        }
+        },
+        selfStep(){
+            let { step } = this;
+            step = parseFloat(step);
+            if(isNaN(step)){
+                step = 1;
+            }
+            return step;
+        },
+        selfPrecision(){
+            let { precision } = this;
+            if(isNaN(precision) || precision < 0) return 0;
+            if(precision > 100) return 100
+            return precision;
+        },
+        inputDisplayValue(){
+            const { selfValue, formatter } = this;
+            if(typeof formatter === 'function'){
+                let value = formatter(selfValue);
+                if(value === undefined || value === null || (typeof value === 'number' && isNaN(value))) return '';
+                return value;
+            }
+            return selfValue;
+        },
+        inputProps(){
+            const { inputDisplayValue: value, disabled, size, placeholder, name, id, autoFocus, prefixCls } = this;
+            return {
+                value, disabled, size, placeholder, name, id, autoFocus, inputClass: `${prefixCls}-input`,
+            }
+        },
     },
     beforeDestroy(){
         this.stop();
@@ -99,44 +126,48 @@ export default {
             this.$refs.input.focus();
         },
         blur() {
-            this.focused = false
             this.$refs.input.blur();
         },
         onFocus(e){
+            console.log('focus');
             this.focused = true
             this.$emit('focus', e);
         },
         onBlur(e) {
+            console.log('blur');
+            this.focused = false
             this.handlePrecision(e);
             this.$emit('blur', e);
         },
         handlePrecision(e){
-            let { selfValue: value, precision } = this;
+            let { selfValue: value, selfPrecision: precision } = this;
+            if(value === '' || value === null || value === undefined) return;
             console.log('precision', precision, value);
             if(precision === undefined || precision === null) return;
             if(getPrecisionLength(value) === precision) return;
             value = parseFloat(value).toFixed(precision);
-            this.update(e, value)
+            this.update(e, value, true)
         },
         handleChange(e){
             let value = e.target.value;
+            value = this.getCurrentValue(value);
             if(numberRegexp.test(value)){
                 this.update(e, value)
             }
             this.$nextTick(this.$forceUpdate);
         },
-        update(e, value){
-            const { min, max } = this;
+        update(e, value, force){
+            const { min, max, selfPrecision: precision } = this;
 
-            if(value !== ''){
+            if(value !== '' && force){
                 let _value = parseFloat(value);
                 _value = _value < min ? min : _value > max ? max : _value;
                 if(_value !== parseFloat(value)){
-                    value = _value;
+                    value = _value.toFixed(precision);
                 }
             }
 
-            if(value === this.selfValue) return;
+            // if(parseFloat(value) === parseFloat(this.selfValue) && !force) return;
             if(!hasProp(this, 'value')){
                 this.selfValue = value;
             }
@@ -148,14 +179,19 @@ export default {
         },
         handleStep(e, dir, recursive){
             console.log('xx')
-            let { selfValue: value, step } = this;
+            let { selfValue: value, selfStep: step, selfPrecision: precision } = this;
+
             if(isNaN(value) || !value){
                 value = 0;
             }
+
             let bit = Math.max(getPrecisionLength(value), getPrecisionLength(step));
             value = Math.round((parseFloat(value) + dir * step) * Math.pow(10, bit)) / Math.pow(10, bit);
-            this.update(e, value);
-            this.focus();
+            console.log('update', value);
+            if(getPrecisionLength(value) < precision){
+                value = value.toFixed(precision);
+            }
+            this.update(e, value, true);
             this.autoStepTimer = setTimeout(() => {
                 this.handleStep(e, dir, true);
             }, recursive ? SPEED : DELAY)
@@ -164,8 +200,16 @@ export default {
             if (this.autoStepTimer) {
                 clearTimeout(this.autoStepTimer);
                 this.autoStepTimer = null;
+                this.focus();
             }
         },
+        getCurrentValue(value){
+            const { parser } = this;
+            if(typeof parser === 'function'){
+                return parser(value)
+            }
+            return value;
+        }
     }
 }
 
