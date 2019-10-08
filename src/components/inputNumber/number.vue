@@ -1,7 +1,7 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
 <vInput ref="input" :class="classes" v-bind="inputProps"
-    v-on="$$listeners" @focus="onFocus" @blur="onBlur" @change="handleChange"
+    v-on="$$listeners" @focus="onFocus" @blur="onBlur" @change="handleChange" @keydown="onKeydown" @keyup="onKeyup"
 >
     <div slot="suffix" :class="`${prefixCls}-handler-wrap`">
         <HandlerButton type="up" :disabled="upDisabled" :prefixCls="prefixCls"
@@ -31,7 +31,7 @@ const DELAY = 600;
 export default {
     name: 'InputNumber',
     mixins: [events],
-    exceptListeners: ['focus', 'blur', 'input', 'change'],
+    exceptListeners: ['focus', 'blur', 'input', 'change', 'keydown', 'keyup'],
     components: {
         vInput,
         Icon,
@@ -98,6 +98,7 @@ export default {
         },
         selfPrecision(){
             let { precision } = this;
+            if(precision === undefined || precision === null) return undefined;
             if(isNaN(precision) || precision < 0) return 0;
             if(precision > 100) return 100
             return precision;
@@ -129,32 +130,68 @@ export default {
             this.$refs.input.blur();
         },
         onFocus(e){
-            console.log('focus');
             this.focused = true
             this.$emit('focus', e);
         },
         onBlur(e) {
-            console.log('blur');
             this.focused = false
             this.handlePrecision(e);
             this.$emit('blur', e);
         },
+        onKeydown(e){
+            const { keyCode } = e;
+            if(keyCode === 38 || keyCode === 40){
+                this.handleStep(e, keyCode === 38 ? 1 : -1);
+            }
+            this.keyCode = keyCode;
+        },
+        onKeyup(e){
+            const { keyCode } = e;
+            if(keyCode === 38 || keyCode === 40){
+                this.stop();
+            }
+        },
         handlePrecision(e){
-            let { selfValue: value, selfPrecision: precision } = this;
+            let { selfValue: value } = this;
             if(value === '' || value === null || value === undefined) return;
-            console.log('precision', precision, value);
-            if(precision === undefined || precision === null) return;
-            if(getPrecisionLength(value) === precision) return;
-            value = parseFloat(value).toFixed(precision);
             this.update(e, value, true)
         },
         handleChange(e){
             let value = e.target.value;
+            // console.log('selectionStart', e.target.selectionStart, 'selectionEnd', e.target.selectionEnd, e.target.value);
             value = this.getCurrentValue(value);
+            let { inputDisplayValue: prevValue } = this;
+            let { value: _value, selectionStart, selectionEnd } = e.target;
+            let rval = _value[e.target.selectionEnd];
+            let rlen = _value.length - e.target.selectionEnd
+
             if(numberRegexp.test(value)){
                 this.update(e, value)
             }
-            this.$nextTick(this.$forceUpdate);
+
+            this.$forceUpdate();
+            this.$nextTick(() => {
+                let cval = this.inputDisplayValue;
+                let clen = cval.length;
+                if((rval === undefined || this.keyCode === 8) && prevValue !== this.inputDisplayValue){
+                    e.target.setSelectionRange(clen - (selectionEnd - selectionStart + rlen), clen - rlen);
+                }else if(prevValue === this.inputDisplayValue){
+                    e.target.setSelectionRange(selectionStart, selectionEnd);
+                }else {
+                    let _len = clen + 1 - rlen;
+                    let _rval = cval[_len];
+                    do{
+                        _len = _len - 1;
+                        _rval = cval[_len];
+                    }while(_rval !== rval && _len > 0)
+                    selectionStart = selectionStart - (selectionEnd - _len);
+                    if(selectionStart < 0){
+                        selectionStart = 0;
+                    }
+                    e.target.setSelectionRange(selectionStart, _len);
+                }
+                this.keyCode = undefined;
+            });
         },
         update(e, value, force){
             const { min, max, selfPrecision: precision } = this;
@@ -162,23 +199,25 @@ export default {
             if(value !== '' && force){
                 let _value = parseFloat(value);
                 _value = _value < min ? min : _value > max ? max : _value;
-                if(_value !== parseFloat(value)){
-                    value = _value.toFixed(precision);
+                if(precision !== undefined){
+                    _value = _value.toFixed(precision);
                 }
+                value = _value;
             }
+
+            if(value + '' === this.selfValue + '') return;
 
             // if(parseFloat(value) === parseFloat(this.selfValue) && !force) return;
             if(!hasProp(this, 'value')){
                 this.selfValue = value;
             }
-            e.target.value = value;
             this.$emit('input', value);
-            console.log('change', value)
-            // this.$emit('change', e);
+            // console.log('change', value)
             this.$emit('change', value);
         },
         handleStep(e, dir, recursive){
-            console.log('xx')
+            this.stop();
+
             let { selfValue: value, selfStep: step, selfPrecision: precision } = this;
 
             if(isNaN(value) || !value){
@@ -187,10 +226,11 @@ export default {
 
             let bit = Math.max(getPrecisionLength(value), getPrecisionLength(step));
             value = Math.round((parseFloat(value) + dir * step) * Math.pow(10, bit)) / Math.pow(10, bit);
-            console.log('update', value);
-            if(getPrecisionLength(value) < precision){
+
+            if(precision !== undefined && getPrecisionLength(value) < precision){
                 value = value.toFixed(precision);
             }
+
             this.update(e, value, true);
             this.autoStepTimer = setTimeout(() => {
                 this.handleStep(e, dir, true);
