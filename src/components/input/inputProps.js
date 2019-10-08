@@ -17,4 +17,5 @@ export default {
     spellCheck: PropTypes.bool,
     autoFocus: PropTypes.bool,
     allowClear: PropTypes.bool,
+    inputClass: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
 }

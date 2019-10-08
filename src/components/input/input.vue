@@ -62,17 +62,25 @@ export default {
         inputClasses(){
             const { type, prefixCls, size, disabled } = this;
             if(type === 'textarea') return;
-            return {
+            let { inputClass } = this;
+            if(inputClass){
+                if(is(inputClass, 'array')){
+                    inputClass = { [inputClass.join(' ')]: true };
+                }else if(is(inputClass, 'string')){
+                    inputClass = { [inputClass]: true };
+                }
+            }
+            return Object.assign({
                 [`${prefixCls}`]: true,
                 [`${prefixCls}-sm`]: size === 'small',
                 [`${prefixCls}-lg`]: size === 'large',
                 [`${prefixCls}-disabled`]: disabled,
-            };
+            }, inputClass);
         },
         inputProps(){
             const { type } = this;
             if(type === 'textarea') return {};
-            const props = omit(this.$props, ['prefixCls', 'addonBefore', 'addonAfter', 'prefix', 'suffix', 'value', 'defaultValue']);
+            const props = omit(this.$props, ['prefixCls', 'addonBefore', 'addonAfter', 'prefix', 'suffix', 'value', 'defaultValue', 'inputClass']);
             return props;
         },
     },
