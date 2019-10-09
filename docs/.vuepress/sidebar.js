@@ -44,6 +44,7 @@ module.exports = [
         sidebarDepth: 2,
         children: [
             '/components/data-entry/checkbox',
+            '/components/data-entry/inputNumber',
             '/components/data-entry/input',
             '/components/data-entry/radio',
             '/components/data-entry/switch',

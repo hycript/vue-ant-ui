@@ -40,12 +40,12 @@ export default {
     data(){
         const { value, defaultValue } = this;
         let _value = hasProp(this, 'value') ? value : defaultValue;
-        if(isNaN){
-
+        if(_value === null || _value === '' || (typeof _value === 'number' && !isFinite(_value))){
+            _value = ''
         }
         return {
             focused: false,
-            selfValue: (hasProp(this, 'value') ? value : defaultValue) || '',
+            selfValue: _value,
         }
     },
     props: {
@@ -104,10 +104,13 @@ export default {
             return precision;
         },
         inputDisplayValue(){
-            const { selfValue, formatter } = this;
+            let { selfValue, formatter, decimalSeparator } = this;
+            if(!!decimalSeparator && !/\d|^[.\-+]$/.test(decimalSeparator)){
+                selfValue = (selfValue + '').replace('.', decimalSeparator);
+            }
             if(typeof formatter === 'function'){
                 let value = formatter(selfValue);
-                if(value === undefined || value === null || (typeof value === 'number' && isNaN(value))) return '';
+                if(value === undefined || value === null || (typeof _value === 'number' && !isFinite(value))) return '';
                 return value;
             }
             return selfValue;
@@ -118,6 +121,11 @@ export default {
                 value, disabled, size, placeholder, name, id, autoFocus, inputClass: `${prefixCls}-input`,
             }
         },
+    },
+    watch: {
+        value(val){
+            this.selfValue = val === undefined || val === null || (typeof _value === 'number' && !isFinite(val)) ? '' : val;
+        }
     },
     beforeDestroy(){
         this.stop();
@@ -158,14 +166,21 @@ export default {
         },
         handleChange(e){
             let value = e.target.value;
-            // console.log('selectionStart', e.target.selectionStart, 'selectionEnd', e.target.selectionEnd, e.target.value);
-            value = this.getCurrentValue(value);
             let { inputDisplayValue: prevValue } = this;
+            value = this.getCurrentValue(value, prevValue);
+            // console.log('selectionStart', e.target.selectionStart, 'selectionEnd', e.target.selectionEnd, e.target.value);
             let { value: _value, selectionStart, selectionEnd } = e.target;
             let rval = _value[e.target.selectionEnd];
-            let rlen = _value.length - e.target.selectionEnd
+            let lval = _value[e.target.selectionEnd - 1];
+            let rlen = _value.length - e.target.selectionEnd;
+            let diff = _value.length - prevValue.length;
 
-            if(numberRegexp.test(value)){
+            if(!!this.value && !numberRegexp.test(this.value)){
+                value = value.replace(/[^\d.-]+/g, '');
+            }
+            const isvalid = numberRegexp.test(value);
+
+            if(isvalid){
                 this.update(e, value)
             }
 
@@ -173,22 +188,35 @@ export default {
             this.$nextTick(() => {
                 let cval = this.inputDisplayValue;
                 let clen = cval.length;
-                if((rval === undefined || this.keyCode === 8) && prevValue !== this.inputDisplayValue){
+                // || this.keyCode === 8
+                if((rval === undefined) && prevValue !== this.inputDisplayValue){
                     e.target.setSelectionRange(clen - (selectionEnd - selectionStart + rlen), clen - rlen);
                 }else if(prevValue === this.inputDisplayValue){
+                    if(this.keyCode === 46){
+                        selectionStart ++;
+                        selectionEnd ++;
+                    }else if(!isvalid){
+                        selectionStart = selectionStart - diff;
+                        selectionEnd = selectionEnd - diff;
+                    }
                     e.target.setSelectionRange(selectionStart, selectionEnd);
                 }else {
                     let _len = clen + 1 - rlen;
                     let _rval = cval[_len];
+                    let _lval = cval[_len - 1];
                     do{
                         _len = _len - 1;
                         _rval = cval[_len];
-                    }while(_rval !== rval && _len > 0)
-                    selectionStart = selectionStart - (selectionEnd - _len);
-                    if(selectionStart < 0){
-                        selectionStart = 0;
+                    }while((numberRegexp.test(rval) ? _rval !== rval : _lval !== lval) && _len > 0);
+
+                    if(_rval === rval){
+                        selectionStart = selectionStart - (selectionEnd - _len);
+                        selectionEnd = _len;
+                        if(selectionStart < 0){
+                            selectionStart = 0;
+                        }
                     }
-                    e.target.setSelectionRange(selectionStart, _len);
+                    e.target.setSelectionRange(selectionStart, selectionEnd);
                 }
                 this.keyCode = undefined;
             });
@@ -212,7 +240,6 @@ export default {
                 this.selfValue = value;
             }
             this.$emit('input', value);
-            // console.log('change', value)
             this.$emit('change', value);
         },
         handleStep(e, dir, recursive){
@@ -243,10 +270,21 @@ export default {
                 this.focus();
             }
         },
-        getCurrentValue(value){
-            const { parser } = this;
+        getCurrentValue(value, prev){
+            const { parser, decimalSeparator } = this;
             if(typeof parser === 'function'){
-                return parser(value)
+                value = parser(value);
+                prev = parser(value);
+            }
+            value = value.replace(/。/g, '.');
+            if(!!decimalSeparator && !/\d|^[.\-+]$/.test(decimalSeparator)){
+                let hadDecimal = prev.indexOf(decimalSeparator) > -1;
+                if(hadDecimal && value.indexOf(decimalSeparator) === -1 && !numberRegexp.test(value)){
+                    let underZero = !this.selfValue ? '' : parseFloat(this.selfValue) < 0 ? '-' : '';
+                    value = underZero + value.replace(/[^\d]+/g, '');
+                }else{
+                    value = value.replace(decimalSeparator, '.')
+                }
             }
             return value;
         }
