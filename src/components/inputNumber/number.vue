@@ -32,6 +32,7 @@ export default {
     name: 'InputNumber',
     mixins: [events],
     exceptListeners: ['focus', 'blur', 'input', 'change', 'keydown', 'keyup'],
+    inheritAttrs: false,
     components: {
         vInput,
         Icon,
@@ -116,9 +117,9 @@ export default {
             return selfValue;
         },
         inputProps(){
-            const { inputDisplayValue: value, disabled, size, placeholder, name, id, autoFocus, prefixCls } = this;
+            const { inputDisplayValue: value, disabled, size, placeholder, name, id, autoFocus, prefixCls, $attrs } = this;
             return {
-                value, disabled, size, placeholder, name, id, autoFocus, inputClass: `${prefixCls}-input`,
+                ...$attrs, value, disabled, size, placeholder, name, id, autoFocus, inputClass: `${prefixCls}-input`
             }
         },
     },
@@ -244,6 +245,8 @@ export default {
         },
         handleStep(e, dir, recursive){
             this.stop();
+            const { readonly } = this.$attrs;
+            if(!!readonly || readonly === '') return;
 
             let { selfValue: value, selfStep: step, selfPrecision: precision } = this;
 

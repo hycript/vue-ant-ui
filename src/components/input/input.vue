@@ -78,9 +78,11 @@ export default {
             }, inputClass);
         },
         inputProps(){
-            const { type } = this;
+            const { type, $attrs } = this;
             if(type === 'textarea') return {};
             const props = omit(this.$props, ['prefixCls', 'addonBefore', 'addonAfter', 'prefix', 'suffix', 'value', 'defaultValue', 'inputClass']);
+
+            Object.assign(props, $attrs);
             return props;
         },
     },

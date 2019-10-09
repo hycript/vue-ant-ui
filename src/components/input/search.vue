@@ -64,6 +64,7 @@ export default {
                 delete props.value;
             }
             props.prefixCls = this.inputPrefixCls;
+            Object.assign(props, this.$attrs);
             return props;
         }
     },

@@ -45,13 +45,14 @@ export default {
     },
     computed: {
         inputProps() {
-            const { visible } = this;
+            const { visible, $attrs } = this;
             const props = omit(this.$props, ['prefixCls', 'inputPrefixCls', 'type']);
             if(!hasProp(this, 'value')){
                 delete props.value;
             }
             props.prefixCls = this.inputPrefixCls;
             props.type = visible ? 'text' : 'password';
+            Object.assign(props, $attrs);
             return props;
         },
     },

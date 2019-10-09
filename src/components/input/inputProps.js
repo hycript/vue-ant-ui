@@ -9,7 +9,7 @@ export default {
     name: PropTypes.string,
     size: PropTypes.oneOf(['small', 'large', 'default']),
     disabled: PropTypes.bool.def(false),
-    readOnly: PropTypes.bool,
+    readonly: PropTypes.bool,
     addonBefore: PropTypes.any,
     addonAfter: PropTypes.any,
     prefix: PropTypes.any,
