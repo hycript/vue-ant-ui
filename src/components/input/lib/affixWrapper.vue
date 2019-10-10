@@ -1,5 +1,5 @@
 <template>
-<span v-if="$slots.prefix || prefix || $slots.suffix || suffix" :class="classes">
+<span v-if="$slots.prefix || prefix || $slots.suffix || suffix || allowClear" :class="classes">
     <span v-if="$slots.prefix || prefix" :class="`${prefixCls}-prefix`">
         <slot name="prefix">{{ prefix }}</slot>
     </span>
