@@ -6,6 +6,15 @@
                 <vIcon type="close-circle" @click="emitEmpty" />
             </template>
         </vInput>
+        <div style="margin: 24px 0" />
+        <vInput suffix="RMB" prefix="￥"></vInput>
+        <div style="margin: 24px 0" />
+        <vInput>
+            <vIcon slot="prefix" type="user"/>
+            <vTooltip title="Extra information" slot="suffix">
+                <vIcon type="info-circle" style="color: rgba(0,0,0,.45);"/>
+            </vTooltip>
+        </vInput>
     </div>
 </template>
 
