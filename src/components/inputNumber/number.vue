@@ -17,7 +17,7 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import { hasProp } from '../_util/props-util';
+import { hasProp } from '../_util/tool';
 import { omit } from '../_util/lodash';
 import events from '../common/events';
 import vInput from '../input';
@@ -25,8 +25,8 @@ import Icon from '../icon';
 import HandlerButton from './lib/handlerButton';
 
 const numberRegexp = /^[-+]?(\d*(\.\d*)?)?$/;
-const SPEED = 200;
-const DELAY = 600;
+const SPEED = 150;
+const DELAY = 450;
 
 export default {
     name: 'InputNumber',
@@ -169,12 +169,12 @@ export default {
             let value = e.target.value;
             let { inputDisplayValue: prevValue } = this;
             value = this.getCurrentValue(value, prevValue);
-            // console.log('selectionStart', e.target.selectionStart, 'selectionEnd', e.target.selectionEnd, e.target.value);
             let { value: _value, selectionStart, selectionEnd } = e.target;
             let rval = _value[e.target.selectionEnd];
             let lval = _value[e.target.selectionEnd - 1];
             let rlen = _value.length - e.target.selectionEnd;
             let diff = _value.length - prevValue.length;
+            console.log('selectionStart', e.target.selectionStart, 'selectionEnd', e.target.selectionEnd, e.target.value, rval, lval, rlen, diff);
 
             if(!!this.value && !numberRegexp.test(this.value)){
                 value = value.replace(/[^\d.-]+/g, '');

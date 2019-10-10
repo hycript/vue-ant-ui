@@ -20,7 +20,7 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import { filterEmpty, isNumeric } from '../_util/props-util';
+import { filterEmpty, isNumeric } from '../_util/tool';
 import events from '../common/events';
 import vnode from '../common/vnode';
 import vTransition from '../transition';

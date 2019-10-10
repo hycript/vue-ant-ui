@@ -12,6 +12,10 @@ export function isNumeric(value){
     return /^[-+]?\d*(\.\d*)?$/.test(value);
 }
 
+export function toArray(val){
+    return val === undefined || val === null ? [] : Array.isArray(val) ? val : [val];
+}
+
 export function isEmptyElement(vnode) {
     return !vnode || !(vnode.tag || (vnode.text && vnode.text.trim() !== ''));
 }

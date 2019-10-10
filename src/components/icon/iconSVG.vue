@@ -14,7 +14,7 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import { is } from '../_util/props-util';
+import { is } from '../_util/tool';
 import vnode from '../common/vnode';
 import VueIcon from '@ant-design/icons-vue';
 import iconProps from './iconProps.js';

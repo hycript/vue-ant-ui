@@ -22,7 +22,7 @@
 <script>
 import PropTypes from '../_util/vue-types';
 import { omit } from '../_util/lodash';
-import { is, hasProp } from '../_util/props-util';
+import { is, hasProp } from '../_util/tool';
 import inputProps from './inputProps';
 import inputMixin from './inputMixin';
 import AddonWrapper from './lib/addonWrapper';

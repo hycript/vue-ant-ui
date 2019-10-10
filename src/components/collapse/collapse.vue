@@ -8,12 +8,8 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import { hasProp, is } from '../_util/props-util';
+import { hasProp, is, toArray } from '../_util/tool';
 import vnode from '../common/vnode';
-
-function toArray(val){
-    return val === undefined || val === null ? [] : Array.isArray(val) ? val : [val];
-}
 
 export default {
     name: 'Collapse',

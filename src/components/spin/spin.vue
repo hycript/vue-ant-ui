@@ -16,7 +16,7 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import { filterEmpty } from '../_util/props-util';
+import { filterEmpty } from '../_util/tool';
 import vnode from '../common/vnode';
 import Inner from './inner';
 

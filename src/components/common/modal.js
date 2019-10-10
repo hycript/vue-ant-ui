@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { is } from '../_util/props-util'
+import { is } from '../_util/tool'
 /*
  * children: slotbox,
  * children: 'hello world ~~~!',

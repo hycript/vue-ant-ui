@@ -51,7 +51,7 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import { is, filterEmpty } from '../_util/props-util';
+import { is, filterEmpty } from '../_util/tool';
 import vnode from '../common/vnode';
 import events from '../common/events';
 import { Tabs, TabPane } from '../tabs';

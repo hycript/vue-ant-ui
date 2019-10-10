@@ -25,7 +25,7 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import { getProp } from '../_util/props-util';
+import { getProp } from '../_util/tool';
 import events from '../common/events';
 import Icon from '../icon';
 import vTransition from '../transition';

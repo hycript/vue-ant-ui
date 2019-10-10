@@ -1,4 +1,4 @@
-import { is, hasProp } from '../_util/props-util';
+import { is, hasProp } from '../_util/tool';
 import events from '../common/events';
 
 export default {

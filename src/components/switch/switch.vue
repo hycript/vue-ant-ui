@@ -21,7 +21,7 @@
 <script>
 import PropTypes from '../_util/vue-types';
 import events from '../common/events';
-import { hasProp } from '../_util/props-util';
+import { hasProp } from '../_util/tool';
 import Icon from '../icon';
 
 export default {

@@ -1,8 +1,7 @@
 
-import { is, type } from '../_util/props-util';
+import { is, type } from '../_util/tool';
 import { cloneVNodes } from '../_util/vnode';
 import PropTypes from '../_util/vue-types';
-import listener from './listener';
 
 export default {
     functional: true,

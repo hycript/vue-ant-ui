@@ -5,7 +5,7 @@
 </template>
 <script>
 import ResizeObserver from 'resize-observer-polyfill';
-import { filterEmpty } from '../_util/props-util';
+import { filterEmpty } from '../_util/tool';
 import vnode from './vnode';
 import resizable from './resizable';
 

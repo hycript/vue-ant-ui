@@ -19,7 +19,7 @@
 </template>
 <script>
 import PropTypes from '../_util/vue-types';
-import { hasProp } from '../_util/props-util';
+import { hasProp } from '../_util/tool';
 import events from '../common/events';
 import Checkbox from './checkbox';
 import { CHECKBOX } from './const';
