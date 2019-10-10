@@ -1,7 +1,8 @@
 <style lang="less" src="./style/index.less"></style>
 <template>
 <vInput ref="input" :class="classes" v-bind="inputProps"
-    v-on="$$listeners" @focus="onFocus" @blur="onBlur" @change="handleChange" @keydown="onKeydown" @keyup="onKeyup"
+    role="spinbutton" :aria-valuemin="min" :aria-valuemax="max" :aria-valuenow="selfValue" :aria-disabled="disabled"
+    v-on="$$listeners" @focus="onFocus" @blur="onBlur" @change="handleChange" @keydown="onKeydown" @keyup="onKeyup" @pressEnter="onPressEnter"
 >
     <div slot="suffix" :class="`${prefixCls}-handler-wrap`">
         <HandlerButton type="up" :disabled="upDisabled" :prefixCls="prefixCls"
@@ -31,7 +32,7 @@ const DELAY = 450;
 export default {
     name: 'InputNumber',
     mixins: [events],
-    exceptListeners: ['focus', 'blur', 'input', 'change', 'keydown', 'keyup'],
+    exceptListeners: ['focus', 'blur', 'input', 'change', 'keydown', 'keyup', 'pressEnter'],
     inheritAttrs: false,
     components: {
         vInput,
@@ -41,7 +42,7 @@ export default {
     data(){
         const { value, defaultValue } = this;
         let _value = hasProp(this, 'value') ? value : defaultValue;
-        if(_value === null || _value === '' || (typeof _value === 'number' && !isFinite(_value))){
+        if(_value === undefined || _value === null || (typeof _value === 'number' && !isFinite(_value))){
             _value = ''
         }
         return {
@@ -56,7 +57,7 @@ export default {
         value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         step: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).def(1),
         defaultValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-        tabIndex: PropTypes.number,
+        tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         disabled: PropTypes.bool,
         size: PropTypes.oneOf(['large', 'small', 'default']),
         formatter: PropTypes.func,
@@ -114,12 +115,12 @@ export default {
                 if(value === undefined || value === null || (typeof _value === 'number' && !isFinite(value))) return '';
                 return value;
             }
-            return selfValue;
+            return selfValue + '';
         },
         inputProps(){
-            const { inputDisplayValue: value, disabled, size, placeholder, name, id, autoFocus, prefixCls, $attrs } = this;
+            const { inputDisplayValue: value, disabled, size, placeholder, name, id, autoFocus, tabIndex, prefixCls, $attrs } = this;
             return {
-                ...$attrs, value, disabled, size, placeholder, name, id, autoFocus, inputClass: `${prefixCls}-input`
+                ...$attrs, value, disabled, size, placeholder, name, id, autoFocus, tabIndex, inputClass: `${prefixCls}-input`
             }
         },
     },
@@ -153,12 +154,20 @@ export default {
                 this.handleStep(e, keyCode === 38 ? 1 : -1);
             }
             this.keyCode = keyCode;
+            this.$emit('keydown', e);
         },
         onKeyup(e){
             const { keyCode } = e;
             if(keyCode === 38 || keyCode === 40){
                 this.stop();
             }
+            this.$emit('keyup', e);
+        },
+        onPressEnter(e){
+            this.handlePrecision(e);
+            this.$nextTick(() => {
+                this.$emit('pressEnter', this.selfValue);
+            })
         },
         handlePrecision(e){
             let { selfValue: value } = this;
@@ -174,7 +183,6 @@ export default {
             let lval = _value[e.target.selectionEnd - 1];
             let rlen = _value.length - e.target.selectionEnd;
             let diff = _value.length - prevValue.length;
-            console.log('selectionStart', e.target.selectionStart, 'selectionEnd', e.target.selectionEnd, e.target.value, rval, lval, rlen, diff);
 
             if(!!this.value && !numberRegexp.test(this.value)){
                 value = value.replace(/[^\d.-]+/g, '');

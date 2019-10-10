@@ -89,6 +89,7 @@
 | 事件名称 | 说明 | 回调参数 |
 | --- | --- | --- |
 | change | 变化回调 | Function(value: number \| string) |  |
+| pressEnter | 按下回车时回调 | Function(value: number \| string) |  |
 
 ## 方法
 
