@@ -3,12 +3,12 @@
 <AddonWrapper v-bind="$props">
     <template slot="addonBefore"><slot name="addonBefore"></slot></template>
     <AffixWrapper :class="[ ($slots.suffix || suffix) && allowClear && !!selfValue ? `${prefixCls}-affix-wrapper-with-clear-btn` : '']" v-bind="$props">
-        <template slot="prefix"><slot name="prefix"></slot></template>
+        <template slot="prefix">
+            <slot name="prefix"><span v-if="prefix">{{ prefix }}</span></slot>
+        </template>
         <template slot="suffix">
-            <!-- <template v-if="allowClear"> -->
-                <Icon v-if="allowClear && !!selfValue" :class="`${prefixCls}-clear-icon`" type="close-circle" @click="handleReset" role="button"/>
-            <!-- </template> -->
-            <slot name="suffix"></slot>
+            <Icon v-if="allowClear && !!selfValue" :class="`${prefixCls}-clear-icon`" type="close-circle" @click="handleReset" role="button"/>
+            <slot name="suffix"><span v-if="suffix">{{ suffix }}</span></slot>
         </template>
         <input ref="input" :class="inputClasses"
             v-bind="inputProps" :value="selfValue"

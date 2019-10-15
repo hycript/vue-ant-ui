@@ -1,11 +1,11 @@
 <template>
-<span v-if="$slots.prefix || prefix || $slots.suffix || suffix || allowClear" :class="classes">
-    <span v-if="$slots.prefix || prefix" :class="`${prefixCls}-prefix`">
-        <slot name="prefix">{{ prefix }}</slot>
+<span v-if="$slots.prefix || $slots.suffix || allowClear" :class="classes">
+    <span v-if="$slots.prefix" :class="`${prefixCls}-prefix`">
+        <slot name="prefix"></slot>
     </span>
     <slot></slot>
-    <span v-if="$slots.suffix || suffix" :class="`${prefixCls}-suffix`">
-        <slot name="suffix">{{ suffix }}</slot>
+    <span v-if="$slots.suffix" :class="`${prefixCls}-suffix`">
+        <slot name="suffix"></slot>
     </span>
 </span>
 <vnode v-else><slot></slot></vnode>

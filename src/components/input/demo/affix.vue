@@ -7,7 +7,7 @@
             </template>
         </vInput>
         <div style="margin: 24px 0" />
-        <vInput suffix="RMB" prefix="￥"></vInput>
+        <vInput suffix="RMB" prefix="￥" allowClear></vInput>
         <div style="margin: 24px 0" />
         <vInput>
             <vIcon slot="prefix" type="user"/>

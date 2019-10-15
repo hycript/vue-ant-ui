@@ -1,3 +1,3 @@
 <template>
-    <vInputPassword placeholder="input password" />
+    <vInputPassword placeholder="input password" allowClear/>
 </template>
